@@ -2,6 +2,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 
@@ -68,6 +69,14 @@
             </ul>
             <ul class="navbar-nav navbar-right">
                 <li class="nav-item" >
+                    <sec:authorize access="!isAuthenticated()">
+                        Login
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal.firstName"/> <sec:authentication property="principal.lastName"/>
+                    </sec:authorize>
+                </li>
+                <li class="nav-item" >
                     <a class="nav-link" href="${pageContext.request.contextPath}/login">Přihlášení</a>
                 </li>
             </ul>
@@ -83,23 +92,5 @@
     </div>
 </div>
 
-<!-- FOOTER -->
-
-<%--<div id="pagefooter">--%>
-<%--<div class="container-fluid" style="background-color: cornflowerblue;">--%>
-<%--<div class="container" style="margin: 30px auto 30px auto; max-width: 970px;">--%>
-<%--<div class="row">--%>
-<%--<div class="col-xs-10 col-md-11">--%>
-<%--<span style="color: white; font-size: 15px">© 2016 Jan Palcút. All Rights Reserved.</span>--%>
-<%--</div>--%>
-<%--<div class="col-xs-2 col-md-1">--%>
-<%--<a href="#header" style="float: right; margin-right: 15px;">--%>
-<%--<span style="color:white" class="glyphicon glyphicon-chevron-up"></span>--%>
-<%--</a>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
 </body>
 </html>
