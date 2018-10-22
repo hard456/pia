@@ -15,4 +15,11 @@ public class LoginController {
         return model;
     }
 
+    @RequestMapping(path = "/logoutSuccessful")
+    public ModelAndView showSuccessFulLogoutPage(){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("login");
+        return model;
+    }
+
 }
