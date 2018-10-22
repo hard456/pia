@@ -27,11 +27,14 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
+    <%--FONT AWESOME--%>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
     <title>Bank</title>
 </head>
 <body>
 
-<!-- MENU-->
+<!-- DEFAULT MENU-->
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #00796B">
 
@@ -51,38 +54,71 @@
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/contact">Kontakt</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
             </ul>
             <ul class="navbar-nav navbar-right">
+
+                <sec:authorize access="isAuthenticated()">
+                <li class="nav-item" >
+                    <a class="nav-link" href="${pageContext.request.contextPath}/user">
+                        <i class="fas fa-user"></i>
+                        <sec:authentication property="principal.firstName"/>
+                        <sec:authentication property="principal.lastName"/>
+                    </a>
+                </li>
+                </sec:authorize>
+
                 <li class="nav-item" >
                     <sec:authorize access="!isAuthenticated()">
-                        Login
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login">Přihlášení</a>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
-                        <sec:authentication property="principal.firstName"/> <sec:authentication property="principal.lastName"/>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/logout">Odhlášení</a>
                     </sec:authorize>
-                </li>
-                <li class="nav-item" >
-                    <a class="nav-link" href="${pageContext.request.contextPath}/login">Přihlášení</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
+
+<%-- USER MENU --%>
+<sec:authorize access="hasAuthority('USER')">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: lightgrey;">
+
+    <div class="container-fluid" style="max-width: 1000px;">
+
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: dimgray" href="${pageContext.request.contextPath}/about-us">Nová platba</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: dimgrey;" href="${pageContext.request.contextPath}/contact">Pohyby</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="color: dimgrey;" href="${pageContext.request.contextPath}/contact">Šablony</a>
+                </li>
+            </ul>
+
+    </div>
+</nav>
+</sec:authorize>
+
+<%-- USER MENU --%>
+<sec:authorize access="hasAuthority('ADMIN')">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: lightgrey;">
+
+        <div class="container-fluid" style="max-width: 1000px;">
+
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" style="color: dimgray" href="${pageContext.request.contextPath}/about-us">Přidat uživatele</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+</sec:authorize>
 
 <!-- BODY -->
 
