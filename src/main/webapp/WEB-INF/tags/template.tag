@@ -85,8 +85,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: lightgrey;">
 
     <div class="container-fluid" style="max-width: 1000px;">
-
-
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" style="color: dimgray" href="${pageContext.request.contextPath}/about-us">Nová platba</a>
@@ -98,24 +96,20 @@
                     <a class="nav-link" style="color: dimgrey;" href="${pageContext.request.contextPath}/contact">Šablony</a>
                 </li>
             </ul>
-
     </div>
 </nav>
 </sec:authorize>
 
-<%-- USER MENU --%>
+<%-- ADMIN MENU --%>
 <sec:authorize access="hasAuthority('ADMIN')">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: lightgrey;">
 
         <div class="container-fluid" style="max-width: 1000px;">
-
-
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" style="color: dimgray" href="${pageContext.request.contextPath}/about-us">Přidat uživatele</a>
                 </li>
             </ul>
-
         </div>
     </nav>
 </sec:authorize>
