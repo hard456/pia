@@ -1,18 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: fifal
-  Date: 6.10.18
-  Time: 17:07
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <link rel="stylesheet" type="text/css" href="css/style.css"/>
-    <title>1 rooting tooting motherfucker</title>
-</head>
-<body>
-    <h1>henlo lizer.</h1>
-    <p>helllo you STINKY LIZARD. go eat a fly ugly</p>
-</body>
-</html>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<t:template>
+    <jsp:body>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <h6 class="card-header card-header-style">Domů</h6>
+                    <div class="card-body">
+                        <c:forEach items="${users}" var="c">
+                            ${c.firstname}
+                        </c:forEach>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </jsp:body>
+</t:template>

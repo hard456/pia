@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <h6 class="card-header" style="background-color: #535353; color: #ffffff;">O nás</h6>
+                    <h6 class="card-header card-header-style">O nás</h6>
                     <div class="card-body">
                     </div>
                 </div>
