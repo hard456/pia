@@ -30,6 +30,9 @@ public class User implements Serializable{
     @Column(name = "pin")
     private String pin;
 
+    @Column(name = "pid")
+    private String pid;
+
     @ManyToMany
     @JoinTable(
             name="user_role",
@@ -83,6 +86,14 @@ public class User implements Serializable{
 
     public void setPin(String pin) {
         this.pin = pin;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public List<Role> getRoleList() {

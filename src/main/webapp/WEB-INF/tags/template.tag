@@ -91,7 +91,8 @@
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/new-transaction">Účet</a>
+                    <a class="nav-link navbar-user-color"
+                       href="${pageContext.request.contextPath}/account">Účet</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/new-transaction">Nová
@@ -102,7 +103,8 @@
                        href="${pageContext.request.contextPath}/transaction-list">Pohyby</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/templates">Vzory plateb</a>
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/templates">Vzory
+                        plateb</a>
                 </li>
             </ul>
         </div>
@@ -116,8 +118,14 @@
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/about-us">Přidat
-                        uživatele</a>
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/new-user">
+                        Přidat uživatele
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/users">
+                        Uživatelé
+                    </a>
                 </li>
             </ul>
         </div>
@@ -126,12 +134,12 @@
 
 <%-- ALERT --%>
 <%--<div class="row" style="max-width: 1000px; margin: 0 auto;">--%>
-    <%--<div class="col-md-12">--%>
-        <%--<div class="alert alert-success alert-dismissible">--%>
-            <%--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>--%>
-            <%--<strong>Success!</strong> Indicates a successful or positive action.--%>
-        <%--</div>--%>
-    <%--</div>--%>
+<%--<div class="col-md-12">--%>
+<%--<div class="alert alert-success alert-dismissible">--%>
+<%--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>--%>
+<%--<strong>Success!</strong> Indicates a successful or positive action.--%>
+<%--</div>--%>
+<%--</div>--%>
 <%--</div>--%>
 
 <!-- BODY -->

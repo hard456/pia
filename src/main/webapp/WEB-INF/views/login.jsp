@@ -17,7 +17,7 @@
                                     <input type="text" name="login_id" class="form-control" placeholder="Identifikační číslo"/>
                                 </div>
                                 <div class="row" style="margin-bottom: 7px;">
-                                    <input type="text" name="pin" class="form-control" placeholder="PIN"/>
+                                    <input type="password" name="pin" class="form-control" placeholder="PIN"/>
                                 </div>
                                 <div class="row" style="margin-bottom: 7px;">
                                     <input type="submit" class="form-control" value="Přihlásit"/>

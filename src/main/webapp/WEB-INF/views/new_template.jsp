@@ -6,21 +6,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <h6 class="card-header card-header-style">Nová platba</h6>
+                    <h6 class="card-header card-header-style">Nový vzor platby</h6>
                     <div class="card-body">
 
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
-                                Použít vzor
+                                Název
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <select class="form-control">
-                                    <option>Nevyplňovat podle vzoru</option>
-                                    <option>Ubytování</option>
-                                    <option>Menza</option>
-                                    <option>Test11</option>
-                                    <option>Test Ads</option>
-                                </select>
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                         <hr>
@@ -56,15 +50,6 @@
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
-                                Splatnost
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control" maxlength="10">
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
                                 Variabilní symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -89,18 +74,9 @@
                                 <input type="text" class="form-control" maxlength="10">
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                Zpráva
-                            </div>
-                            <div class="col-sm-12 col-md-6 col-lg-6">
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
-                            </div>
-                        </div>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Odeslat</button>
+                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Uložit</button>
                             </div>
                         </div>
 

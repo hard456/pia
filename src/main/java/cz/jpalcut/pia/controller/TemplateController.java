@@ -15,4 +15,11 @@ public class TemplateController {
         return model;
     }
 
+    @RequestMapping(path = "/templates/new")
+    public ModelAndView showAddTemplatePage(){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("new_template");
+        return model;
+    }
+
 }

@@ -225,10 +225,12 @@
 
                         <div class="row mt-3">
                             <ul class="pagination mx-auto">
-                                <li class="page-item disabled"><a class="page-link pagination-style" href="#">&lt;&lt;</a></li>
-                                <li class="page-item disabled"><a class="page-link pagination-style" href="#">&lt;</a></li>
+                                <li class="page-item disabled"><a class="page-link pagination-style"
+                                                                  href="#">&lt;&lt;</a></li>
+                                <li class="page-item disabled"><a class="page-link pagination-style" href="#">&lt;</a>
+                                </li>
                                 <li class="page-item"><a class="page-link pagination-active"
-                                                                href="#">1</a></li>
+                                                         href="#">1</a></li>
                                 <li class="page-item"><a class="page-link pagination-style" href="#">2</a></li>
                                 <li class="page-item"><a class="page-link pagination-style" href="#">3</a></li>
                                 <li class="page-item"><a class="page-link pagination-style" href="#">&gt;</a></li>
