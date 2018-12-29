@@ -5,7 +5,7 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-style">
 
                     <h6 class="card-header card-header-style">Pohyby</h6>
 
@@ -31,9 +31,15 @@
                             </div>
                         </div>
 
-                        <div class="row bg-grey p-2">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold">Datum</div>
+                            <div class="col-sm-12 col-md-8 col-lg-8 font-weight-bold">Platba</div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold">Částka</div>
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -49,23 +55,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right text-danger">
-                                        <span>-1500,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
+                                <span>-7725,00 CZK</span>
                             </div>
                         </div>
-
-                        <div class="row p-2">
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Příchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -81,23 +78,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        <span>700,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-success text-right">
+                                <span>700,00 CZK</span>
                             </div>
                         </div>
-
-                        <div class="row bg-grey p-2">
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -113,23 +101,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right text-danger">
-                                        <span>-3525,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
+                                <span>-3525,00 CZK</span>
                             </div>
-                        </div>
 
-                        <div class="row p-2">
+                        </div>
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -145,23 +125,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right text-danger">
-                                        <span>-1500,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
+                                <span>-455,00 CZK</span>
                             </div>
                         </div>
-
-                        <div class="row p-2 bg-grey">
+                        <hr>
+                        <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Příchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -177,23 +148,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        <span>200,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-success text-right">
+                                <span>200,00 CZK</span>
                             </div>
                         </div>
-
+                        <hr>
                         <div class="row p-2">
                             <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-8">
+                            <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
                                 </div>
@@ -209,20 +171,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right text-danger">
-                                        <span>-200,00 CZK</span>
-                                    </div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                        4000,00 CZK
-                                    </div>
-                                </div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
+                                <span class="">-300,00 CZK</span>
                             </div>
                         </div>
-
+                        <hr>
                         <div class="row mt-3">
                             <ul class="pagination mx-auto">
                                 <li class="page-item disabled"><a class="page-link pagination-style"

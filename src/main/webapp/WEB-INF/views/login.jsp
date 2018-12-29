@@ -7,7 +7,7 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-style">
                     <h6 class="card-header card-header-style">Přihlášení uživatele</h6>
                     <div class="card-body">
                             <div class="form-group" style="max-width: 450px; margin: 0 auto;">

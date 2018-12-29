@@ -6,12 +6,12 @@
         <div class="row">
             <div class="col-md-12">
 
-                <div class="card">
+                <div class="card card-style">
                     <h6 class="card-header card-header-style">Detail účtu</h6>
                     <div class="card-body">
 
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Číslo účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -21,7 +21,7 @@
                         <hr>
 
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Aktuální hodnota účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -32,12 +32,12 @@
                     </div>
                 </div>
 
-                <div class="card mt-3">
+                <div class="card card-style mt-3">
                     <h6 class="card-header card-header-style">Kreditní karta</h6>
                     <div class="card-body">
 
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Číslo kreditní karty
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">

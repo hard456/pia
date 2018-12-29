@@ -5,12 +5,12 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card">
+                <div class="card card-style">
                     <h6 class="card-header card-header-style">Nová platba</h6>
                     <div class="card-body">
 
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Použít vzor
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -25,7 +25,7 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Na účet
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6 col">
@@ -45,7 +45,7 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Částka
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5">
@@ -55,16 +55,16 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Splatnost
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control" maxlength="10">
+                                <input type="date" class="form-control" maxlength="10">
                             </div>
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Variabilní symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -73,7 +73,7 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Konstantní symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -82,7 +82,7 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Specifický symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
@@ -91,7 +91,7 @@
                         </div>
                         <hr>
                         <div class="row mb-2">
-                            <div class="col-sm-12 col-md-6 col-lg-6">
+                            <div class="col-sm-12 col-md-6 col-lg-6 font-weight-bold">
                                 Zpráva
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
