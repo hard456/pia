@@ -2,19 +2,15 @@ package cz.jpalcut.pia.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Entity
-@Table(schema = "public", name = "transaction")
-public class Transaction implements Serializable {
+@Table(schema = "public", name = "template")
+public class Template implements Serializable {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
-
-    @Column(name = "income")
-    private Boolean income;
 
     @Column(name = "number")
     private String number;
@@ -24,9 +20,6 @@ public class Transaction implements Serializable {
 
     @Column(name = "value")
     private Double value;
-
-    @Column(name = "maturity")
-    private LocalDateTime maturity;
 
     @Column(name = "variable_symbol")
     private String variableSymbol;
@@ -40,9 +33,6 @@ public class Transaction implements Serializable {
     @Column(name = "message")
     private String message;
 
-    @Column(name = "processing_date")
-    private LocalDateTime processingDate;
-
     @ManyToOne
     @JoinColumn(name="account_id")
     private Account account;
@@ -53,14 +43,6 @@ public class Transaction implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Boolean getIncome() {
-        return income;
-    }
-
-    public void setIncome(Boolean income) {
-        this.income = income;
     }
 
     public String getNumber() {
@@ -85,14 +67,6 @@ public class Transaction implements Serializable {
 
     public void setValue(Double value) {
         this.value = value;
-    }
-
-    public LocalDateTime getMaturity() {
-        return maturity;
-    }
-
-    public void setMaturity(LocalDateTime maturity) {
-        this.maturity = maturity;
     }
 
     public String getVariableSymbol() {
@@ -125,14 +99,6 @@ public class Transaction implements Serializable {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public LocalDateTime getProcessingDate() {
-        return processingDate;
-    }
-
-    public void setProcessingDate(LocalDateTime processingDate) {
-        this.processingDate = processingDate;
     }
 
     public Account getAccount() {

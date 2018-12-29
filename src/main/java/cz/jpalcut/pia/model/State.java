@@ -2,28 +2,24 @@ package cz.jpalcut.pia.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table(schema = "public", name = "role")
-public class Role implements Serializable {
+@Table(schema = "public", name = "state")
+public class State implements Serializable{
 
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy="roleList")
-    private List<User> users;
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

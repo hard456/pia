@@ -1,7 +1,5 @@
 package cz.jpalcut.pia.model;
 
-import org.hibernate.annotations.Fetch;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -25,13 +23,26 @@ public class User implements Serializable{
     private String email;
 
     @Column(name = "login_id")
-    private Integer loginId;
+    private String loginId;
 
     @Column(name = "pin")
     private String pin;
 
     @Column(name = "pid")
     private String pid;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "address_number")
+    private String addressNumber;
+
+    @Column(name = "zip_code")
+    private String zipCode;
+
+    @ManyToOne
+    @JoinColumn(name="state_id")
+    private State state;
 
     @ManyToMany
     @JoinTable(
@@ -72,11 +83,11 @@ public class User implements Serializable{
         this.email = email;
     }
 
-    public Integer getLoginId() {
+    public String getLoginId() {
         return loginId;
     }
 
-    public void setLoginId(Integer loginId) {
+    public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
 
@@ -94,6 +105,38 @@ public class User implements Serializable{
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAddressNumber() {
+        return addressNumber;
+    }
+
+    public void setAddressNumber(String addressNumber) {
+        this.addressNumber = addressNumber;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
     }
 
     public List<Role> getRoleList() {
