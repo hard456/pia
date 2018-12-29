@@ -50,7 +50,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDetails;
     }
 
-    @Transactional
     public User getUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
