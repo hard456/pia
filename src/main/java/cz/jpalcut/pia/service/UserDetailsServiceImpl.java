@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
-        User user = userDAO.findUserByLoginId(Integer.parseInt(loginId));
+        User user = userDAO.findUserByLoginId(loginId);
 
         if (user == null) {
             throw new UsernameNotFoundException("User" + loginId + " not found!");
@@ -52,10 +52,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional
     public User getUser(){
-        Integer loginId;
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        loginId = Integer.parseInt(((UserDetails) principal).getUsername());
-        return userDAO.findUserByLoginId(loginId);
+        return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
     }
 
 }
