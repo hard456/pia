@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AccountController {
 
     @RequestMapping(path = "/account")
-    public ModelAndView showHomePage()
+    public ModelAndView showAccountPage()
     {
         ModelAndView model = new ModelAndView();
         model.setViewName("account");

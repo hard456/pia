@@ -1,6 +1,5 @@
 package cz.jpalcut.pia.controller;
 
-import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +17,6 @@ public class UserController {
         ModelAndView model = new ModelAndView();
         model.setViewName("user");
         model.addObject("user", userService.getUser());
-
         return model;
     }
 
