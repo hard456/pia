@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:template>
     <jsp:body>
@@ -9,13 +10,14 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nový uživatel</h6>
                     <div class="card-body">
-
+                        <form:form modelAttribute="newUserForm" action="/new-user/add" method="post">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Jméno
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="firstname" type="text" class="form-control"/>
+                                <form:errors path="firstname"/>
                             </div>
                         </div>
                         <hr>
@@ -24,7 +26,8 @@
                                 Příjmení
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="lastname" type="text" class="form-control"/>
+                                <form:errors path="lastname"/>
                             </div>
                         </div>
                         <hr>
@@ -33,7 +36,8 @@
                                 Rodné číslo
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="pid" type="text" class="form-control"/>
+                                <form:errors path="pid"/>
                             </div>
                         </div>
                         <hr>
@@ -42,7 +46,8 @@
                                 Adresa
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="address" type="text" class="form-control"/>
+                                <form:errors path="address"/>
                             </div>
                         </div>
                         <hr>
@@ -51,7 +56,8 @@
                                 Číslo popisné
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="addressNumber" type="text" class="form-control"/>
+                                <form:errors path="addressNumber"/>
                             </div>
                         </div>
                         <hr>
@@ -60,7 +66,8 @@
                                 PSČ
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="zipCode" type="text" class="form-control"/>
+                                <form:errors path="zipCode"/>
                             </div>
                         </div>
                         <hr>
@@ -70,13 +77,10 @@
                             </div>
 
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form>
-                                    <select class="form-control">
-                                        <c:forEach items="${states}" var="item">
-                                            <option value="${item.id}">${item.name}</option>
-                                        </c:forEach>
-                                    </select>
-                                </form>
+                                <form:select path="state" cssClass="form-control">
+                                    <form:options items="${states}" itemValue="id" itemLabel="name"/>
+                                </form:select>
+                                <form:errors path="state"/>
                             </div>
                         </div>
                         <hr>
@@ -85,15 +89,17 @@
                                 Email
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control">
+                                <form:input path="email" type="text" class="form-control"/>
+                                <form:errors path="email"/>
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Vytvořit
+                                <button type="submit" class="btn btn-primary btn-sm button_primary_new">Vytvořit
                                 </button>
                             </div>
                         </div>
+                        </form:form>
 
                     </div>
                 </div>
