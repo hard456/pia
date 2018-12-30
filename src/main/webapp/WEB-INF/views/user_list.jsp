@@ -13,7 +13,7 @@
 
                         <div class="row">
                             <div class="col-sm-12 col-md-3 col-lg-3 font-weight-bold">Jméno</div>
-                            <div class="col-sm-12 col-md-3 col-lg-3 ont-weight-bold">Příjmení</div>
+                            <div class="col-sm-12 col-md-3 col-lg-3 font-weight-bold">Příjmení</div>
                             <div class="col-sm-12 col-md-3 col-lg-3 font-weight-bold">Rodné číslo</div>
                             <div class="col-sm-12 col-md-3 col-lg-3 text-right">
                             </div>
@@ -30,24 +30,6 @@
                         </div>
                             <c:if test="${!i.last}"><hr></c:if>
                         </c:forEach>
-
-                        <%--<div class="row">--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">Karel</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">Novákeqwqeqqeqw</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">453604/1634</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 text-right">--%>
-                                <%--<button type="button" class="btn btn-primary btn-sm button_primary_new">Upravit</button>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<hr>--%>
-                        <%--<div class="row">--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">Karel</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">Novák</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 align-self-center">453604/1634</div>--%>
-                            <%--<div class="col-sm-12 col-md-3 col-lg-3 text-right">--%>
-                                <%--<button type="button" class="btn btn-primary btn-sm button_primary_new">Upravit</button>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
 
                     </div>
                 </div>
