@@ -16,7 +16,7 @@
                                 Jméno*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="firstname" type="text" class="form-control"/>
+                                <form:input path="firstname" type="text" class="form-control" maxlength="50"/>
                                 <form:errors class="text-danger" path="firstname"/>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                                 Příjmení*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="lastname" type="text" class="form-control"/>
+                                <form:input path="lastname" type="text" class="form-control" maxlength="50"/>
                                 <form:errors class="text-danger" path="lastname"/>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                 Rodné číslo*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="pid" type="text" class="form-control"/>
+                                <form:input path="pid" type="text" class="form-control" maxlength="10"/>
                                 <form:errors class="text-danger" path="pid"/>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                 Adresa
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="address" type="text" class="form-control"/>
+                                <form:input path="address" type="text" class="form-control" maxlength="50"/>
                                 <form:errors class="text-danger" path="address"/>
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                                 Číslo popisné
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="addressNumber" type="text" class="form-control"/>
+                                <form:input path="addressNumber" type="text" class="form-control" maxlength="8"/>
                                 <form:errors class="text-danger" path="addressNumber"/>
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                                 PSČ
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="zipCode" type="text" class="form-control"/>
+                                <form:input path="zipCode" type="text" class="form-control" maxlength="10"/>
                                 <form:errors class="text-danger" path="zipCode"/>
                             </div>
                         </div>
@@ -89,7 +89,7 @@
                                 Email*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="email" type="email" class="form-control"/>
+                                <form:input path="email" type="email" class="form-control" maxlength="50"/>
                                 <form:errors class="text-danger" path="email"/>
                             </div>
                         </div>
