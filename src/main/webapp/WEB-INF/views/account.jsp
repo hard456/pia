@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <t:template>
     <jsp:body>
@@ -15,7 +17,7 @@
                                 Číslo účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                4568798789/0300
+                                ${account.number}/${bankCode}
                             </div>
                         </div>
                         <hr>
@@ -25,7 +27,7 @@
                                 Aktuální hodnota účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                2735 CZK
+                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${account.balance}" />
                             </div>
                         </div>
 
@@ -41,7 +43,9 @@
                                 Číslo kreditní karty
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                5621 3546 2563 8645
+                                    ${fn:substring(account.cardNumber,0,4)}
+                                    ${fn:substring(account.cardNumber,4,6)}** ****
+                                    ${fn:substring(account.cardNumber,12,16)}
                             </div>
                         </div>
                     </div>
