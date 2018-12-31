@@ -21,24 +21,16 @@
                             </div>
                         </div>
                         <hr>
-
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Aktuální hodnota účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${account.balance}" />
+                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${account.balance}" /> CZK
                             </div>
                         </div>
-
-                    </div>
-                </div>
-
-                <div class="card card-style mt-3">
-                    <h6 class="card-header card-header-style">Kreditní karta</h6>
-                    <div class="card-body">
-
-                        <div class="row mb-2">
+                        <hr>
+                        <div class="row mb-4">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Číslo kreditní karty
                             </div>
@@ -48,6 +40,7 @@
                                     ${fn:substring(account.cardNumber,12,16)}
                             </div>
                         </div>
+
                     </div>
                 </div>
 

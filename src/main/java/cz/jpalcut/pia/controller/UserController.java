@@ -55,7 +55,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/users")
+    @RequestMapping(path = "/user/list")
     public ModelAndView showUserListPage()
     {
         ModelAndView model = new ModelAndView();
@@ -76,7 +76,8 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/{id}/edit", method = RequestMethod.POST)
-    public ModelAndView editUser(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult, @PathVariable("id") Integer userId){
+    public ModelAndView editUser(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult,
+                                 @PathVariable("id") Integer userId){
 
         User user = userService.getUserById(userId);
 

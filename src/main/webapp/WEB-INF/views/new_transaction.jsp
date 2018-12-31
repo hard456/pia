@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <t:template>
     <jsp:body>
@@ -8,7 +9,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nová platba</h6>
                     <div class="card-body">
-
+                        <form:form modelAttribute="transaction" action="${pageContext.request.contextPath}/new-transaction/add" method="post">
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Použít vzor
@@ -26,40 +27,51 @@
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                Na účet
+                                Na účet*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6 col">
                                 <div class="row">
                                     <div class="col-sm-7 col-md-7 col-lg-7">
-                                        <input type="text" class="form-control" maxlength="17">
+                                        <form:input path="number" type="text" class="form-control" maxlength="17"/>
                                     </div>
                                     <div class="col-sm-1 col-md-1 col-lg-1 align-self-center text-center size-25">
                                         /
                                     </div>
                                     <div class="col-sm-4 col-md-4 col-lg-4">
-                                        <input type="text" class="form-control" maxlength="4">
+                                        <form:input path="code" type="text" class="form-control" maxlength="4"/>
                                     </div>
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-7 col-md-7 col-lg-7">
+                                        <form:errors class="text-danger" path="number"/>
+                                    </div>
+                                    <div class="col-sm-1 col-md-1 col-lg-1 align-self-center text-center size-25">
+                                    </div>
+                                    <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <form:errors class="text-danger" path="code"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                Částka
+                                Částka*
                             </div>
                             <div class="col-sm-12 col-md-5 col-lg-5">
-                                <input type="text" class="form-control" maxlength="15">
+                                <form:input path="value" type="text" class="form-control" maxlength="15"/>
+                                <form:errors class="text-danger" path="value"/>
                             </div>
                             <div class="col-sm-12 col-md-1 col-lg-1 align-self-center text-right">CZK</div>
                         </div>
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                Splatnost
+                                Splatnost*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="date" class="form-control" maxlength="10">
+                                <form:input path="maturity" type="date" class="form-control"/>
+                                <form:errors class="text-danger" path="maturity"/>
                             </div>
                         </div>
                         <hr>
@@ -68,7 +80,8 @@
                                 Variabilní symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control" maxlength="10">
+                                <form:input path="variableSymbol" type="text" class="form-control" maxlength="10"/>
+                                <form:errors class="text-danger" path="variableSymbol"/>
                             </div>
                         </div>
                         <hr>
@@ -77,7 +90,8 @@
                                 Konstantní symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control" maxlength="4">
+                                <form:input path="constantSymbol" type="text" class="form-control" maxlength="4"/>
+                                <form:errors class="text-danger" path="constantSymbol"/>
                             </div>
                         </div>
                         <hr>
@@ -86,7 +100,8 @@
                                 Specifický symbol
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <input type="text" class="form-control" maxlength="10">
+                                <form:input path="specificSymbol" type="text" class="form-control" maxlength="10"/>
+                                <form:errors class="text-danger" path="specificSymbol"/>
                             </div>
                         </div>
                         <hr>
@@ -95,15 +110,17 @@
                                 Zpráva
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <form:input path="message" type="text" class="form-control" maxlength="100"/>
+                                <form:errors class="text-danger" path="message"/>
                             </div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Odeslat</button>
+                                <button type="submit" class="btn btn-primary btn-sm button_primary_new">Odeslat
+                                </button>
                             </div>
                         </div>
-
+                        </form:form>
                     </div>
                 </div>
             </div>

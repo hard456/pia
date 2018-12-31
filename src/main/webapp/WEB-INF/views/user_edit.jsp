@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-style">
-                    <h6 class="card-header card-header-style">Detail uživatele </h6>
+                    <h6 class="card-header card-header-style">Detail uživatele</h6>
                     <div class="card-body">
 
                         <form:form modelAttribute="userForm"

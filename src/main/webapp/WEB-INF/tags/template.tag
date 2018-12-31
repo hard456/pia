@@ -100,10 +100,10 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link navbar-user-color"
-                       href="${pageContext.request.contextPath}/transaction-list">Pohyby</a>
+                       href="${pageContext.request.contextPath}/transaction/list">Pohyby</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/templates">Vzory
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/template/list">Vzory
                         plateb</a>
                 </li>
             </ul>
@@ -123,7 +123,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/users">
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/user/list">
                         Uživatelé
                     </a>
                 </li>

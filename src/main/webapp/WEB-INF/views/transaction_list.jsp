@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <t:template>
     <jsp:body>
@@ -11,186 +13,60 @@
 
                     <div class="card-body">
 
-
-                        <div class="row">
-                            <div class="form-group mr-1">
-                                <select class="form-control">
-                                    <option>Platby</option>
-                                    <option>Příjmy</option>
-                                    <option>Výjdaje</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <select class="form-control">
-                                    <option>Týden</option>
-                                    <option>Měsíc</option>
-                                    <option>Rok</option>
-                                    <option>Vlastní</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="row">
                             <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold">Datum</div>
                             <div class="col-sm-12 col-md-8 col-lg-8 font-weight-bold">Platba</div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold">Částka</div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold text-right">Částka</div>
                         </div>
                         <hr>
+                        <c:forEach items="${transactions}" var="item" varStatus="i">
                         <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
+                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">
+                                <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${item.maturity}" />
+                                <br>
+                                <a href="${pageContext.request.contextPath}/transaction/${item.id}/detail">[Více]</a>
+                            </div>
                             <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        <c:if test="${item.income eq true}">
+                                            Příchozí úhrada (${item.number}/${item.code})
+                                        </c:if>
+                                        <c:if test="${item.income eq false}">
+                                            Odchozí úhrada (${item.number}/${item.code})
+                                        </c:if>
+                                    </div>
                                 </div>
                                 <div class="row size-14">
                                     <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
+                                        Variabilní: ${item.variableSymbol}
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
+                                        Specifický: ${item.specificSymbol}
                                     </div>
                                     <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
+                                        Konstantní: ${item.constantSymbol}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
-                                <span>-7725,00 CZK</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-12 col-md-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Příchozí úhrada (79994563/0300)</div>
+                            <c:if test="${item.income eq true}">
+                                <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-success text-right">
+                                    <span>
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.value}" /> CZK
+                                    </span>
                                 </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
-                                    </div>
+                            </c:if>
+                            <c:if test="${item.income eq false}">
+                                <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
+                                    <span>
+                                        -<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.value}" /> CZK
+                                    </span>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-success text-right">
-                                <span>700,00 CZK</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-12 col-md-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
-                                <span>-3525,00 CZK</span>
-                            </div>
+                            </c:if>
 
                         </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-12 col-md-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
-                                <span>-455,00 CZK</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-12 col-md-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Příchozí úhrada (79994563/0300)</div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-success text-right">
-                                <span>200,00 CZK</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row p-2">
-                            <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">10.10.2018</div>
-                            <div class="col-sm-12 col-md-8 col-lg-8">
-                                <div class="row">
-                                    <div class="col-sm-12 col-md-12 col-lg-12">Odchozí úhrada (79994563/0300)</div>
-                                </div>
-                                <div class="row size-14">
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Variabilní: 456987321
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Specifický: 3694567891
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4">
-                                        Konstantní: 2257
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 col-md-2 col-lg-2 align-self-center text-danger text-right">
-                                <span class="">-300,00 CZK</span>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row mt-3">
-                            <ul class="pagination mx-auto">
-                                <li class="page-item disabled"><a class="page-link pagination-style"
-                                                                  href="#">&lt;&lt;</a></li>
-                                <li class="page-item disabled"><a class="page-link pagination-style" href="#">&lt;</a>
-                                </li>
-                                <li class="page-item"><a class="page-link pagination-active"
-                                                         href="#">1</a></li>
-                                <li class="page-item"><a class="page-link pagination-style" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link pagination-style" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link pagination-style" href="#">&gt;</a></li>
-                                <li class="page-item"><a class="page-link pagination-style" href="#">&gt;&gt;</a>
-                                </li>
-                            </ul>
-                        </div>
+                            <hr>
+                        </c:forEach>
 
                     </div>
                 </div>
