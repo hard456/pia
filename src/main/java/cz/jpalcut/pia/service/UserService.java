@@ -20,7 +20,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     UserDAO userDAO;
@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
         }
 
-        UserDetails userDetails = new AppUser(user.getLoginId().toString(),
+        UserDetails userDetails = new AppUser(user.getLoginId(),
                 user.getPin(), user.getFirstname(), user.getLastname(), grantList);
 
         return userDetails;
@@ -53,6 +53,32 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public User getUser(){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
+    }
+
+    public void editUser(User newUser){
+        User user = getUser();
+        user.setAddress(newUser.getAddress());
+        user.setAddressNumber(newUser.getAddressNumber());
+        user.setZipCode(newUser.getZipCode());
+        user.setState(newUser.getState());
+        user.setEmail(newUser.getEmail());
+        userDAO.save(user);
+    }
+
+    public void editUserByAdmin(User user, User newUser){
+        newUser.setId(user.getId());
+        newUser.setPin(user.getPin());
+        newUser.setLoginId(user.getLoginId());
+        newUser.setRoleList(user.getRoleList());
+        userDAO.save(newUser);
+    }
+
+    public List<User> getAllUsersByRole(String role){
+        return roleDAO.findAllByName(role).getUsers();
+    }
+
+    public User getUserById(Integer id){
+        return userDAO.findUserById(id);
     }
 
 }

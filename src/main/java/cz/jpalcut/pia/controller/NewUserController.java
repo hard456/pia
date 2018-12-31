@@ -35,9 +35,9 @@ public class NewUserController {
     @RequestMapping(path = "/new-user/add", method = RequestMethod.POST)
     public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult){
         ModelAndView model = new ModelAndView("new_user");
+        model.addObject("states",stateService.getAllStates());
 
         if(bindingResult.hasErrors()){
-            model.addObject("states",stateService.getAllStates());
             return model;
         }
 

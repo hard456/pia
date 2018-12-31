@@ -1,6 +1,6 @@
 package cz.jpalcut.pia.config;
 
-import cz.jpalcut.pia.service.UserDetailsServiceImpl;
+import cz.jpalcut.pia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    UserService userDetailsService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

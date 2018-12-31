@@ -89,7 +89,7 @@
                                 Email*
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <form:input path="email" type="text" class="form-control"/>
+                                <form:input path="email" type="email" class="form-control"/>
                                 <form:errors class="text-danger" path="email"/>
                             </div>
                         </div>

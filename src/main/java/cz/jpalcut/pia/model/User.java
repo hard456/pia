@@ -42,7 +42,7 @@ public class User implements Serializable{
     private String pin;
 
     @Size(min = 10, max = 10, message = "Rodné číslo musí mít 10 znaků!")
-    @Pattern(regexp = "^[0-9]*$", message = "Rodné číslo nesmí obsahovat lomítko!")
+    @Pattern(regexp = "^[0-9]*$", message = "Rodné číslo musí obsahovat pouze čísla!")
     @NotNull
     @Column(name = "pid")
     private String pid;
@@ -53,13 +53,13 @@ public class User implements Serializable{
     private String address;
 
     @Size(max = 8, message = "Maximální počet znaků je 8!")
-    @Pattern(regexp = "^[0-9]*$", message = "Číslo popisné musí obsahovat čísla!")
+    @Pattern(regexp = "^[0-9]*$", message = "Číslo popisné musí obsahovat pouze čísla!")
     @NotNull
     @Column(name = "address_number")
     private String addressNumber;
 
     @Size(max = 10, message = "Maximální počet znaků je 10!")
-    @Pattern(regexp = "^[0-9]*$", message = "PSČ musí obsahovat čísla!")
+    @Pattern(regexp = "^[0-9]*$", message = "PSČ musí obsahovat pouze čísla!")
     @NotNull
     @Column(name = "zip_code")
     private String zipCode;

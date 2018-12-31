@@ -19,4 +19,14 @@ public class AccountService {
         return accountDAO.findAccountByUser(user);
     }
 
+    public void changeAccountStatus(Account account){
+        if(account.getActive()){
+            account.setActive(false);
+        }
+        else{
+            account.setActive(true);
+        }
+        accountDAO.save(account);
+    }
+
 }

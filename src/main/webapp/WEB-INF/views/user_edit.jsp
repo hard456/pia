@@ -2,23 +2,54 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:template>
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-style">
-                    <h6 class="card-header card-header-style">Uživatelský profil</h6>
+                    <h6 class="card-header card-header-style">Detail uživatele </h6>
                     <div class="card-body">
 
-                        <form:form modelAttribute="userForm" action="${pageContext.request.contextPath}/user/edit" method="post">
+                        <form:form modelAttribute="userForm"
+                                   action="${pageContext.request.contextPath}/user/${userForm.id}/edit" method="post">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Účet
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                        ${account.number}/${bankCode}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Stav účtu
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <c:if test="${account.active eq true}">
+                                        Aktivní
+                                        <a href="${pageContext.request.contextPath}/user/${userForm.id}/editStatus">
+                                            <input type="button" class="btn btn-danger btn-sm" value="Zablokovat"/>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${account.active eq false}">
+                                        Blokovaný
+                                        <a href="${pageContext.request.contextPath}/user/${userForm.id}/editStatus">
+                                            <input type="button" class="btn btn-success btn-sm" value="Aktivovat"/>
+                                        </a>
+                                    </c:if>
+                                </div>
+                            </div>
+                            <hr>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Jméno
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <input value="${userForm.firstname}" type="text" class="form-control" disabled>
-                                    <form:hidden path="firstname" />
+                                    <form:input path="firstname" type="text" class="form-control"/>
+                                    <form:errors class="text-danger" path="firstname"/>
                                 </div>
                             </div>
                             <hr>
@@ -27,8 +58,8 @@
                                     Příjmení
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <input value="${userForm.lastname}" type="text" class="form-control" disabled>
-                                    <form:hidden path="lastname" />
+                                    <form:input path="lastname" type="text" class="form-control"/>
+                                    <form:errors class="text-danger" path="lastname"/>
                                 </div>
                             </div>
                             <hr>
@@ -37,8 +68,8 @@
                                     Rodné číslo
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <input value="${userForm.pid}" type="text" class="form-control" disabled>
-                                    <form:hidden path="pid" />
+                                    <form:input path="pid" type="text" class="form-control"/>
+                                    <form:errors class="text-danger" path="pid"/>
                                 </div>
                             </div>
                             <hr>

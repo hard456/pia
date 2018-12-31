@@ -25,7 +25,9 @@
                             <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.lastname}</div>
                             <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${fn:substring(item.pid,0,6)}/${fn:substring(item.pid,6,11)}</div>
                             <div class="col-sm-12 col-md-3 col-lg-3 text-right">
-                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Upravit</button>
+                                <a href="${pageContext.request.contextPath}/user/${item.id}">
+                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Detail</button>
+                                </a>
                             </div>
                         </div>
                             <c:if test="${!i.last}"><hr></c:if>
