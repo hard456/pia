@@ -1,6 +1,11 @@
 package cz.jpalcut.pia.model;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
@@ -9,41 +14,62 @@ import java.util.List;
 public class User implements Serializable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
+    @Size(min = 1, max = 50, message = "Jméno musí mít 1-50 znaků!")
+    @NotNull
     @Column(name = "firstname")
     private String firstname;
 
+    @Size(min = 1, max = 50, message = "Příjmení musí mít 1-50 znaků!")
+    @NotNull
     @Column(name = "lastname")
     private String lastname;
 
+    @Size(min = 6, max = 50, message = "Email musí mít 6-50 znaků!")
+    @NotNull
     @Column(name = "email")
     private String email;
 
+    @Nullable
     @Column(name = "login_id")
     private String loginId;
 
+    @Nullable
     @Column(name = "pin")
     private String pin;
 
+    @Size(min = 10, max = 10, message = "Rodné číslo musí mít 10 znaků!")
+    @Pattern(regexp = "^[0-9]*$", message = "Rodné číslo nesmí obsahovat lomítko!")
+    @NotNull
     @Column(name = "pid")
     private String pid;
 
+    @Size(max = 50, message = "Maximální počet znaků je 50!")
+    @NotNull
     @Column(name = "address")
     private String address;
 
+    @Size(max = 8, message = "Maximální počet znaků je 8!")
+    @Pattern(regexp = "^[0-9]*$", message = "Číslo popisné musí obsahovat čísla!")
+    @NotNull
     @Column(name = "address_number")
     private String addressNumber;
 
+    @Size(max = 10, message = "Maximální počet znaků je 10!")
+    @Pattern(regexp = "^[0-9]*$", message = "PSČ musí obsahovat čísla!")
+    @NotNull
     @Column(name = "zip_code")
     private String zipCode;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="state_id")
     private State state;
 
+    @Nullable
     @ManyToMany
     @JoinTable(
             name="user_role",
@@ -51,7 +77,7 @@ public class User implements Serializable{
             inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName="id"))
     private List<Role> roleList;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
