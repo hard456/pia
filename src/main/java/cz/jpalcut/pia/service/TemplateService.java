@@ -1,8 +1,6 @@
 package cz.jpalcut.pia.service;
 
-import cz.jpalcut.pia.dao.AccountDAO;
 import cz.jpalcut.pia.dao.TemplateDAO;
-import cz.jpalcut.pia.dao.UserDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import org.springframework.beans.factory.annotation.Autowired;

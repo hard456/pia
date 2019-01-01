@@ -3,6 +3,7 @@ package cz.jpalcut.pia.model;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -30,6 +31,7 @@ public class User implements Serializable{
 
     @Size(min = 6, max = 50, message = "Email musí mít 6-50 znaků!")
     @NotNull
+    @Email(message = "Špatný formát emailu!")
     @Column(name = "email")
     private String email;
 

@@ -29,10 +29,10 @@ public class UserService implements UserDetailsService {
     UserDAO userDAO;
 
     @Autowired
-    RoleDAO roleDAO;
+    AccountService accountService;
 
     @Autowired
-    AccountDAO accountDAO;
+    RoleService roleService;
 
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getAllUsersByRole(String role){
-        return roleDAO.findAllByName(role).getUsers();
+        return roleService.getRoleByName(role).getUsers();
     }
 
     public User getUserById(Integer id){
@@ -102,7 +102,7 @@ public class UserService implements UserDetailsService {
         //Vytvoření hesla uživatele
         user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
 
-        user.setRoleList(roleDAO.findRoleListByName("USER"));
+        user.setRoleList(roleService.getRoleListByName("USER"));
         user = userDAO.save(user);
 
         Account account = new Account();
@@ -113,7 +113,7 @@ public class UserService implements UserDetailsService {
         //Generování čísla účtu
         while(true){
             tmp = Utils.generateNumber(9);
-            if(accountDAO.findAccountByNumber(tmp) == null){
+            if(accountService.getAccountByNumber(tmp) == null){
                 account.setNumber(tmp);
                 break;
             }
@@ -122,12 +122,12 @@ public class UserService implements UserDetailsService {
         //Generování čísla kreditní karty
         while(true){
             tmp = Utils.generateNumber(16);
-            if(accountDAO.findAccountByCardNumber(tmp) == null){
+            if(accountService.getAccountByCardNumber(tmp) == null){
                 account.setCardNumber(tmp);
                 break;
             }
         }
-        accountDAO.save(account);
+        accountService.save(account);
     }
 
 }

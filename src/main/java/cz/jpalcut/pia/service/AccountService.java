@@ -29,4 +29,16 @@ public class AccountService {
         accountDAO.save(account);
     }
 
+    public Account getAccountByNumber(String number){
+        return accountDAO.findAccountByNumber(number);
+    }
+
+    public Account getAccountByCardNumber(String number){
+        return accountDAO.findAccountByCardNumber(number);
+    }
+
+    public void save(Account account){
+        accountDAO.save(account);
+    }
+
 }

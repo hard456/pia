@@ -23,13 +23,13 @@
                                         (window.location = this.options[this.selectedIndex].value);">
                                         <c:if test="${template != null}">
                                             <option value="${pageContext.request.contextPath}/transaction/new/${template.id}">${template.name}</option>
-                                            <option value="${pageContext.request.contextPath}/transaction/new">Nepoužít
-                                                vzor
+                                            <option value="${pageContext.request.contextPath}/transaction/new">
+                                                Bez použití vzoru
                                             </option>
                                         </c:if>
                                         <c:if test="${template == null}">
-                                            <option value="${pageContext.request.contextPath}/transaction/new">Nepoužít
-                                                vzor
+                                            <option value="${pageContext.request.contextPath}/transaction/new">
+                                                Bez použití vzoru
                                             </option>
                                         </c:if>
                                         <c:forEach items="${templates}" var="item" varStatus="i">
