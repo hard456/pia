@@ -23,7 +23,7 @@ public class Transaction implements Serializable {
     private Boolean income;
 
     @Size(min = 1, max = 17, message = "Číslo účtu musí mít 1-17 znaků!")
-    @Pattern(regexp = "^[0-9]*$", message = "Číslo účtu musí obsahovat pouze čísla!")
+    @Pattern(regexp = "[\\d -]+", message = "Číslo účtu muže obsahovat čísla nebo pomlčku!")
     @NotNull
     @Column(name = "number")
     private String number;
