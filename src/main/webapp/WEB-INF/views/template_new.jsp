@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <t:template>
     <jsp:body>
@@ -48,7 +49,8 @@
                                     Částka
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
-                                    <form:input path="value" type="text" class="form-control" maxlength="15"/>
+                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue" groupingUsed="false"/>
+                                    <form:input path="value" value="${newValue}" type="text" class="form-control" maxlength="15"/>
                                     <form:errors class="text-danger" path="value"/>
                                 </div>
                                 <div class="col-sm-12 col-md-1 col-lg-1 align-self-center text-right">CZK</div>

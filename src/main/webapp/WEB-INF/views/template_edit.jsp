@@ -50,7 +50,7 @@
                                     Částka
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
-                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue"/>
+                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue" groupingUsed="false"/>
                                     <form:input path="value" value="${newValue}" type="text" class="form-control" maxlength="15"/>
                                     <form:errors class="text-danger" path="value"/>
                                 </div>
