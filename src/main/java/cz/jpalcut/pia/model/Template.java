@@ -23,7 +23,7 @@ public class Template implements Serializable {
     private String name;
 
     @Size(min = 1, max = 17, message = "Číslo účtu musí mít 1-17 znaků!")
-    @Pattern(regexp = "[\\d -]+", message = "Číslo účtu muže obsahovat čísla nebo pomlčku!")
+    @Pattern(regexp = "[\\d -]+", message = "Číslo účtu obsahuje nepovolené znaky!")
     @NotNull
     @Column(name = "number")
     private String number;
