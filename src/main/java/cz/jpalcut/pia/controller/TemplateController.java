@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ public class TemplateController {
     @Autowired
     TemplateService templateService;
 
-        @RequestMapping(path = "/template/list")
+        @RequestMapping(path = "/template/list", method = RequestMethod.GET)
     public ModelAndView showTemplatesPage()
     {
         Account account = accountService.getAccount(userService.getUser());
@@ -37,15 +38,15 @@ public class TemplateController {
         return model;
     }
 
-    @RequestMapping(path = "/template/new")
+    @RequestMapping(path = "/template/new", method = RequestMethod.GET)
     public ModelAndView showAddTemplatePage(){
         ModelAndView model = new ModelAndView("template_new");
         model.addObject("template", new Template());
         return model;
     }
 
-    @RequestMapping(path = "/template/new/add")
-    public ModelAndView showAddNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult){
+    @RequestMapping(path = "/template/new/add", method = RequestMethod.POST)
+    public ModelAndView addNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult){
         ModelAndView model = new ModelAndView("template_new");
 
         if(bindingResult.hasErrors()){
@@ -65,15 +66,15 @@ public class TemplateController {
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}")
+    @RequestMapping(path = "/template/{id}", method = RequestMethod.GET)
     public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("template_edit");
         model.addObject("template", templateService.getTemplateById(templateId));
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}/edit")
-    public ModelAndView showAddNewTemplate(@Valid @ModelAttribute("template") Template newTemplate,
+    @RequestMapping(path = "/template/{id}/edit", method = RequestMethod.POST)
+    public ModelAndView editTemplate(@Valid @ModelAttribute("template") Template newTemplate,
                                            BindingResult bindingResult, @PathVariable("id") Integer templateId){
 
         ModelAndView model = new ModelAndView("template_edit");
@@ -96,8 +97,8 @@ public class TemplateController {
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}/delete")
-    public ModelAndView showAddNewTemplate(@PathVariable("id") Integer templateId){
+    @RequestMapping(path = "/template/{id}/delete", method = RequestMethod.GET)
+    public ModelAndView deleteTemplate(@PathVariable("id") Integer templateId){
 
         ModelAndView model = new ModelAndView("template_list");
 

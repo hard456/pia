@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class TransactionController {
     @Autowired
     TemplateService templateService;
 
-    @RequestMapping(path = "/transaction/new")
+    @RequestMapping(path = "/transaction/new", method = RequestMethod.GET)
     public ModelAndView showNewTransactionPage()
     {
         ModelAndView model = new ModelAndView("new_transaction");
@@ -42,8 +43,8 @@ public class TransactionController {
         return model;
     }
 
-    @RequestMapping(path = "/transaction/new/add")
-    public ModelAndView addNewTransactionPage(@Valid @ModelAttribute("transaction")Transaction transaction,
+    @RequestMapping(path = "/transaction/new/add", method = RequestMethod.POST)
+    public ModelAndView addNewTransaction(@Valid @ModelAttribute("transaction")Transaction transaction,
                                               BindingResult bindingResult){
 
         ModelAndView model = new ModelAndView("new_transaction");
@@ -69,7 +70,7 @@ public class TransactionController {
         return model;
     }
 
-    @RequestMapping(path = "/transaction/list")
+    @RequestMapping(path = "/transaction/list", method = RequestMethod.GET)
     public ModelAndView showTransactionListPage()
     {
         ModelAndView model = new ModelAndView("transaction_list");
@@ -78,7 +79,7 @@ public class TransactionController {
         return model;
     }
 
-    @RequestMapping(path = "/transaction/{id}/detail")
+    @RequestMapping(path = "/transaction/{id}/detail", method = RequestMethod.GET)
     public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId)
     {
         ModelAndView model = new ModelAndView("transaction_detail");
@@ -86,7 +87,7 @@ public class TransactionController {
         return model;
     }
 
-    @RequestMapping(path = "/transaction/new/{id}")
+    @RequestMapping(path = "/transaction/new/{id}", method = RequestMethod.GET)
     public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("new_transaction");
         Account account = accountService.getAccount(userService.getUser());

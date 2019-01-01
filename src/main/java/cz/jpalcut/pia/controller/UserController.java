@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     private BankConfig bankConfig;
 
-    @RequestMapping("/user")
+    @RequestMapping(path = "/user", method = RequestMethod.GET)
     public ModelAndView showUserPage(){
         ModelAndView model = new ModelAndView("user");
         model.addObject("states",stateService.getAllStates());
@@ -61,7 +61,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/list")
+    @RequestMapping(path = "/user/list", method = RequestMethod.GET)
     public ModelAndView showUserListPage()
     {
         ModelAndView model = new ModelAndView("user_list");
@@ -69,7 +69,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/{id}")
+    @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
     public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId){
         User user = userService.getUserById(userId);
         ModelAndView model = new ModelAndView("user_edit");
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/{id}/edit", method = RequestMethod.POST)
-    public ModelAndView editUser(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult,
+    public ModelAndView editUserByAdmin(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult,
                                  @PathVariable("id") Integer userId){
 
         User user = userService.getUserById(userId);
@@ -108,7 +108,7 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/{id}/editStatus", method = RequestMethod.GET)
-    public ModelAndView editUser(@PathVariable("id") Integer userId) {
+    public ModelAndView editUserStatus(@PathVariable("id") Integer userId) {
 
         User user = userService.getUserById(userId);
         Account account = accountService.getAccount(user);
@@ -126,7 +126,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/new")
+    @RequestMapping(path = "/user/new", method = RequestMethod.GET)
     public ModelAndView showNewUserPage()
     {
         ModelAndView model = new ModelAndView("new_user");
