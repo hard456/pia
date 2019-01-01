@@ -10,21 +10,22 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Přihlášení uživatele</h6>
                     <div class="card-body">
+                        <div class="form-group" style="max-width: 450px; margin: 0 auto;">
 
-                        <div class="form-group" id="login_form">
-                                <form action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
-                                <div class="row mb-3 mt-5">
-                                    <input type="text" name="login_id" class="form-control" placeholder="Identifikační číslo"/>
+                            <form action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
+                                <div class="row" style="margin-bottom: 7px;">
+                                    <input type="text" name="login_id" class="form-control"
+                                           placeholder="Identifikační číslo"/>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row" style="margin-bottom: 7px;">
                                     <input type="password" name="pin" class="form-control" placeholder="PIN"/>
                                 </div>
-                                <div class="row mb-5">
-                                    <input type="submit" class="btn btn-primary button_primary_new width_max" value="Přihlásit"/>
+                                <div class="row" style="margin-bottom: 7px;">
+                                    <input type="submit" class="form-control" value="Přihlásit"/>
                                 </div>
-                                </form>
-                        </div>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>

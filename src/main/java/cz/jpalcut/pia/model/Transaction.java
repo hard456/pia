@@ -1,6 +1,5 @@
 package cz.jpalcut.pia.model;
 
-import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;

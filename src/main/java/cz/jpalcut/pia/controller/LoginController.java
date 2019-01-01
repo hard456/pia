@@ -3,15 +3,22 @@ package cz.jpalcut.pia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
-    public ModelAndView showLoginPage()
+    public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error)
     {
         ModelAndView model = new ModelAndView("login");
+        if(error != null){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Byly zadány špatné přihlašovací údaje.");
+        }
+
         return model;
     }
 

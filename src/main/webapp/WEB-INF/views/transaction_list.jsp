@@ -65,8 +65,11 @@
                             </c:if>
 
                         </div>
-                            <hr>
+                            <c:if test="${!i.last}">
+                                <hr>
+                            </c:if>
                         </c:forEach>
+                        <br>
 
                     </div>
                 </div>
