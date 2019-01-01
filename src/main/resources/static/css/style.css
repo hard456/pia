@@ -63,3 +63,12 @@
 .text-decoration-none{
     text-decoration: none !important;
 }
+
+.width_max{
+    width: 100%;
+}
+
+#login_form{
+    max-width: 450px;
+    margin: 0 auto;
+}
