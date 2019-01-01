@@ -47,12 +47,23 @@ public class TransactionController {
                                               BindingResult bindingResult){
 
         ModelAndView model = new ModelAndView("new_transaction");
+        Account account = accountService.getAccount(userService.getUser());
+        model.addObject("templates", templateService.getTemplatesByAccount(account));
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
+
             return model;
         }
 
         transactionService.addTransaction(transaction);
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Byla přijata transakce ke zpracování.");
+
         model.addObject("transaction", new Transaction());
 
         return model;

@@ -32,16 +32,14 @@ public class TemplateController {
     public ModelAndView showTemplatesPage()
     {
         Account account = accountService.getAccount(userService.getUser());
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView("template_list");
         model.addObject("templates", templateService.getTemplatesByAccount(account));
-        model.setViewName("template_list");
         return model;
     }
 
     @RequestMapping(path = "/template/new")
     public ModelAndView showAddTemplatePage(){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("template_new");
+        ModelAndView model = new ModelAndView("template_new");
         model.addObject("template", new Template());
         return model;
     }
@@ -51,10 +49,17 @@ public class TemplateController {
         ModelAndView model = new ModelAndView("template_new");
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
         templateService.addTemplate(template);
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Šablona byla vytvořena.");
 
         model.addObject("template", new Template());
         return model;
@@ -74,12 +79,20 @@ public class TemplateController {
         ModelAndView model = new ModelAndView("template_edit");
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
         Template template = templateService.getTemplateById(templateId);
         newTemplate.setAccount(template.getAccount());
         templateService.editTemplate(newTemplate);
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Šablona byla upravena.");
+
         return model;
     }
 
@@ -100,6 +113,10 @@ public class TemplateController {
         }
 
         model.addObject("templates", templateService.getTemplatesByAccount(template.getAccount()));
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Šablona byla smazána.");
 
         return model;
     }

@@ -10,15 +10,18 @@ public class LoginController {
     @RequestMapping(path = "/login")
     public ModelAndView showLoginPage()
     {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("login");
+        ModelAndView model = new ModelAndView("login");
         return model;
     }
 
     @RequestMapping(path = "/logoutSuccessful")
     public ModelAndView showSuccessFulLogoutPage(){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("login");
+        ModelAndView model = new ModelAndView("login");
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Byl jste úspěšně odhlášen z aplikace.");
+
         return model;
     }
 

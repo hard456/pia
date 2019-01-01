@@ -23,8 +23,7 @@ public class AccountController {
     @RequestMapping(path = "/account")
     public ModelAndView showAccountPage()
     {
-        ModelAndView model = new ModelAndView();
-        model.setViewName("account");
+        ModelAndView model = new ModelAndView("account");
         model.addObject("account",accountService.getAccount(userService.getUser()));
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;

@@ -39,7 +39,6 @@
 <body class="body_bg">
 
 <!-- DEFAULT MENU-->
-
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
 
     <div class="container-fluid container-max-width">
@@ -132,19 +131,27 @@
     </nav>
 </sec:authorize>
 
-<%-- ALERT --%>
-<%--<div class="row" style="max-width: 1000px; margin: 0 auto;">--%>
-<%--<div class="col-md-12">--%>
-<%--<div class="alert alert-success alert-dismissible">--%>
-<%--<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>--%>
-<%--<strong>Success!</strong> Indicates a successful or positive action.--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
 
 <!-- BODY -->
 <div id="body" class="mt-3">
     <div class="container-fluid container-max-width">
+
+        <%--flash message success--%>
+        <c:if test="${flashMessageSuccess == true}">
+            <div class="alert alert-info alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    ${flashMessageText}
+            </div>
+        </c:if>
+
+        <%--flash message danger--%>
+        <c:if test="${flashMessageSuccess == false}">
+            <div class="alert alert-danger alert-dismissible">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    ${flashMessageText}
+            </div>
+        </c:if>
+
         <jsp:doBody/>
     </div>
 </div>

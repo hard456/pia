@@ -34,8 +34,7 @@ public class UserController {
 
     @RequestMapping("/user")
     public ModelAndView showUserPage(){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("user");
+        ModelAndView model = new ModelAndView("user");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", userService.getUser());
         return model;
@@ -47,10 +46,17 @@ public class UserController {
         model.addObject("states",stateService.getAllStates());
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
         userService.editUser(user);
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Uživatelský profil byl upraven.");
 
         return model;
     }
@@ -58,9 +64,8 @@ public class UserController {
     @RequestMapping(path = "/user/list")
     public ModelAndView showUserListPage()
     {
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView("user_list");
         model.addObject("users",userService.getAllUsersByRole("USER"));
-        model.setViewName("user_list");
         return model;
     }
 
@@ -87,10 +92,17 @@ public class UserController {
         model.addObject("bankCode", bankConfig.getBankCode());
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
         userService.editUserByAdmin(user, newUser);
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Uživatel byl úspěšně upraven.");
 
         return model;
     }
@@ -107,6 +119,9 @@ public class UserController {
         model.addObject("userForm", user);
 
         accountService.changeAccountStatus(account);
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Byl změněn stav uživatele.");
 
         return model;
     }
@@ -114,10 +129,9 @@ public class UserController {
     @RequestMapping(path = "/user/new")
     public ModelAndView showNewUserPage()
     {
-        ModelAndView model = new ModelAndView();
+        ModelAndView model = new ModelAndView("new_user");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm",new User());
-        model.setViewName("new_user");
         return model;
     }
 
@@ -127,11 +141,18 @@ public class UserController {
         model.addObject("states",stateService.getAllStates());
 
         if(bindingResult.hasErrors()){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
         userService.addUser(user);
         model.addObject("userForm",new User());
+
+        //flash message success
+        model.addObject("flashMessageSuccess",true);
+        model.addObject("flashMessageText","Uživatel byl přidán.");
 
         return model;
     }

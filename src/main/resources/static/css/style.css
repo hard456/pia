@@ -59,3 +59,7 @@
 .container-max-width{
     max-width: 1000px;
 }
+
+.text-decoration-none{
+    text-decoration: none !important;
+}
