@@ -32,9 +32,10 @@ public class UserController {
     @Autowired
     private BankConfig bankConfig;
 
-    @RequestMapping(path = "/user", method = RequestMethod.GET)
+    @RequestMapping(path = "/user", name = "userUrl", method = RequestMethod.GET)
     public ModelAndView showUserPage(){
         ModelAndView model = new ModelAndView("user");
+        model.addObject("activeLink","user");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", userService.getUser());
         return model;
@@ -65,6 +66,7 @@ public class UserController {
     public ModelAndView showUserListPage()
     {
         ModelAndView model = new ModelAndView("user_list");
+        model.addObject("activeLink","user/list");
         model.addObject("users",userService.getAllUsersByRole("USER"));
         return model;
     }
@@ -73,6 +75,7 @@ public class UserController {
     public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId){
         User user = userService.getUserById(userId);
         ModelAndView model = new ModelAndView("user_edit");
+        model.addObject("activeLink","user/list");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", user);
         model.addObject("account", accountService.getAccount(user));
@@ -130,6 +133,7 @@ public class UserController {
     public ModelAndView showNewUserPage()
     {
         ModelAndView model = new ModelAndView("new_user");
+        model.addObject("activeLink","user/new");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm",new User());
         return model;

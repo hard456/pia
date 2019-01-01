@@ -36,7 +36,10 @@
 
     <title>Bank</title>
 </head>
-<body class="body_bg">
+<body class="body-bg">
+
+
+<c:set var="url" value="${requestScope['javax.servlet.forward.request_uri']}"/>
 
 <!-- DEFAULT MENU-->
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
@@ -51,18 +54,19 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item align-self-center">
                     <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/about-us">O nás</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item align-self-center">
                     <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/contact">Kontakt</a>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-right">
 
                 <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/user">
+                    <li class="nav-item align-self-center">
+                        <a class="nav-link navbar-color ${activeLink == 'user' ? ' active-link' : ''}"
+                           href="${pageContext.request.contextPath}/user">
                             <i class="fas fa-user"></i>
                             <sec:authentication property="principal.firstName"/>
                             <sec:authentication property="principal.lastName"/>
@@ -70,12 +74,14 @@
                     </li>
                 </sec:authorize>
 
-                <li class="nav-item">
+                <li class="nav-item align-self-center">
                     <sec:authorize access="!isAuthenticated()">
-                        <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/login">Přihlášení</a>
+                        <a class="nav-link navbar-color ${activeLink == 'login' ? ' active-link' : ''}"
+                           href="${pageContext.request.contextPath}/login">Přihlášení</a>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
-                        <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/logout">Odhlášení</a>
+                        <a class="nav-link navbar-color"
+                           href="${pageContext.request.contextPath}/logout">Odhlášení</a>
                     </sec:authorize>
                 </li>
             </ul>
@@ -83,26 +89,31 @@
     </div>
 </nav>
 
+<sec:authorize access="!isAuthenticated()">
+    <div id="under-menu-line"></div>
+</sec:authorize>
+
+
 <%-- USER MENU --%>
 <sec:authorize access="hasAuthority('USER')">
     <nav class="navbar navbar-expand-lg navbar-dark navbar-user-bg">
 
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link navbar-user-color"
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'account' ? ' active-link2' : ''}"
                        href="${pageContext.request.contextPath}/account">Účet</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/transaction/new">Nová
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'transaction/new' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/transaction/new">Nová
                         platba</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link navbar-user-color"
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'transaction/list' ? ' active-link2' : ''}"
                        href="${pageContext.request.contextPath}/transaction/list">Pohyby</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/template/list">Vzory
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'template/list' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/template/list">Vzory
                         plateb</a>
                 </li>
             </ul>
@@ -116,13 +127,13 @@
 
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/user/new">
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'user/new' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/user/new">
                         Přidat uživatele
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/user/list">
+                <li class="nav-item align-self-center">
+                    <a class="nav-link navbar-user-color ${activeLink == 'user/list' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/user/list">
                         Uživatelé
                     </a>
                 </li>

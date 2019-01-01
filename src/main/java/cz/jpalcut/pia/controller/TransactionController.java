@@ -37,6 +37,7 @@ public class TransactionController {
     public ModelAndView showNewTransactionPage()
     {
         ModelAndView model = new ModelAndView("new_transaction");
+        model.addObject("activeLink","transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("transaction", new Transaction());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
@@ -74,6 +75,7 @@ public class TransactionController {
     public ModelAndView showTransactionListPage()
     {
         ModelAndView model = new ModelAndView("transaction_list");
+        model.addObject("activeLink","transaction/list");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("transactions", transactionService.getTransactionsByAccount(account));
         return model;
@@ -83,6 +85,7 @@ public class TransactionController {
     public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId)
     {
         ModelAndView model = new ModelAndView("transaction_detail");
+        model.addObject("activeLink","transaction/list");
         model.addObject("transaction", transactionService.getTransactionById(transactionId));
         return model;
     }
@@ -90,6 +93,7 @@ public class TransactionController {
     @RequestMapping(path = "/transaction/new/{id}", method = RequestMethod.GET)
     public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("new_transaction");
+        model.addObject("activeLink","transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         Template template = templateService.getTemplateById(templateId);
         Transaction transaction = new Transaction();

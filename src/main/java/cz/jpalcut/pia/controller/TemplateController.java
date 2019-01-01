@@ -29,11 +29,12 @@ public class TemplateController {
     @Autowired
     TemplateService templateService;
 
-        @RequestMapping(path = "/template/list", method = RequestMethod.GET)
+    @RequestMapping(path = "/template/list", method = RequestMethod.GET)
     public ModelAndView showTemplatesPage()
     {
         Account account = accountService.getAccount(userService.getUser());
         ModelAndView model = new ModelAndView("template_list");
+        model.addObject("activeLink","template/list");
         model.addObject("templates", templateService.getTemplatesByAccount(account));
         return model;
     }
@@ -41,6 +42,7 @@ public class TemplateController {
     @RequestMapping(path = "/template/new", method = RequestMethod.GET)
     public ModelAndView showAddTemplatePage(){
         ModelAndView model = new ModelAndView("template_new");
+        model.addObject("activeLink","template/list");
         model.addObject("template", new Template());
         return model;
     }
@@ -69,6 +71,7 @@ public class TemplateController {
     @RequestMapping(path = "/template/{id}", method = RequestMethod.GET)
     public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("template_edit");
+        model.addObject("activeLink","template/list");
         model.addObject("template", templateService.getTemplateById(templateId));
         return model;
     }

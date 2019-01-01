@@ -9,10 +9,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-    @RequestMapping(path = "/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login", name = "loginUrl", method = RequestMethod.GET)
     public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error)
     {
         ModelAndView model = new ModelAndView("login");
+        model.addObject("activeLink","login");
         if(error != null){
             //flash message danger
             model.addObject("flashMessageSuccess",false);
@@ -25,7 +26,7 @@ public class LoginController {
     @RequestMapping(path = "/logoutSuccessful", method = RequestMethod.GET)
     public ModelAndView showSuccessFulLogoutPage(){
         ModelAndView model = new ModelAndView("login");
-
+        model.addObject("activeLink","login");
         //flash message success
         model.addObject("flashMessageSuccess",true);
         model.addObject("flashMessageText","Byl jste úspěšně odhlášen z aplikace.");

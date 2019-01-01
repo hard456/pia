@@ -31,7 +31,7 @@
     border-color: #777777 !important;
 }
 
-.body_bg{
+.body-bg{
     background-color: #919EA1;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .navbar-color{
-    color: #F3F3EC !important;
+    color: #BDBDBD !important;
 }
 
 .navbar-user-bg{
@@ -64,11 +64,25 @@
     text-decoration: none !important;
 }
 
-.width_max{
+.width-max{
     width: 100%;
 }
 
-#login_form{
+#login-form{
     max-width: 450px;
     margin: 0 auto;
+}
+
+.active-link{
+    color: #ffffff !important;
+}
+
+.active-link2{
+    color: #BF360C !important;
+}
+
+#under-menu-line{
+    height: 7px;
+    width: 100%;
+    background-color: #F3F3EC;
 }

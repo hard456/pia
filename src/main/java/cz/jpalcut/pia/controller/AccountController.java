@@ -25,6 +25,7 @@ public class AccountController {
     public ModelAndView showAccountPage()
     {
         ModelAndView model = new ModelAndView("account");
+        model.addObject("activeLink","account");
         model.addObject("account",accountService.getAccount(userService.getUser()));
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;
