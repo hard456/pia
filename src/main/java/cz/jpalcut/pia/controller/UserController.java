@@ -111,4 +111,29 @@ public class UserController {
         return model;
     }
 
+    @RequestMapping(path = "/user/new")
+    public ModelAndView showNewUserPage()
+    {
+        ModelAndView model = new ModelAndView();
+        model.addObject("states",stateService.getAllStates());
+        model.addObject("userForm",new User());
+        model.setViewName("new_user");
+        return model;
+    }
+
+    @RequestMapping(path = "/user/new/add", method = RequestMethod.POST)
+    public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult){
+        ModelAndView model = new ModelAndView("new_user");
+        model.addObject("states",stateService.getAllStates());
+
+        if(bindingResult.hasErrors()){
+            return model;
+        }
+
+        userService.addUser(user);
+        model.addObject("userForm",new User());
+
+        return model;
+    }
+
 }

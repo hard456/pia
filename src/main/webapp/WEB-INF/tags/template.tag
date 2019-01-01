@@ -95,7 +95,7 @@
                        href="${pageContext.request.contextPath}/account">Účet</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/new-transaction">Nová
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/transaction/new">Nová
                         platba</a>
                 </li>
                 <li class="nav-item">
@@ -118,7 +118,7 @@
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/new-user">
+                    <a class="nav-link navbar-user-color" href="${pageContext.request.contextPath}/user/new">
                         Přidat uživatele
                     </a>
                 </li>

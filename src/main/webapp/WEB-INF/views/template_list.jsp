@@ -33,13 +33,15 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.name}</div>
                     <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.number}/${item.code}</div>
-                    <div class="col-sm-12 col-md-2 col-lg-2 align-self-center">
+                    <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">
                         <c:if test="${not empty item.value}">
                             <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.value}" /> CZK
                         </c:if>
                     </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4 text-right">
+                    <div class="col-sm-12 col-md-3 col-lg-3 text-right">
+                        <a href="${pageContext.request.contextPath}/transaction/new/${item.id}">
                         <button type="button" class="btn btn-primary btn-sm button_primary_new">Použít</button>
+                        </a>
                         <a href="${pageContext.request.contextPath}/template/${item.id}">
                             <button type="button" class="btn btn-sm btn-info">Upravit</button>
                         </a>

@@ -10,7 +10,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nový uživatel</h6>
                     <div class="card-body">
-                        <form:form modelAttribute="userForm" action="${pageContext.request.contextPath}/new-user/add" method="post">
+                        <form:form modelAttribute="userForm" action="${pageContext.request.contextPath}/user/new/add" method="post">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Jméno*
