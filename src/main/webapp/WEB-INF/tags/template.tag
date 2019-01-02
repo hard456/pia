@@ -45,7 +45,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
 
     <div class="container-fluid container-max-width">
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/">e-Banking</a>
+        <a class="navbar-brand navbar-color" href="${pageContext.request.contextPath}/">e-Banking</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,17 +54,17 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/about-us">O nás</a>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/contact">Kontakt</a>
                 </li>
             </ul>
             <ul class="navbar-nav navbar-right">
 
                 <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item align-self-center">
+                    <li class="nav-item">
                         <a class="nav-link navbar-color ${activeLink == 'user' ? ' active-link' : ''}"
                            href="${pageContext.request.contextPath}/user">
                             <i class="fas fa-user"></i>
@@ -74,7 +74,7 @@
                     </li>
                 </sec:authorize>
 
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <sec:authorize access="!isAuthenticated()">
                         <a class="nav-link navbar-color ${activeLink == 'login' ? ' active-link' : ''}"
                            href="${pageContext.request.contextPath}/login">Přihlášení</a>
