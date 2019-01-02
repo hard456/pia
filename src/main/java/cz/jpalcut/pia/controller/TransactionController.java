@@ -1,5 +1,6 @@
 package cz.jpalcut.pia.controller;
 
+import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.sql.Date;
+import java.util.Calendar;
 
 @Controller
 public class TransactionController {
@@ -32,6 +35,9 @@ public class TransactionController {
 
     @Autowired
     TemplateService templateService;
+
+    @Autowired
+    BankConfig bankConfig;
 
     @RequestMapping(path = "/transaction/new", method = RequestMethod.GET)
     public ModelAndView showNewTransactionPage()
@@ -58,6 +64,70 @@ public class TransactionController {
             model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
 
             return model;
+        }
+
+        //Porovnání data splatnosti s aktuálním datem
+        Calendar cal = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal.setTime(transaction.getMaturity());
+        cal.setTime(new Date(System.currentTimeMillis()));
+        if(cal.compareTo(cal2) < 0){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Datum splatnosti nesmí být v minulosti");
+
+            return model;
+        }
+
+        //Zakazání poslání peněz na vlastní účet
+        if(account.getNumber().equals(transaction.getNumber()) && transaction.getCode().equals(bankConfig.getBankCode())){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nemůžete poslat peníze na vlastní účet.");
+
+            return model;
+        }
+
+        //Kontrola zadané částky transakce na větší než 0.00
+        if(transaction.getValue() <= 0.00){
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Lze poslat jen částku větší než nula.");
+
+            return model;
+        }
+
+        //Kontrola stavu peněž na účtu po odečtení částky transakce
+        if((account.getBalance()-account.getBlockedBalance()-transaction.getValue()) < 0.0){
+
+            //flash message danger
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nemáte dostatek peněz na účtu.");
+
+            return model;
+
+        }
+
+        //Kontrola existence účtu v bance
+        if(transaction.getCode().equals(bankConfig.getBankCode())){
+            if(accountService.getAccountByNumber(transaction.getNumber()) == null){
+                //flash message danger
+                model.addObject("flashMessageSuccess",false);
+                model.addObject("flashMessageText","Zvolený účet v naší bance neexistuje.");
+
+                return model;
+            }
+            else{
+                transactionService.addInterBankTransaction(transaction);
+
+                //flash message success
+                model.addObject("flashMessageSuccess",true);
+                model.addObject("flashMessageText","Byla přijata transakce ke zpracování.");
+
+                model.addObject("transaction", new Transaction());
+
+                return model;
+            }
         }
 
         transactionService.addTransaction(transaction);

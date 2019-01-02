@@ -102,6 +102,7 @@ public class UserService implements UserDetailsService {
         //Vytvoření hesla uživatele
         user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
 
+        //Přiřazení rolí uživateli
         user.setRoleList(roleService.getRoleListByName("USER"));
         user = userDAO.save(user);
 
@@ -109,6 +110,7 @@ public class UserService implements UserDetailsService {
         account.setUser(user);
         account.setActive(true);
         account.setBalance(0.00);
+        account.setBlockedBalance(0.00);
 
         //Generování čísla účtu
         while(true){

@@ -18,6 +18,9 @@ public class Account implements Serializable {
     @Column(name = "balance")
     private Double balance;
 
+    @Column(name = "blocked_balance")
+    private Double blockedBalance;
+
     @Column(name = "active")
     private Boolean active;
 
@@ -66,6 +69,14 @@ public class Account implements Serializable {
 
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+
+    public Double getBlockedBalance() {
+        return blockedBalance;
+    }
+
+    public void setBlockedBalance(Double blockedBalance) {
+        this.blockedBalance = blockedBalance;
     }
 
     public User getUser() {
