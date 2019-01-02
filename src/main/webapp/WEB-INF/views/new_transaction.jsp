@@ -97,7 +97,12 @@
                                     Splatnost*
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <form:input path="maturity" type="date" class="form-control"/>
+
+                                    <%--Aktuální datum pro input date--%>
+                                    <jsp:useBean id="dateNow" class="java.util.Date" />
+                                    <fmt:formatDate var="actualDate" value="${dateNow}" pattern="yyyy-MM-dd" />
+
+                                    <form:input path="maturity" min="${actualDate}" type="date" class="form-control" />
                                     <form:errors class="text-danger" path="maturity"/>
                                 </div>
                             </div>

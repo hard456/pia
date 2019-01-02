@@ -23,10 +23,19 @@
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                Aktuální hodnota účtu
+                                Aktuální částka účtu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${account.balance}" /> CZK
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row mb-2">
+                            <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                Blokovaná částka účtu
+                            </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${account.blockedBalance}" /> CZK
                             </div>
                         </div>
                         <hr>

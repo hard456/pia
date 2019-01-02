@@ -19,19 +19,36 @@
                             </div>
                         </div>
                         <hr>
-                        <c:forEach items="${users}" var="item" varStatus="i">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.firstname}</div>
-                            <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.lastname}</div>
-                            <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${fn:substring(item.pid,0,6)}/${fn:substring(item.pid,6,11)}</div>
-                            <div class="col-sm-12 col-md-3 col-lg-3 text-right">
-                                <a href="${pageContext.request.contextPath}/user/${item.id}">
-                                <button type="button" class="btn btn-primary btn-sm button_primary_new">Detail</button>
-                                </a>
-                            </div>
-                        </div>
-                            <c:if test="${!i.last}"><hr></c:if>
-                        </c:forEach>
+                        <c:choose>
+                            <c:when test="${empty users}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        Nejsou k dispozici žádný uživatelé.
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <c:forEach items="${users}" var="item" varStatus="i">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.firstname}</div>
+                                        <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.lastname}</div>
+                                        <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">
+                                                ${fn:substring(item.pid,0,6)}/${fn:substring(item.pid,6,11)}
+                                        </div>
+                                        <div class="col-sm-12 col-md-3 col-lg-3 text-right">
+                                            <a href="${pageContext.request.contextPath}/user/${item.id}">
+                                                <button type="button" class="btn btn-primary btn-sm button_primary_new">
+                                                    Detail
+                                                </button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <c:if test="${!i.last}">
+                                        <hr>
+                                    </c:if>
+                                </c:forEach>
+                            </c:otherwise>
+                        </c:choose>
 
                     </div>
                 </div>

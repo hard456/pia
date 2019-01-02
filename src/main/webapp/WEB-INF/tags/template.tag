@@ -149,17 +149,17 @@
 
         <%--flash message success--%>
         <c:if test="${flashMessageSuccess == true}">
-            <div class="alert alert-info alert-dismissible">
+            <div id="flash-message-success" class="alert alert-success alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    ${flashMessageText}
+                <b>${flashMessageText}</b>
             </div>
         </c:if>
 
         <%--flash message danger--%>
         <c:if test="${flashMessageSuccess == false}">
-            <div class="alert alert-danger alert-dismissible">
+            <div id="flash-message-danger" class="alert alert-danger alert-dismissible">
                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                    ${flashMessageText}
+                <b>${flashMessageText}</b>
             </div>
         </c:if>
 

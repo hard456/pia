@@ -86,3 +86,13 @@
     width: 100%;
     background-color: #F3F3EC;
 }
+
+#flash-message-success{
+    background-color: #4CAF50 !important;
+    color: #ffffff !important;
+}
+
+#flash-message-danger{
+    background-color: #e53935 !important;
+    color: #ffffff !important;
+}
