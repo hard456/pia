@@ -14,8 +14,8 @@
                         <form:form modelAttribute="template" action="${pageContext.request.contextPath}/template/${template.id}/edit"
                                    method="post">
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
-                                    Název
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Název*
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <form:input path="name" type="text" class="form-control" maxlength="50"/>
@@ -24,8 +24,8 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
-                                    Na účet
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Na účet*
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6 col">
                                     <div class="row">
@@ -46,7 +46,7 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Částka
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
@@ -58,7 +58,7 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Variabilní symbol
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -68,7 +68,7 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Konstantní symbol
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -78,7 +78,7 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Specifický symbol
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -88,7 +88,7 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Zpráva
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">

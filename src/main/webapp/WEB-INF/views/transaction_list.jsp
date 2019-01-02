@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <c:if test="${item.income eq true}">
-                                <div class="col-sm-12 col-md-2 col-lg-3 align-self-center text-success text-right">
+                                <div class="col-sm-12 col-md-2 col-lg-3 align-self-center text-right">
                                     <span>
                                         <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${item.value}" /> CZK
                                     </span>
