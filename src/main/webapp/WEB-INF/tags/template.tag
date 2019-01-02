@@ -100,19 +100,19 @@
 
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'account' ? ' active-link2' : ''}"
                        href="${pageContext.request.contextPath}/account">Účet</a>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'transaction/new' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/transaction/new">Nová
                         platba</a>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'transaction/list' ? ' active-link2' : ''}"
                        href="${pageContext.request.contextPath}/transaction/list">Pohyby</a>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'template/list' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/template/list">Vzory
                         plateb</a>
                 </li>
@@ -127,12 +127,12 @@
 
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'user/new' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/user/new">
                         Přidat uživatele
                     </a>
                 </li>
-                <li class="nav-item align-self-center">
+                <li class="nav-item">
                     <a class="nav-link navbar-user-color ${activeLink == 'user/list' ? ' active-link2' : ''}" href="${pageContext.request.contextPath}/user/list">
                         Uživatelé
                     </a>
