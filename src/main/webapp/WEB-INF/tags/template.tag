@@ -45,7 +45,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
 
     <div class="container-fluid container-max-width">
-        <a class="navbar-brand navbar-color" href="${pageContext.request.contextPath}/">e-Banking</a>
+        <a class="navbar-brand navbar-color">e-Banking</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
