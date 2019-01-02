@@ -8,8 +8,17 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">ERROR</h6>
                     <div class="card-body">
-                        ${errorCode}
-                        ${errorMessage}
+                        <div class="row mt-5 mb-3">
+                            <div class="col-12 mx-auto text-center size-25">
+                                ${errorCode}
+                            </div>
+
+                        </div>
+                        <div class="row mb-5">
+                            <div class="col-12 mx-auto text-center">
+                                    ${errorMessage}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

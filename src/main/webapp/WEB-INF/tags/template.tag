@@ -54,12 +54,12 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/about-us">O nás</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link navbar-color" href="${pageContext.request.contextPath}/contact">Kontakt</a>
-                </li>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link navbar-color" href="${pageContext.request.contextPath}/about-us">O nás</a>--%>
+                <%--</li>--%>
+                <%--<li class="nav-item">--%>
+                    <%--<a class="nav-link navbar-color" href="${pageContext.request.contextPath}/contact">Kontakt</a>--%>
+                <%--</li>--%>
             </ul>
             <ul class="navbar-nav navbar-right">
 
