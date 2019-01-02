@@ -4,6 +4,7 @@ import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
+import cz.jpalcut.pia.service.CaptchaService;
 import cz.jpalcut.pia.service.StateService;
 import cz.jpalcut.pia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -31,6 +33,9 @@ public class UserController {
 
     @Autowired
     private BankConfig bankConfig;
+
+    @Autowired
+    private CaptchaService captchaService;
 
     @RequestMapping(path = "/user", name = "userUrl", method = RequestMethod.GET)
     public ModelAndView showUserPage(){
@@ -140,7 +145,8 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/new/add", method = RequestMethod.POST)
-    public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult){
+    public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult,
+                                    HttpServletRequest request){
         ModelAndView model = new ModelAndView("new_user");
         model.addObject("states",stateService.getAllStates());
 
@@ -148,6 +154,13 @@ public class UserController {
             //flash message danger
             model.addObject("flashMessageSuccess",false);
             model.addObject("flashMessageText","Nastala chyba při vyplnění formuláře.");
+            return model;
+        }
+
+        String captchaResponse = request.getParameter("g-recaptcha-response");
+        if(!captchaService.processResponse(captchaResponse, request.getRemoteAddr())){
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při ověření formuláře - Google reCAPTCHA ");
             return model;
         }
 

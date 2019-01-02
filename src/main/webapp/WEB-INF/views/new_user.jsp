@@ -3,6 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("new_user_form").submit();
+    }
+</script>
+
 <t:template>
     <jsp:body>
         <div class="row">
@@ -10,7 +17,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nový uživatel</h6>
                     <div class="card-body">
-                        <form:form modelAttribute="userForm" action="${pageContext.request.contextPath}/user/new/add" method="post">
+                        <form:form id="new_user_form" modelAttribute="userForm" action="${pageContext.request.contextPath}/user/new/add" method="post">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Jméno*
@@ -95,8 +102,8 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                <button type="submit" class="btn btn-primary btn-sm button_primary_new">Vytvořit
-                                </button>
+                                <button class="g-recaptcha btn btn-primary btn-sm button_primary_new"
+                                        data-sitekey="6LftVoYUAAAAAATyI7xI5eS3Nx0oM3WkksD0_KWC" data-callback='onSubmit'>Vytvořit</button>
                             </div>
                         </div>
                         </form:form>
