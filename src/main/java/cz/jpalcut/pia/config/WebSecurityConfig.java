@@ -50,11 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //přihlašovací formulář
         http.authorizeRequests().and().formLogin()//
                 //přihlášení
-                .loginProcessingUrl("/j_spring_security_check") // Submit URL
-                .loginPage("/login")//
+                .loginProcessingUrl("/j_spring_security_check")
+                .loginPage("/login")
                 .defaultSuccessUrl("/user")
-                .failureUrl("/login?error=true")//
-                .usernameParameter("login_id")//
+                .failureUrl("/login?error=true")
+                .usernameParameter("login_id")
                 .passwordParameter("pin")
                 //odhlášení
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
