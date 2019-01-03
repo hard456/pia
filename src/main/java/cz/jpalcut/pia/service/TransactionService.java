@@ -52,7 +52,7 @@ public class TransactionService {
         secondTransaction.setNumber(firstAccount.getNumber());
         secondTransaction.setCode(firstTransaction.getCode());
         secondTransaction.setValue(firstTransaction.getValue());
-        secondTransaction.setMaturity(firstTransaction.getMaturity());
+        secondTransaction.setDueDate(firstTransaction.getDueDate());
         secondTransaction.setVariableSymbol(firstTransaction.getVariableSymbol());
         secondTransaction.setSpecificSymbol(firstTransaction.getSpecificSymbol());
         secondTransaction.setConstantSymbol(firstTransaction.getConstantSymbol());

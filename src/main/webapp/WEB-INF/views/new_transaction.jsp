@@ -4,6 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script>
+    function onSubmit(token) {
+        document.getElementById("new_transaction_form").submit();
+    }
+</script>
+
 <t:template>
     <jsp:body>
         <div class="row">
@@ -11,7 +18,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nová platba</h6>
                     <div class="card-body">
-                        <form:form modelAttribute="transaction"
+                        <form:form id="new_transaction_form" modelAttribute="transaction"
                                    action="${pageContext.request.contextPath}/transaction/new/add" method="post">
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
@@ -102,8 +109,8 @@
                                     <jsp:useBean id="dateNow" class="java.util.Date" />
                                     <fmt:formatDate var="actualDate" value="${dateNow}" pattern="yyyy-MM-dd" />
 
-                                    <form:input path="maturity" min="${actualDate}" type="date" class="form-control" />
-                                    <form:errors class="text-danger" path="maturity"/>
+                                    <form:input path="dueDate" min="${actualDate}" type="date" class="form-control" />
+                                    <form:errors class="text-danger" path="dueDate"/>
                                 </div>
                             </div>
                             <hr>
@@ -148,7 +155,9 @@
                             </div>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
-                                    <button type="submit" class="btn btn-primary btn-sm button_primary_new">Odeslat
+                                    <button class="g-recaptcha btn btn-primary btn-sm button_primary_new"
+                                            data-sitekey="6LftVoYUAAAAAATyI7xI5eS3Nx0oM3WkksD0_KWC" data-callback='onSubmit'>
+                                        Odeslat
                                     </button>
                                 </div>
                             </div>

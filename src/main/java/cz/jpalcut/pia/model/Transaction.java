@@ -38,8 +38,8 @@ public class Transaction implements Serializable {
     private Double value;
 
     @NotNull(message = "Datum splatnosti musí být vyplněn!")
-    @Column(name = "maturity")
-    private Date maturity;
+    @Column(name = "due_date")
+    private Date dueDate;
 
     @Size(max = 10, message = "Maximální počet znaků je 10!")
     @Pattern(regexp = "^[0-9]*$", message = "Variabilní symbol musí obsahovat pouze čísla!")
@@ -113,12 +113,12 @@ public class Transaction implements Serializable {
         this.value = value;
     }
 
-    public Date getMaturity() {
-        return maturity;
+    public Date getDueDate() {
+        return dueDate;
     }
 
-    public void setMaturity(Date maturity) {
-        this.maturity = maturity;
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 
     public String getVariableSymbol() {

@@ -27,7 +27,7 @@
                                 <c:set var="transactionCounter" value="${transactionCounter+1}"/>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">
-                                        <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${item.maturity}"/>
+                                        <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${item.dueDate}"/>
                                         <br>
                                         <a href="${pageContext.request.contextPath}/transaction/${item.id}/detail">[Více]</a>
                                     </div>

@@ -36,7 +36,7 @@
                                 Splatnost
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${transaction.maturity}"/>
+                                <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${transaction.dueDate}"/>
                             </div>
                         </div>
                         <hr>

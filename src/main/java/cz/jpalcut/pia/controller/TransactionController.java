@@ -4,10 +4,7 @@ import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
-import cz.jpalcut.pia.service.AccountService;
-import cz.jpalcut.pia.service.TemplateService;
-import cz.jpalcut.pia.service.TransactionService;
-import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.util.Calendar;
@@ -39,6 +37,9 @@ public class TransactionController {
     @Autowired
     BankConfig bankConfig;
 
+    @Autowired
+    CaptchaService captchaService;
+
     @RequestMapping(path = "/transaction/new", method = RequestMethod.GET)
     public ModelAndView showNewTransactionPage()
     {
@@ -52,7 +53,7 @@ public class TransactionController {
 
     @RequestMapping(path = "/transaction/new/add", method = RequestMethod.POST)
     public ModelAndView addNewTransaction(@Valid @ModelAttribute("transaction")Transaction transaction,
-                                              BindingResult bindingResult){
+                                              BindingResult bindingResult, HttpServletRequest request){
 
         ModelAndView model = new ModelAndView("new_transaction");
         Account account = accountService.getAccount(userService.getUser());
@@ -66,10 +67,17 @@ public class TransactionController {
             return model;
         }
 
+        String captchaResponse = request.getParameter("g-recaptcha-response");
+        if(!captchaService.processResponse(captchaResponse, request.getRemoteAddr())){
+            model.addObject("flashMessageSuccess",false);
+            model.addObject("flashMessageText","Nastala chyba při ověření formuláře - Google reCAPTCHA ");
+            return model;
+        }
+
         //Porovnání data splatnosti s aktuálním datem
         Calendar cal = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
-        cal.setTime(transaction.getMaturity());
+        cal.setTime(transaction.getDueDate());
         cal.setTime(new Date(System.currentTimeMillis()));
         if(cal.compareTo(cal2) < 0){
             //flash message danger
