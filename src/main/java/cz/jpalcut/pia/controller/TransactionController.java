@@ -5,6 +5,7 @@ import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
 import cz.jpalcut.pia.service.*;
+import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -76,12 +77,8 @@ public class TransactionController {
             return model;
         }
 
-        //Porovnání data splatnosti s aktuálním datem
-        Calendar cal = Calendar.getInstance();
-        Calendar cal2 = Calendar.getInstance();
-        cal.setTime(transaction.getDueDate());
-        cal.setTime(new Date(System.currentTimeMillis()));
-        if(cal.compareTo(cal2) < 0){
+        //Validace data splatnosti
+        if(!Utils.isValidDate(transaction.getDueDate())){
             //flash message danger
             model.addObject("flashMessageSuccess",false);
             model.addObject("flashMessageText","Datum splatnosti nesmí být v minulosti");

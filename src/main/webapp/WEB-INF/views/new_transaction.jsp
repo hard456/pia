@@ -116,7 +116,7 @@
                                     <jsp:useBean id="dateNow" class="java.util.Date" />
                                     <fmt:formatDate var="actualDate" value="${dateNow}" pattern="yyyy-MM-dd" />
 
-                                    <form:input path="dueDate" min="${actualDate}" type="date" class="form-control" />
+                                    <form:input path="dueDate" min="${actualDate}" placeholder="${actualDate}" maxlength="10" type="date"  class="form-control" />
                                     <form:errors class="text-danger" path="dueDate"/>
                                 </div>
                             </div>
