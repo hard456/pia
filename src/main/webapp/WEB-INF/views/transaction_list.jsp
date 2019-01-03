@@ -2,6 +2,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
+<%--URL--%>
+<c:set var="transactionIdDetailUrl" value="${s:mvcUrl('transactionController#id-detail').build()}" scope="page"/>
+<c:set var="paginationUrl" value="${s:mvcUrl('transactionController#list').build()}" scope="page"/>
 
 <t:template>
     <jsp:body>
@@ -29,7 +34,7 @@
                                     <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">
                                         <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${item.dueDate}"/>
                                         <br>
-                                        <a href="${pageContext.request.contextPath}/transaction/${item.id}/detail">[Více]</a>
+                                        <a href="${transactionIdDetailUrl}${item.id}">[Více]</a>
                                     </div>
                                     <div class="col-sm-12 col-md-7 col-lg-7">
                                         <div class="row">
@@ -84,15 +89,18 @@
                         </c:forEach>
 
                             <%--Výpis pro nula transakcí --%>
-                        <c:if test="${transactionCounter == 0}">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-12 col-lg-12">
-                                    Nejsou k dispozici žádné transakce.
+                        <c:choose>
+                            <c:when test="${transactionCounter == 0}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 col-lg-12">
+                                        Nejsou k dispozici žádné transakce.
+                                    </div>
                                 </div>
-                            </div>
-                        </c:if>
-
-                        <br>
+                            </c:when>
+                            <c:otherwise>
+                                <t:pagination/>
+                            </c:otherwise>
+                        </c:choose>
 
                     </div>
                 </div>

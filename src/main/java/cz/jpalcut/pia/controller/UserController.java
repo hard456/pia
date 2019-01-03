@@ -2,12 +2,15 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
+import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.CaptchaService;
 import cz.jpalcut.pia.service.StateService;
 import cz.jpalcut.pia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping(name = "userController")
 public class UserController {
 
     @Autowired
@@ -37,16 +41,15 @@ public class UserController {
     @Autowired
     private CaptchaService captchaService;
 
-    @RequestMapping(path = "/user", name = "userUrl", method = RequestMethod.GET)
+    @RequestMapping(path = "/user", name = "user", method = RequestMethod.GET)
     public ModelAndView showUserPage(){
         ModelAndView model = new ModelAndView("user");
-        model.addObject("activeLink","user");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", userService.getUser());
         return model;
     }
 
-    @RequestMapping(path = "/user/edit", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/edit", name = "edit", method = RequestMethod.POST)
     public ModelAndView editUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult){
         ModelAndView model = new ModelAndView("user");
         model.addObject("states",stateService.getAllStates());
@@ -67,20 +70,20 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/list", method = RequestMethod.GET)
-    public ModelAndView showUserListPage()
+    @RequestMapping(path = "/user/list", name = "list", method = RequestMethod.GET)
+    public ModelAndView showUserListPage(Pageable pageable)
     {
         ModelAndView model = new ModelAndView("user_list");
-        model.addObject("activeLink","user/list");
-        model.addObject("users",userService.getAllUsersByRole("USER"));
+        Page<User> pages = userService.getAllUsersByRolePageable("USER", pageable);
+        model.addObject("pagination", pages);
+        model.addObject("users",pages.getContent());
         return model;
     }
 
-    @RequestMapping(path = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/{id}", name = "id", method = RequestMethod.GET)
     public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId){
         User user = userService.getUserById(userId);
         ModelAndView model = new ModelAndView("user_edit");
-        model.addObject("activeLink","user/list");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", user);
         model.addObject("account", accountService.getAccount(user));
@@ -88,7 +91,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/{id}/edit", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/edit/{id}", name = "edit-id", method = RequestMethod.POST)
     public ModelAndView editUserByAdmin(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult,
                                  @PathVariable("id") Integer userId){
 
@@ -115,7 +118,7 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/{id}/editStatus", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/editStatus/{id}", name = "editstatus-id", method = RequestMethod.GET)
     public ModelAndView editUserStatus(@PathVariable("id") Integer userId) {
 
         User user = userService.getUserById(userId);
@@ -134,17 +137,16 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/new", method = RequestMethod.GET)
+    @RequestMapping(path = "/user/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showNewUserPage()
     {
         ModelAndView model = new ModelAndView("new_user");
-        model.addObject("activeLink","user/new");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm",new User());
         return model;
     }
 
-    @RequestMapping(path = "/user/new/add", method = RequestMethod.POST)
+    @RequestMapping(path = "/user/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult,
                                     HttpServletRequest request){
         ModelAndView model = new ModelAndView("new_user");

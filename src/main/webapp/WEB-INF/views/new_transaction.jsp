@@ -3,6 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
@@ -10,6 +11,12 @@
         document.getElementById("new_transaction_form").submit();
     }
 </script>
+
+<%--URL --%>
+<c:set var="transactionNewAddUrl" value="${s:mvcUrl('transactionController#new-add').build()}" scope="page"/>
+<c:set var="transactionNewIdUrl" value="${s:mvcUrl('transactionController#new-id').build()}" scope="page"/>
+<c:set var="transactionNewUrl" value="${s:mvcUrl('transactionController#new').build()}" scope="page"/>
+
 
 <t:template>
     <jsp:body>
@@ -19,7 +26,7 @@
                     <h6 class="card-header card-header-style">Nová platba</h6>
                     <div class="card-body">
                         <form:form id="new_transaction_form" modelAttribute="transaction"
-                                   action="${pageContext.request.contextPath}/transaction/new/add" method="post">
+                                   action="${transactionNewAddUrl}" method="post">
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Použít vzor
@@ -29,24 +36,24 @@
                                     <select class="form-control" onchange="this.options[this.selectedIndex].value &&
                                         (window.location = this.options[this.selectedIndex].value);">
                                         <c:if test="${template != null}">
-                                            <option value="${pageContext.request.contextPath}/transaction/new/${template.id}">${template.name}</option>
-                                            <option value="${pageContext.request.contextPath}/transaction/new">
+                                            <option value="${transactionNewIdUrl}${template.id}">${template.name}</option>
+                                            <option value="${transactionNewUrl}">
                                                 Bez použití vzoru
                                             </option>
                                         </c:if>
                                         <c:if test="${template == null}">
-                                            <option value="${pageContext.request.contextPath}/transaction/new">
+                                            <option value="${transactionNewUrl}">
                                                 Bez použití vzoru
                                             </option>
                                         </c:if>
                                         <c:forEach items="${templates}" var="item" varStatus="i">
                                             <c:if test="${template != null}">
                                                 <c:if test="${item.id != template.id}">
-                                                    <option value="${pageContext.request.contextPath}/transaction/new/${item.id}">${item.name}</option>
+                                                    <option value="${transactionNewIdUrl}${item.id}">${item.name}</option>
                                                 </c:if>
                                             </c:if>
                                             <c:if test="${template == null}">
-                                                <option value="${pageContext.request.contextPath}/transaction/new/${item.id}">${item.name}</option>
+                                                <option value="${transactionNewIdUrl}${item.id}">${item.name}</option>
                                             </c:if>
                                         </c:forEach>>
                                     </select>

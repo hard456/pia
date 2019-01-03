@@ -2,6 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
@@ -10,6 +11,9 @@
     }
 </script>
 
+<%--URL--%>
+<c:set var="userNewAddUrl" value="${s:mvcUrl('userController#new-add').build()}" scope="page"/>
+
 <t:template>
     <jsp:body>
         <div class="row">
@@ -17,7 +21,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nový uživatel</h6>
                     <div class="card-body">
-                        <form:form id="new_user_form" modelAttribute="userForm" action="${pageContext.request.contextPath}/user/new/add" method="post">
+                        <form:form id="new_user_form" modelAttribute="userForm" action="${userNewAddUrl}" method="post">
                         <div class="row">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Jméno*

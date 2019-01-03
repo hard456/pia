@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping(name = "accountController")
 public class AccountController {
 
     @Autowired
@@ -21,11 +22,10 @@ public class AccountController {
     @Autowired
     private BankConfig bankConfig;
 
-    @RequestMapping(path = "/account", method = RequestMethod.GET)
+    @RequestMapping(path = "/account", name = "account", method = RequestMethod.GET)
     public ModelAndView showAccountPage()
     {
         ModelAndView model = new ModelAndView("account");
-        model.addObject("activeLink","account");
         model.addObject("account",accountService.getAccount(userService.getUser()));
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;

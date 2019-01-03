@@ -4,6 +4,8 @@ import cz.jpalcut.pia.dao.TemplateDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -41,6 +43,10 @@ public class TemplateService {
 
     public void deleteTemplate(Template template){
         templateDAO.delete(template);
+    }
+
+    public Page<Template> getTemplatesByAccountPageable(Account account, Pageable pageable) {
+        return templateDAO.findAllByAccount(account, pageable);
     }
 
 }

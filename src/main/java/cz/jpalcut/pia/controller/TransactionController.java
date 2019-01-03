@@ -6,6 +6,8 @@ import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
 import cz.jpalcut.pia.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,6 +22,7 @@ import java.sql.Date;
 import java.util.Calendar;
 
 @Controller
+@RequestMapping(name = "transactionController")
 public class TransactionController {
 
     @Autowired
@@ -40,18 +43,17 @@ public class TransactionController {
     @Autowired
     CaptchaService captchaService;
 
-    @RequestMapping(path = "/transaction/new", method = RequestMethod.GET)
+    @RequestMapping(path = "/transaction/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showNewTransactionPage()
     {
         ModelAndView model = new ModelAndView("new_transaction");
-        model.addObject("activeLink","transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("transaction", new Transaction());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
         return model;
     }
 
-    @RequestMapping(path = "/transaction/new/add", method = RequestMethod.POST)
+    @RequestMapping(path = "/transaction/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView addNewTransaction(@Valid @ModelAttribute("transaction")Transaction transaction,
                                               BindingResult bindingResult, HttpServletRequest request){
 
@@ -149,29 +151,28 @@ public class TransactionController {
         return model;
     }
 
-    @RequestMapping(path = "/transaction/list", method = RequestMethod.GET)
-    public ModelAndView showTransactionListPage()
+    @RequestMapping(path = "/transaction/list", name = "list", method = RequestMethod.GET)
+    public ModelAndView showTransactionListPage(Pageable pageable)
     {
         ModelAndView model = new ModelAndView("transaction_list");
-        model.addObject("activeLink","transaction/list");
         Account account = accountService.getAccount(userService.getUser());
-        model.addObject("transactions", transactionService.getTransactionsByAccount(account));
+        Page<Transaction> pages = transactionService.getTransactionsByAccountPageable(account, pageable);
+        model.addObject("pagination", pages);
+        model.addObject("transactions", pages.getContent());
         return model;
     }
 
-    @RequestMapping(path = "/transaction/{id}/detail", method = RequestMethod.GET)
+    @RequestMapping(path = "/transaction/detail/{id}", name = "id-detail", method = RequestMethod.GET)
     public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId)
     {
         ModelAndView model = new ModelAndView("transaction_detail");
-        model.addObject("activeLink","transaction/list");
         model.addObject("transaction", transactionService.getTransactionById(transactionId));
         return model;
     }
 
-    @RequestMapping(path = "/transaction/new/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/transaction/new/{id}", name = "new-id", method = RequestMethod.GET)
     public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("new_transaction");
-        model.addObject("activeLink","transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         Template template = templateService.getTemplateById(templateId);
         Transaction transaction = new Transaction();

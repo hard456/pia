@@ -2,7 +2,15 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
+<%--URL--%>
+<c:set var="transactionNewIdUrl" value="${s:mvcUrl('transactionController#new-id').build()}" scope="page"/>
+<c:set var="templateIdtUrl" value="${s:mvcUrl('templateController#id').build()}" scope="page"/>
+<c:set var="templateIdDeleteUrl" value="${s:mvcUrl('templateController#id-delete').build()}" scope="page"/>
+<c:set var="templateNewtUrl" value="${s:mvcUrl('templateController#new').build()}" scope="page"/>
+
+<c:set var="paginationUrl" value="${s:mvcUrl('templateController#list').build()}" scope="page"/>
 
 <t:template>
     <jsp:body>
@@ -14,7 +22,7 @@
             <div class="card-body">
 
                 <div class="row mb-4">
-                    <a href="${pageContext.request.contextPath}/template/new">
+                    <a href="${templateNewtUrl}">
                         <input type="button" class="btn btn-primary button_primary_new" value="Přidat vzor">
                     </a>
                 </div>
@@ -48,16 +56,16 @@
                                     </c:if>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 text-right">
-                                    <a href="${pageContext.request.contextPath}/transaction/new/${item.id}"
+                                    <a href="${transactionNewIdUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-primary btn-sm button_primary_new"
                                                value="Použít">
                                     </a>
-                                    <a href="${pageContext.request.contextPath}/template/${item.id}"
+                                    <a href="${templateIdtUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-sm btn-info" value="Upravit">
                                     </a>
-                                    <a href="${pageContext.request.contextPath}/template/${item.id}/delete"
+                                    <a href="${templateIdDeleteUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-sm btn-danger" value="Smazat">
                                     </a>
@@ -67,6 +75,7 @@
                                 <hr>
                             </c:if>
                         </c:forEach>
+                        <t:pagination/>
                     </c:otherwise>
                 </c:choose>
                 <br>

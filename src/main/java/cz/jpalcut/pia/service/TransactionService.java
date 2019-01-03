@@ -4,6 +4,8 @@ import cz.jpalcut.pia.dao.TransactionDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -80,11 +82,15 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactionsByAccount(Account account){
-        return transactionDAO.findTransactionByAccount(account);
+        return transactionDAO.findAllByAccount(account);
     }
 
     public Transaction getTransactionById(Integer id){
         return transactionDAO.findTransactionById(id);
+    }
+
+    public Page<Transaction> getTransactionsByAccountPageable(Account account, Pageable pageable) {
+            return transactionDAO.findAllByAccount(account, pageable);
     }
 
 }

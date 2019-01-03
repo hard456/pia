@@ -2,6 +2,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
+<%--URL--%>
+<c:set var="userIdUrl" value="${s:mvcUrl('userController#id').build()}" scope="page"/>
+<c:set var="paginationUrl" value="${s:mvcUrl('userController#list').build()}" scope="page"/>
 
 <t:template>
     <jsp:body>
@@ -36,7 +41,7 @@
                                                 ${fn:substring(item.pid,0,6)}/${fn:substring(item.pid,6,11)}
                                         </div>
                                         <div class="col-sm-12 col-md-3 col-lg-3 text-right">
-                                            <a href="${pageContext.request.contextPath}/user/${item.id}">
+                                            <a href="${userIdUrl}${item.id}">
                                                 <button type="button" class="btn btn-primary btn-sm button_primary_new">
                                                     Detail
                                                 </button>
@@ -47,6 +52,7 @@
                                         <hr>
                                     </c:if>
                                 </c:forEach>
+                                <t:pagination/>
                             </c:otherwise>
                         </c:choose>
 

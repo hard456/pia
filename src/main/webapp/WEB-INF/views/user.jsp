@@ -2,6 +2,12 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%--URL--%>
+<c:set var="userEditUrl" value="${s:mvcUrl('userController#edit').build()}" scope="page"/>
+
 
 <t:template>
     <jsp:body>
@@ -11,7 +17,7 @@
                     <h6 class="card-header card-header-style">Uživatelský profil</h6>
                     <div class="card-body">
 
-                        <form:form modelAttribute="userForm" action="${pageContext.request.contextPath}/user/edit" method="post">
+                        <form:form modelAttribute="userForm" action="${userEditUrl}" method="post">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Jméno

@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping(name = "loginController")
 public class LoginController {
 
-    @RequestMapping(path = "/login", name = "loginUrl", method = RequestMethod.GET)
+    @RequestMapping(path = {"/login","/"}, name = "login", method = RequestMethod.GET)
     public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error)
     {
         ModelAndView model = new ModelAndView("login");
@@ -23,10 +24,9 @@ public class LoginController {
         return model;
     }
 
-    @RequestMapping(path = "/logoutSuccessful", method = RequestMethod.GET)
+    @RequestMapping(path = "/logoutSuccessful", name = "logout", method = RequestMethod.GET)
     public ModelAndView showSuccessFulLogoutPage(){
         ModelAndView model = new ModelAndView("login");
-        model.addObject("activeLink","login");
         //flash message success
         model.addObject("flashMessageSuccess",true);
         model.addObject("flashMessageText","Byl jste úspěšně odhlášen z aplikace.");

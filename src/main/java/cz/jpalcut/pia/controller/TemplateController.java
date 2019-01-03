@@ -2,11 +2,14 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
+import cz.jpalcut.pia.model.Transaction;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.TemplateService;
 import cz.jpalcut.pia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping(name = "templateController")
 public class TemplateController {
 
     @Autowired
@@ -29,25 +33,26 @@ public class TemplateController {
     @Autowired
     TemplateService templateService;
 
-    @RequestMapping(path = "/template/list", method = RequestMethod.GET)
-    public ModelAndView showTemplatesPage()
+    @RequestMapping(path = "/template/list", name = "list", method = RequestMethod.GET)
+    public ModelAndView showTemplatesPage(Pageable pageable)
     {
         Account account = accountService.getAccount(userService.getUser());
         ModelAndView model = new ModelAndView("template_list");
-        model.addObject("activeLink","template/list");
-        model.addObject("templates", templateService.getTemplatesByAccount(account));
+        Page<Template> pages = templateService.getTemplatesByAccountPageable(account, pageable);
+        model.addObject("pagination", pages);
+        model.addObject("transactions", pages.getContent());
+        model.addObject("templates", pages.getContent());
         return model;
     }
 
-    @RequestMapping(path = "/template/new", method = RequestMethod.GET)
+    @RequestMapping(path = "/template/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showAddTemplatePage(){
         ModelAndView model = new ModelAndView("template_new");
-        model.addObject("activeLink","template/list");
         model.addObject("template", new Template());
         return model;
     }
 
-    @RequestMapping(path = "/template/new/add", method = RequestMethod.POST)
+    @RequestMapping(path = "/template/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView addNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult){
         ModelAndView model = new ModelAndView("template_new");
 
@@ -68,15 +73,14 @@ public class TemplateController {
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/template/{id}", name = "id", method = RequestMethod.GET)
     public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId){
         ModelAndView model = new ModelAndView("template_edit");
-        model.addObject("activeLink","template/list");
         model.addObject("template", templateService.getTemplateById(templateId));
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}/edit", method = RequestMethod.POST)
+    @RequestMapping(path = "/template/edit/{id}", name = "id-edit", method = RequestMethod.POST)
     public ModelAndView editTemplate(@Valid @ModelAttribute("template") Template newTemplate,
                                            BindingResult bindingResult, @PathVariable("id") Integer templateId){
 
@@ -100,7 +104,7 @@ public class TemplateController {
         return model;
     }
 
-    @RequestMapping(path = "/template/{id}/delete", method = RequestMethod.GET)
+    @RequestMapping(path = "/template/delete/{id}", name = "id-delete", method = RequestMethod.GET)
     public ModelAndView deleteTemplate(@PathVariable("id") Integer templateId){
 
         ModelAndView model = new ModelAndView("template_list");

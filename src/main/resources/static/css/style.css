@@ -96,3 +96,11 @@
     background-color: #e53935 !important;
     color: #ffffff !important;
 }
+
+.pagination-size-active{
+    color: #e5643c !important;
+}
+
+.pagination-size{
+    color: #537286 !important;
+}

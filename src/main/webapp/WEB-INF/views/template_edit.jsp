@@ -3,6 +3,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
+<%--URL--%>
+<c:set var="templateIdEditUrl" value="${s:mvcUrl('templateController#id-edit').build()}" scope="page"/>
+
 
 <t:template>
     <jsp:body>
@@ -11,7 +16,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Úprava vzoru platby</h6>
                     <div class="card-body">
-                        <form:form modelAttribute="template" action="${pageContext.request.contextPath}/template/${template.id}/edit"
+                        <form:form modelAttribute="template" action="${templateIdEditUrl}${template.id}"
                                    method="post">
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">

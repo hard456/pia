@@ -2,6 +2,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%--URL--%>
+<c:set var="templateNewAddtUrl" value="${s:mvcUrl('templateController#new-add').build()}" scope="page"/>
 
 <t:template>
     <jsp:body>
@@ -10,7 +15,7 @@
                 <div class="card card-style">
                     <h6 class="card-header card-header-style">Nový vzor platby</h6>
                     <div class="card-body">
-                        <form:form modelAttribute="template" action="${pageContext.request.contextPath}/template/new/add"
+                        <form:form modelAttribute="template" action="${templateNewAddtUrl}"
                                    method="post">
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">

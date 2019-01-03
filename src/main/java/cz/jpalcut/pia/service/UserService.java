@@ -9,6 +9,8 @@ import cz.jpalcut.pia.model.Role;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -81,6 +83,11 @@ public class UserService implements UserDetailsService {
 
     public List<User> getAllUsersByRole(String role){
         return roleService.getRoleByName(role).getUsers();
+    }
+
+    public Page<User> getAllUsersByRolePageable(String role, Pageable pageable){
+        List<Role> roleList = roleService.getRoleListByName(role);
+        return userDAO.findAllByRoleList(roleList, pageable);
     }
 
     public User getUserById(Integer id){

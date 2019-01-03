@@ -3,6 +3,12 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+
+<%--URL--%>
+<c:set var="userEditIdtUrl" value="${s:mvcUrl('userController#edit-id').build()}" scope="page"/>
+<c:set var="userEditStatusUrl" value="${s:mvcUrl('userController#editstatus-id').build()}" scope="page"/>
+
 
 <t:template>
     <jsp:body>
@@ -13,7 +19,7 @@
                     <div class="card-body">
 
                         <form:form modelAttribute="userForm"
-                                   action="${pageContext.request.contextPath}/user/${userForm.id}/edit" method="post">
+                                   action="${userEditIdtUrl}${userForm.id}" method="post">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Účet
@@ -30,13 +36,13 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <c:if test="${account.active eq true}">
                                         Aktivní
-                                        <a href="${pageContext.request.contextPath}/user/${userForm.id}/editStatus">
+                                        <a href="${userEditStatusUrl}${userForm.id}">
                                             <input type="button" class="btn btn-danger btn-sm" value="Zablokovat"/>
                                         </a>
                                     </c:if>
                                     <c:if test="${account.active eq false}">
                                         Blokovaný
-                                        <a href="${pageContext.request.contextPath}/user/${userForm.id}/editStatus">
+                                        <a href="${userEditStatusUrl}${userForm.id}">
                                             <input type="button" class="btn btn-success btn-sm" value="Aktivovat"/>
                                         </a>
                                     </c:if>
