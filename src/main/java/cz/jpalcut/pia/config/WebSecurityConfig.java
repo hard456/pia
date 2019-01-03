@@ -27,11 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
     }
 
     @Override
@@ -39,31 +35,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
-        // The pages does not require login
-        http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
+        //definování přístupu v aplikaci
+        http.authorizeRequests()
+                //anonymní uživatel
+                .antMatchers("/", "/login", "/logoutSuccessful").anonymous()
+                //všichni uživatelé
+                .antMatchers("/user", "/user/edit", "/logout").authenticated()
+                //admin
+                .antMatchers("/user/list","/user/new","/user/edit/{id}", "/user/{id}",
+                        "/user/editStatus/{id}", "/user/new/add").hasAuthority("ADMIN")
+                //user
+                .antMatchers("/account", "/transaction/**", "/template/**").hasAuthority("USER");
 
-        // /userInfo page requires login as ROLE_USER or ROLE_ADMIN.
-        // If no login, it will redirect to /login page.
-//        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('USER', 'ADMIN')");
-
-        // For ADMIN only.
-//        http.authorizeRequests().antMatchers("/admin").access("hasRole('ADMIN')");
-
-        // When the user has logged in as XX.
-        // But access a page that requires role YY,
-        // AccessDeniedException will be thrown.
-//        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
-
-        // Config for Login Form
+        //přihlašovací formulář
         http.authorizeRequests().and().formLogin()//
-                // Submit URL of login page.
+                //přihlášení
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/login")//
-                .defaultSuccessUrl("/")//.defaultSuccessUrl("/userAccountInfo")//
+                .defaultSuccessUrl("/user")
                 .failureUrl("/login?error=true")//
                 .usernameParameter("login_id")//
                 .passwordParameter("pin")
-                // Config for Logout Page
+                //odhlášení
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/logoutSuccessful");
 
     }
