@@ -19,14 +19,14 @@ public class AccountService {
         return accountDAO.findAccountByUser(user);
     }
 
-    public void changeAccountStatus(Account account){
+    public Account changeAccountStatus(Account account){
         if(account.getActive()){
             account.setActive(false);
         }
         else{
             account.setActive(true);
         }
-        accountDAO.save(account);
+        return accountDAO.save(account);
     }
 
     public Account getAccountByNumber(String number){
@@ -37,8 +37,8 @@ public class AccountService {
         return accountDAO.findAccountByCardNumber(number);
     }
 
-    public void save(Account account){
-        accountDAO.save(account);
+    public Account save(Account account){
+        return accountDAO.save(account);
     }
 
 }

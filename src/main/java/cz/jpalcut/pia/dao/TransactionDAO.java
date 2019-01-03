@@ -17,7 +17,7 @@ public interface TransactionDAO extends PagingAndSortingRepository<Transaction, 
 
     Transaction findTransactionById(Integer id);
 
-    List<Transaction> findTransactionByProcessingDate(Date date);
+    List<Transaction> findAllByProcessingDate(Date date);
 
     List<Transaction> findAllByAccount(Account account);
 }

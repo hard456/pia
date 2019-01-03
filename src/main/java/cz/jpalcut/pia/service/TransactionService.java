@@ -64,7 +64,7 @@ public class TransactionService {
     @Scheduled(fixedDelay = 30000)
     public void processTransactions(){
         Account account = null;
-        List<Transaction> transactions = transactionDAO.findTransactionByProcessingDate(null);
+        List<Transaction> transactions = transactionDAO.findAllByProcessingDate(null);
         for (Transaction transaction : transactions) {
             transaction.setProcessingDate(new Date(System.currentTimeMillis()));
             account = transaction.getAccount();

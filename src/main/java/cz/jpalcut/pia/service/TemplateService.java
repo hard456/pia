@@ -37,8 +37,8 @@ public class TemplateService {
         return templateDAO.findTemplateById(id);
     }
 
-    public void editTemplate(Template template){
-        templateDAO.save(template);
+    public Template editTemplate(Template template){
+        return templateDAO.save(template);
     }
 
     public void deleteTemplate(Template template){

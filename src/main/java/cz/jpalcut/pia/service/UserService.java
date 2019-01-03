@@ -63,22 +63,22 @@ public class UserService implements UserDetailsService {
         return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
     }
 
-    public void editUser(User newUser){
+    public User editUser(User newUser){
         User user = getUser();
         user.setAddress(newUser.getAddress());
         user.setAddressNumber(newUser.getAddressNumber());
         user.setZipCode(newUser.getZipCode());
         user.setState(newUser.getState());
         user.setEmail(newUser.getEmail());
-        userDAO.save(user);
+        return userDAO.save(user);
     }
 
-    public void editUserByAdmin(User user, User newUser){
+    public User editUserByAdmin(User user, User newUser){
         newUser.setId(user.getId());
         newUser.setPin(user.getPin());
         newUser.setLoginId(user.getLoginId());
         newUser.setRoleList(user.getRoleList());
-        userDAO.save(newUser);
+        return userDAO.save(newUser);
     }
 
     public List<User> getAllUsersByRole(String role){
@@ -94,7 +94,7 @@ public class UserService implements UserDetailsService {
         return userDAO.findUserById(id);
     }
 
-    public void addUser(User user){
+    public User addUser(User user){
         String tmp;
 
         //Generování přihlašovacího loginu uživatele
@@ -137,6 +137,7 @@ public class UserService implements UserDetailsService {
             }
         }
         accountService.save(account);
+        return user;
     }
 
 }
