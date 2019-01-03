@@ -13,7 +13,7 @@ public class LoginController {
     @RequestMapping(path = {"/login","/"}, name = "login", method = RequestMethod.GET)
     public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error)
     {
-        ModelAndView model = new ModelAndView("login");
+        ModelAndView model = new ModelAndView("authentication/login");
         model.addObject("activeLink","login");
         if(error != null){
             //flash message danger
@@ -26,7 +26,7 @@ public class LoginController {
 
     @RequestMapping(path = "/logoutSuccessful", name = "logout", method = RequestMethod.GET)
     public ModelAndView showSuccessFulLogoutPage(){
-        ModelAndView model = new ModelAndView("login");
+        ModelAndView model = new ModelAndView("authentication/login");
         //flash message success
         model.addObject("flashMessageSuccess",true);
         model.addObject("flashMessageText","Byl jste úspěšně odhlášen z aplikace.");

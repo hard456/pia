@@ -2,7 +2,6 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
-import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.CaptchaService;
@@ -43,7 +42,7 @@ public class UserController {
 
     @RequestMapping(path = "/user", name = "user", method = RequestMethod.GET)
     public ModelAndView showUserPage(){
-        ModelAndView model = new ModelAndView("user");
+        ModelAndView model = new ModelAndView("user/profile");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", userService.getUser());
         return model;
@@ -51,7 +50,7 @@ public class UserController {
 
     @RequestMapping(path = "/user/edit", name = "edit", method = RequestMethod.POST)
     public ModelAndView editUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult){
-        ModelAndView model = new ModelAndView("user");
+        ModelAndView model = new ModelAndView("user/profile");
         model.addObject("states",stateService.getAllStates());
 
         if(bindingResult.hasErrors()){
@@ -73,7 +72,7 @@ public class UserController {
     @RequestMapping(path = "/user/list", name = "list", method = RequestMethod.GET)
     public ModelAndView showUserListPage(Pageable pageable)
     {
-        ModelAndView model = new ModelAndView("user_list");
+        ModelAndView model = new ModelAndView("user/list");
         Page<User> pages = userService.getAllUsersByRolePageable("USER", pageable);
         model.addObject("pagination", pages);
         model.addObject("users",pages.getContent());
@@ -83,7 +82,7 @@ public class UserController {
     @RequestMapping(path = "/user/{id}", name = "id", method = RequestMethod.GET)
     public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId){
         User user = userService.getUserById(userId);
-        ModelAndView model = new ModelAndView("user_edit");
+        ModelAndView model = new ModelAndView("user/edit");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", user);
         model.addObject("account", accountService.getAccount(user));
@@ -97,7 +96,7 @@ public class UserController {
 
         User user = userService.getUserById(userId);
 
-        ModelAndView model = new ModelAndView("user_edit");
+        ModelAndView model = new ModelAndView("user/edit");
         model.addObject("states",stateService.getAllStates());
         model.addObject("account", accountService.getAccount(user));
         model.addObject("bankCode", bankConfig.getBankCode());
@@ -123,7 +122,7 @@ public class UserController {
 
         User user = userService.getUserById(userId);
         Account account = accountService.getAccount(user);
-        ModelAndView model = new ModelAndView("user_edit");
+        ModelAndView model = new ModelAndView("user/edit");
         model.addObject("states",stateService.getAllStates());
         model.addObject("account", account);
         model.addObject("bankCode", bankConfig.getBankCode());
@@ -140,7 +139,7 @@ public class UserController {
     @RequestMapping(path = "/user/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showNewUserPage()
     {
-        ModelAndView model = new ModelAndView("new_user");
+        ModelAndView model = new ModelAndView("user/new");
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm",new User());
         return model;
@@ -149,7 +148,7 @@ public class UserController {
     @RequestMapping(path = "/user/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView saveNewUser(@Valid @ModelAttribute("userForm") User user, BindingResult bindingResult,
                                     HttpServletRequest request){
-        ModelAndView model = new ModelAndView("new_user");
+        ModelAndView model = new ModelAndView("user/new");
         model.addObject("states",stateService.getAllStates());
 
         if(bindingResult.hasErrors()){

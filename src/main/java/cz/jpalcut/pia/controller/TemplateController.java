@@ -2,7 +2,6 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
-import cz.jpalcut.pia.model.Transaction;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.TemplateService;
@@ -37,7 +36,7 @@ public class TemplateController {
     public ModelAndView showTemplatesPage(Pageable pageable)
     {
         Account account = accountService.getAccount(userService.getUser());
-        ModelAndView model = new ModelAndView("template_list");
+        ModelAndView model = new ModelAndView("template/list");
         Page<Template> pages = templateService.getTemplatesByAccountPageable(account, pageable);
         model.addObject("pagination", pages);
         model.addObject("transactions", pages.getContent());
@@ -47,14 +46,14 @@ public class TemplateController {
 
     @RequestMapping(path = "/template/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showAddTemplatePage(){
-        ModelAndView model = new ModelAndView("template_new");
+        ModelAndView model = new ModelAndView("template/new");
         model.addObject("template", new Template());
         return model;
     }
 
     @RequestMapping(path = "/template/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView addNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult){
-        ModelAndView model = new ModelAndView("template_new");
+        ModelAndView model = new ModelAndView("template/new");
 
         if(bindingResult.hasErrors()){
             //flash message danger
@@ -75,7 +74,7 @@ public class TemplateController {
 
     @RequestMapping(path = "/template/{id}", name = "id", method = RequestMethod.GET)
     public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId){
-        ModelAndView model = new ModelAndView("template_edit");
+        ModelAndView model = new ModelAndView("template/edit");
         model.addObject("template", templateService.getTemplateById(templateId));
         return model;
     }
@@ -84,7 +83,7 @@ public class TemplateController {
     public ModelAndView editTemplate(@Valid @ModelAttribute("template") Template newTemplate,
                                            BindingResult bindingResult, @PathVariable("id") Integer templateId){
 
-        ModelAndView model = new ModelAndView("template_edit");
+        ModelAndView model = new ModelAndView("template/edit");
 
         if(bindingResult.hasErrors()){
             //flash message danger
@@ -107,7 +106,7 @@ public class TemplateController {
     @RequestMapping(path = "/template/delete/{id}", name = "id-delete", method = RequestMethod.GET)
     public ModelAndView deleteTemplate(@PathVariable("id") Integer templateId){
 
-        ModelAndView model = new ModelAndView("template_list");
+        ModelAndView model = new ModelAndView("template/list");
 
         Template template = templateService.getTemplateById(templateId);
         User user = userService.getUser();

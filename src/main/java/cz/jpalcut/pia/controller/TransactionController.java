@@ -19,8 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.sql.Date;
-import java.util.Calendar;
 
 @Controller
 @RequestMapping(name = "transactionController")
@@ -47,7 +45,7 @@ public class TransactionController {
     @RequestMapping(path = "/transaction/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showNewTransactionPage()
     {
-        ModelAndView model = new ModelAndView("new_transaction");
+        ModelAndView model = new ModelAndView("transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("transaction", new Transaction());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
@@ -58,7 +56,7 @@ public class TransactionController {
     public ModelAndView addNewTransaction(@Valid @ModelAttribute("transaction")Transaction transaction,
                                               BindingResult bindingResult, HttpServletRequest request){
 
-        ModelAndView model = new ModelAndView("new_transaction");
+        ModelAndView model = new ModelAndView("transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
 
@@ -151,7 +149,7 @@ public class TransactionController {
     @RequestMapping(path = "/transaction/list", name = "list", method = RequestMethod.GET)
     public ModelAndView showTransactionListPage(Pageable pageable)
     {
-        ModelAndView model = new ModelAndView("transaction_list");
+        ModelAndView model = new ModelAndView("transaction/list");
         Account account = accountService.getAccount(userService.getUser());
         Page<Transaction> pages = transactionService.getTransactionsByAccountPageable(account, pageable);
         model.addObject("pagination", pages);
@@ -162,14 +160,14 @@ public class TransactionController {
     @RequestMapping(path = "/transaction/detail/{id}", name = "id-detail", method = RequestMethod.GET)
     public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId)
     {
-        ModelAndView model = new ModelAndView("transaction_detail");
+        ModelAndView model = new ModelAndView("transaction/detail");
         model.addObject("transaction", transactionService.getTransactionById(transactionId));
         return model;
     }
 
     @RequestMapping(path = "/transaction/new/{id}", name = "new-id", method = RequestMethod.GET)
     public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId){
-        ModelAndView model = new ModelAndView("new_transaction");
+        ModelAndView model = new ModelAndView("transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         Template template = templateService.getTemplateById(templateId);
         Transaction transaction = new Transaction();
