@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -73,15 +74,37 @@ public class TemplateController {
     }
 
     @RequestMapping(path = "/template/{id}", name = "id", method = RequestMethod.GET)
-    public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId){
+    public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes){
+
         ModelAndView model = new ModelAndView("template/edit");
-        model.addObject("template", templateService.getTemplateById(templateId));
+        Template template = templateService.getTemplateById(templateId);
+
+        //Kontrola existence šablony
+        if(template == null){
+            model.setViewName("redirect:/template/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
+            return model;
+        }
+
+        //Ověření uživatele pro zobrazení
+        if(!userService.getUser().getId().equals(template.getAccount().getUser().getId())){
+            model.setViewName("redirect:/template/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
+        model.addObject("template", template);
+
         return model;
     }
 
     @RequestMapping(path = "/template/edit/{id}", name = "id-edit", method = RequestMethod.POST)
-    public ModelAndView editTemplate(@Valid @ModelAttribute("template") Template newTemplate,
-                                           BindingResult bindingResult, @PathVariable("id") Integer templateId){
+    public ModelAndView editTemplate(@Valid @ModelAttribute("template") Template newTemplate, BindingResult bindingResult,
+                                     @PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes){
 
         ModelAndView model = new ModelAndView("template/edit");
 
@@ -93,6 +116,25 @@ public class TemplateController {
         }
 
         Template template = templateService.getTemplateById(templateId);
+
+        //Kontrola existence šablony
+        if(template == null){
+            model.setViewName("redirect:/template/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
+            return model;
+        }
+
+        //Ověření uživatele pro zobrazení
+        if(!userService.getUser().getId().equals(template.getAccount().getUser().getId())){
+            model.setViewName("redirect:/template/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
         newTemplate.setAccount(template.getAccount());
         templateService.editTemplate(newTemplate);
 
@@ -104,26 +146,33 @@ public class TemplateController {
     }
 
     @RequestMapping(path = "/template/delete/{id}", name = "id-delete", method = RequestMethod.GET)
-    public ModelAndView deleteTemplate(@PathVariable("id") Integer templateId){
+    public ModelAndView deleteTemplate(@PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes){
 
-        ModelAndView model = new ModelAndView("template/list");
+        ModelAndView model = new ModelAndView("redirect:/template/list");
 
         Template template = templateService.getTemplateById(templateId);
         User user = userService.getUser();
 
+        if(template == null){
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
+            return model;
+        }
+
+        //Ověření uživatele
         if(template.getAccount().getUser().getId().equals(user.getId())){
             templateService.deleteTemplate(template);
         }
         else{
-            //wrong user
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
 
-        model.addObject("templates", templateService.getTemplatesByAccount(template.getAccount()));
-
         //flash message success
-        model.addObject("flashMessageSuccess",true);
-        model.addObject("flashMessageText","Šablona byla smazána.");
+        redirectAttributes.addFlashAttribute("flashMessageSuccess",true);
+        redirectAttributes.addFlashAttribute("flashMessageText","Šablona byla smazána.");
 
         return model;
     }

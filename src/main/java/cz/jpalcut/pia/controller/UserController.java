@@ -1,7 +1,6 @@
 package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.config.BankConfig;
-import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.CaptchaService;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -80,9 +80,18 @@ public class UserController {
     }
 
     @RequestMapping(path = "/user/{id}", name = "id", method = RequestMethod.GET)
-    public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId){
+    public ModelAndView showUserDetailPage(@PathVariable("id") Integer userId, RedirectAttributes redirectAttributes){
         User user = userService.getUserById(userId);
         ModelAndView model = new ModelAndView("user/edit");
+
+        //kontrola existence uživatele
+        if(user == null){
+            model.setViewName("redirect:/user/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
+        }
+
         model.addObject("states",stateService.getAllStates());
         model.addObject("userForm", user);
         model.addObject("account", accountService.getAccount(user));
@@ -92,11 +101,20 @@ public class UserController {
 
     @RequestMapping(path = "/user/edit/{id}", name = "edit-id", method = RequestMethod.POST)
     public ModelAndView editUserByAdmin(@Valid @ModelAttribute("userForm") User newUser, BindingResult bindingResult,
-                                 @PathVariable("id") Integer userId){
+                                 @PathVariable("id") Integer userId, RedirectAttributes redirectAttributes){
 
         User user = userService.getUserById(userId);
-
         ModelAndView model = new ModelAndView("user/edit");
+
+        //kontrola existence uživatele
+        if(user == null){
+            model.setViewName("redirect:/user/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
+        }
+
+
         model.addObject("states",stateService.getAllStates());
         model.addObject("account", accountService.getAccount(user));
         model.addObject("bankCode", bankConfig.getBankCode());
@@ -141,6 +159,7 @@ public class UserController {
 
         String captchaResponse = request.getParameter("g-recaptcha-response");
         if(!captchaService.processResponse(captchaResponse, request.getRemoteAddr())){
+            //flash message danger
             model.addObject("flashMessageSuccess",false);
             model.addObject("flashMessageText","Nastala chyba při ověření formuláře - Google reCAPTCHA ");
             return model;

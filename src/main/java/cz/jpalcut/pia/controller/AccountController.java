@@ -2,7 +2,6 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
-import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.model.UserRequest;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.UserRequestService;
@@ -48,12 +47,25 @@ public class AccountController {
     {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
+
+        //Kontrola existence účtu
+        if(account == null){
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
+        //Ověření uživatele pro změnu
         if(!userService.getUser().getId().equals(account.getUser().getId())){
-//            tady ne týpku
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
         else{
             if(userRequestService.getUserRequestByTypeAndAccount("change_international_payment", account) != null){
+                //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
                 return model;
@@ -77,14 +89,33 @@ public class AccountController {
     {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
+
+        //Kontrola existence účtu
+        if(account == null){
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
+        //Ověření uživatele pro změnu
         if(!userService.getUser().getId().equals(account.getUser().getId())){
-//            tady ne týpku
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
         else{
             if(userRequestService.getUserRequestByTypeAndAccount("change_limit", account) != null){
+                //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
+                return model;
+            }
+            if(account.getLimitPayment().equals(value)){
+                //flash message danger
+                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+                redirectAttributes.addFlashAttribute("flashMessageText", "Nelze poslat požadavek na stejnou částku jako je nastavena.");
                 return model;
             }
             UserRequest request = new UserRequest();

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -103,7 +104,7 @@ public class TransactionController {
         }
 
         //Kontrola stavu peněž na účtu po odečtení částky transakce
-        if((account.getBalance()-account.getBlockedBalance()-transaction.getValue()) < 0.0){
+        if((account.getBalance()+account.getLimitPayment()-account.getBlockedBalance()-transaction.getValue()) < 0.0){
 
             //flash message danger
             model.addObject("flashMessageSuccess",false);
@@ -158,18 +159,57 @@ public class TransactionController {
     }
 
     @RequestMapping(path = "/transaction/detail/{id}", name = "id-detail", method = RequestMethod.GET)
-    public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId)
+    public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId, RedirectAttributes redirectAttributes)
     {
         ModelAndView model = new ModelAndView("transaction/detail");
-        model.addObject("transaction", transactionService.getTransactionById(transactionId));
+        Transaction transaction = transactionService.getTransactionById(transactionId);
+
+        //Kontrola existence šablony
+        if(transaction == null){
+            model.setViewName("redirect:/transaction/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Transakce neexistuje.");
+            return model;
+        }
+
+        //Ověření uživatele pro zobrazení
+        if(!userService.getUser().getId().equals(transaction.getAccount().getUser().getId())){
+            model.setViewName("redirect:/transaction/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
+        model.addObject("transaction", transaction);
         return model;
     }
 
     @RequestMapping(path = "/transaction/new/{id}", name = "new-id", method = RequestMethod.GET)
-    public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId){
+    public ModelAndView showNewTemplateTransactionPage(@PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes){
         ModelAndView model = new ModelAndView("transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         Template template = templateService.getTemplateById(templateId);
+
+        //Kontrola existence šablony
+        if(template == null){
+            model.setViewName("redirect:/transaction/new");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
+            return model;
+        }
+
+        //Ověření uživatele pro použití šablony
+        if(!userService.getUser().getId().equals(template.getAccount().getUser().getId())){
+            model.setViewName("redirect:/transaction/new");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            return model;
+        }
+
         Transaction transaction = new Transaction();
         transaction.setNumber(template.getNumber());
         transaction.setCode(template.getCode());

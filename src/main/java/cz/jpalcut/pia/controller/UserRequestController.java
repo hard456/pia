@@ -11,17 +11,12 @@ import cz.jpalcut.pia.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping(name = "userRequestController")
@@ -43,7 +38,7 @@ public class UserRequestController {
     private RoleService roleService;
 
     @RequestMapping(path = "/request/list", name = "list", method = RequestMethod.GET)
-    public ModelAndView showRequestListPage(Pageable pageable)
+    public ModelAndView showUserRequestListPage(Pageable pageable)
     {
         ModelAndView model = new ModelAndView("user_request/list");
         Page<UserRequest> pages = userRequestService.getAllUserRequestPageable(pageable);
@@ -54,19 +49,39 @@ public class UserRequestController {
     }
 
     @RequestMapping(path = "/request/detail/{id}", name = "id-detail", method = RequestMethod.GET)
-    public ModelAndView showRequestDetailPage(@PathVariable("id") Integer userRequestId)
+    public ModelAndView showUserRequestDetailPage(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
     {
         ModelAndView model = new ModelAndView("user_request/detail");
-        model.addObject("request", userRequestService.getUserRequestById(userRequestId));
+        UserRequest request = userRequestService.getUserRequestById(userRequestId);
+
+        //Kontrola existence požadavku
+        if(request == null){
+            model.setViewName("redirect:/request/list");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
+            return model;
+        }
+
+        model.addObject("request", request);
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;
     }
 
     @RequestMapping(path = "/request/confirm/{id}", name = "id-confirm", method = RequestMethod.GET)
-    public ModelAndView confirmRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
+    public ModelAndView confirmUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
     {
         ModelAndView model = new ModelAndView("redirect:/request/list");
         UserRequest userRequest = userRequestService.getUserRequestById(userRequestId);
+
+        //kontrola existence požadavku
+        if(userRequest == null){
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
+            return model;
+        }
+
         Account account = userRequest.getAccount();
 
         if(userRequest.getType().equals("change_limit")){
@@ -101,31 +116,45 @@ public class UserRequestController {
     }
 
     @RequestMapping(path = "/request/delete/{id}", name = "id-delete", method = RequestMethod.GET)
-    public ModelAndView deleteRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes, HttpServletResponse response)
+    public ModelAndView deleteUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
     {
-        ModelAndView model = new ModelAndView("user_request/list");
+        ModelAndView model = new ModelAndView();
         UserRequest userRequest = userRequestService.getUserRequestById(userRequestId);
-
         User user = userService.getUser();
 
+        //Kontrola existence žádosti
+        if(userRequest == null){
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
+            if(user.getRoleList().contains(roleService.getRoleByName("ADMIN"))){
+                model.setViewName("redirect:/request/list");
+                return model;
+            }
+            else{
+                model.setViewName("redirect:/account");
+                return model;
+            }
+        }
+
+        //Kontrola uživatele
         if(user.getId().equals(userRequest.getAccount().getUser().getId())){
             model.setViewName("redirect:/account");
-
-//            return model;
         }
         else if (user.getRoleList().contains(roleService.getRoleByName("ADMIN"))){
             model.setViewName("redirect:/request/list");
         }
         else{
-//            response.setStatus(HttpStatus.FORBIDDEN.value());
-            model.setViewName("redirect:/error");
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+            model.setViewName("redirect:/account");
             return model;
         }
 
         userRequestService.deleteUserRequest(userRequest);
 
         redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
-        redirectAttributes.addFlashAttribute("flashMessageText", "Žádost byla smazána");
+        redirectAttributes.addFlashAttribute("flashMessageText", "Žádost byla smazána.");
 
         return model;
     }
