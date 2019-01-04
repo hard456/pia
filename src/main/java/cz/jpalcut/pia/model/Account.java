@@ -30,7 +30,6 @@ public class Account implements Serializable {
     @Column(name = "international_payment")
     private Boolean internationalPayment;
 
-    @Nullable
     @Column(name = "limit_payment")
     private Double limitPayment;
 
