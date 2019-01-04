@@ -5,6 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
+<%-- captcha --%>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
     function onSubmit(token) {
@@ -25,6 +26,8 @@
                 <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Nová platba</h6>
                     <div class="card-body">
+
+                            <%-- formulář pro přidání transakce --%>
                         <form:form id="new_transaction_form" modelAttribute="transaction"
                                    action="${transactionNewAddUrl}" method="post">
                             <div class="row mb-2">
@@ -95,12 +98,17 @@
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
                                     <c:if test="${template == null}">
-                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${transaction.value}" var="newValue" groupingUsed="false"/>
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                          value="${transaction.value}" var="newValue"
+                                                          groupingUsed="false"/>
                                     </c:if>
                                     <c:if test="${template != null}">
-                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue" groupingUsed="false"/>
+                                        <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                          value="${template.value}" var="newValue"
+                                                          groupingUsed="false"/>
                                     </c:if>
-                                    <form:input path="value" value="${newValue}" type="text" class="form-control" maxlength="15"/>
+                                    <form:input path="value" value="${newValue}" type="text" class="form-control"
+                                                maxlength="15"/>
                                     <form:errors class="text-danger" path="value"/>
                                 </div>
                                 <div class="col-sm-12 col-md-1 col-lg-1 align-self-center text-right">CZK</div>
@@ -112,11 +120,12 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
 
-                                    <%--Aktuální datum pro input date--%>
-                                    <jsp:useBean id="dateNow" class="java.util.Date" />
-                                    <fmt:formatDate var="actualDate" value="${dateNow}" pattern="yyyy-MM-dd" />
+                                        <%--Aktuální datum pro input date--%>
+                                    <jsp:useBean id="dateNow" class="java.util.Date"/>
+                                    <fmt:formatDate var="actualDate" value="${dateNow}" pattern="yyyy-MM-dd"/>
 
-                                    <form:input path="dueDate" min="${actualDate}" placeholder="${actualDate}" maxlength="10" type="date"  class="form-control" />
+                                    <form:input path="dueDate" min="${actualDate}" placeholder="${actualDate}"
+                                                maxlength="10" type="date" class="form-control"/>
                                     <form:errors class="text-danger" path="dueDate"/>
                                 </div>
                             </div>
@@ -163,13 +172,18 @@
                             <hr>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+
+                                        <%-- tlačítko pro odeslání nové transakce --%>
                                     <button class="g-recaptcha btn btn-primary btn-sm button_primary_new"
-                                            data-sitekey="6LftVoYUAAAAAATyI7xI5eS3Nx0oM3WkksD0_KWC" data-callback='onSubmit'>
+                                            data-sitekey="6LftVoYUAAAAAATyI7xI5eS3Nx0oM3WkksD0_KWC"
+                                            data-callback='onSubmit'>
                                         Odeslat
                                     </button>
+
                                 </div>
                             </div>
                         </form:form>
+
                     </div>
                 </div>
             </div>

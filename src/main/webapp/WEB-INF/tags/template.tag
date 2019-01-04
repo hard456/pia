@@ -14,7 +14,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Own CSS -->
+    <!-- vlastní CSS -->
     <spring:url value="/css/style.css" var="style"/>
     <link rel="stylesheet" href="${style}">
 
@@ -39,7 +39,7 @@
 </head>
 <body class="body-bg">
 
-<%--URL --%>
+<%-- URL --%>
 <c:set var="loginUrl" value="${s:mvcUrl('loginController#login').build()}" scope="page"/>
 <c:set var="logoutUrl" value="${s:mvcUrl('loginController#logout').build()}" scope="page"/>
 
@@ -71,12 +71,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link navbar-color" href="${pageContext.request.contextPath}/about-us">O nás</a>--%>
-                <%--</li>--%>
-                <%--<li class="nav-item">--%>
-                    <%--<a class="nav-link navbar-color" href="${pageContext.request.contextPath}/contact">Kontakt</a>--%>
-                <%--</li>--%>
+                <%-- další odkazy hlavního menu sem --%>
             </ul>
             <ul class="navbar-nav navbar-right">
 
@@ -122,7 +117,8 @@
                        href="${accountAccountUrl}">Účet</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color ${currentUrl == transactionNewUrl ? ' active-link2' : ''}" href="${transactionNewUrl}">Nová
+                    <a class="nav-link navbar-user-color ${currentUrl == transactionNewUrl ? ' active-link2' : ''}"
+                       href="${transactionNewUrl}">Nová
                         platba</a>
                 </li>
                 <li class="nav-item">
@@ -130,7 +126,8 @@
                        href="${transactionListUrl}">Pohyby</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color ${currentUrl == templateListUrl ? ' active-link2' : ''}" href="${templateListUrl}">Vzory
+                    <a class="nav-link navbar-user-color ${currentUrl == templateListUrl ? ' active-link2' : ''}"
+                       href="${templateListUrl}">Vzory
                         plateb</a>
                 </li>
             </ul>
@@ -145,17 +142,20 @@
         <div class="container-fluid container-max-width">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color ${currentUrl == userNewUrl ? ' active-link2' : ''}" href="${userNewUrl}">
+                    <a class="nav-link navbar-user-color ${currentUrl == userNewUrl ? ' active-link2' : ''}"
+                       href="${userNewUrl}">
                         Přidat uživatele
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color ${currentUrl == userListUrl ? ' active-link2' : ''}" href="${userListUrl}">
+                    <a class="nav-link navbar-user-color ${currentUrl == userListUrl ? ' active-link2' : ''}"
+                       href="${userListUrl}">
                         Uživatelé
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link navbar-user-color ${currentUrl == userRequestListUrl ? ' active-link2' : ''}" href="${userRequestListUrl}">
+                    <a class="nav-link navbar-user-color ${currentUrl == userRequestListUrl ? ' active-link2' : ''}"
+                       href="${userRequestListUrl}">
                         Žádosti
                     </a>
                 </li>

@@ -60,7 +60,8 @@
                                                     Povolení částky do mínusu
                                                 </div>
                                                 <div class="col-sm-12 col-md-3 col-lg-2 align-self-center">
-                                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                    <fmt:formatNumber type="number" minFractionDigits="2"
+                                                                      maxFractionDigits="2"
                                                                       value="${item.value}"/> CZK
                                                 </div>
 
@@ -68,22 +69,31 @@
                                         </c:choose>
 
                                         <div class="col-sm-12 col-md-3 col-lg-3 text-right">
+
+                                                <%-- tlačítko pro schválení žádosti uživatele --%>
                                             <a href="${userRequestConfirmlUrl}${item.id}"
                                                class="text-decoration-none">
                                                 <input type="button" class="btn btn-primary btn-sm btn-info"
                                                        value="Schválit">
                                             </a>
+
+                                                <%-- tlačítko pro zobrazení žádosti uživatele --%>
                                             <a href="${userRequestDetailUrl}${item.id}"
                                                class="text-decoration-none">
-                                                <input type="button" class="btn btn-primary btn-sm button_primary_new" value="Zobrazit">
+                                                <input type="button" class="btn btn-primary btn-sm button_primary_new"
+                                                       value="Zobrazit">
                                             </a>
+
                                         </div>
                                     </div>
                                     <c:if test="${!i.last}">
                                         <hr>
                                     </c:if>
                                 </c:forEach>
+
+                                <%-- přidání šablony pro stránkování záznamů --%>
                                 <t:pagination/>
+
                             </c:otherwise>
                         </c:choose>
 

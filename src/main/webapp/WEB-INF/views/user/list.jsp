@@ -41,18 +41,24 @@
                                                 ${fn:substring(item.pid,0,6)}/${fn:substring(item.pid,6,11)}
                                         </div>
                                         <div class="col-sm-12 col-md-3 col-lg-3 text-right">
+
+                                                <%-- odkaz na účet uživatele --%>
                                             <a href="${userIdUrl}${item.id}">
                                                 <button type="button" class="btn btn-primary btn-sm button_primary_new">
                                                     Detail
                                                 </button>
                                             </a>
+
                                         </div>
                                     </div>
                                     <c:if test="${!i.last}">
                                         <hr>
                                     </c:if>
                                 </c:forEach>
+
+                                <%-- přidání šablony pro stránkování záznamů --%>
                                 <t:pagination/>
+
                             </c:otherwise>
                         </c:choose>
 

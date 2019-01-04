@@ -24,6 +24,7 @@
                             <div class="col-sm-12 col-md-2 col-lg-2 font-weight-bold text-right">Částka</div>
                         </div>
                         <hr>
+
                             <%--counter pro počítání transakcí --%>
                         <c:set var="transactionCounter" value="0"/>
 
@@ -34,7 +35,10 @@
                                     <div class="col-sm-12 col-md-2 col-lg-2 size-14 align-center">
                                         <fmt:formatDate type="date" pattern="dd.MM.yyyy" value="${item.dueDate}"/>
                                         <br>
+
+                                            <%-- odkaz na detail transakce --%>
                                         <a href="${transactionIdDetailUrl}${item.id}">[Více]</a>
+
                                     </div>
                                     <div class="col-sm-12 col-md-7 col-lg-7">
                                         <div class="row">
@@ -98,7 +102,10 @@
                                 </div>
                             </c:when>
                             <c:otherwise>
+
+                                <%-- přidání šablony pro stránkování záznamů --%>
                                 <t:pagination/>
+
                             </c:otherwise>
                         </c:choose>
 

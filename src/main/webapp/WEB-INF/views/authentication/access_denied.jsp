@@ -12,6 +12,7 @@
                     <div class="card-body">
                         <div class="form-group" style="max-width: 450px; margin: 0 auto;">
 
+                                <%-- formulář pro přihlášení --%>
                             <form action="${pageContext.request.contextPath}/j_spring_security_check" method="post">
                                 <div class="row" style="margin-bottom: 7px;">
                                     <input type="text" name="login_id" class="form-control"

@@ -56,26 +56,36 @@
                                     </c:if>
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 text-right">
+
+                                        <%-- použití šablony --%>
                                     <a href="${transactionNewIdUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-primary btn-sm button_primary_new"
                                                value="Použít">
                                     </a>
+
+                                        <%-- upravení šablony --%>
                                     <a href="${templateIdtUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-sm btn-info" value="Upravit">
                                     </a>
+
+                                        <%-- smazání šablony --%>
                                     <a href="${templateIdDeleteUrl}${item.id}"
                                        class="text-decoration-none">
                                         <input type="button" class="btn btn-sm btn-danger" value="Smazat">
                                     </a>
+
                                 </div>
                             </div>
                             <c:if test="${!i.last}">
                                 <hr>
                             </c:if>
                         </c:forEach>
+
+                        <%-- přidání šablony pro stránkování záznamů --%>
                         <t:pagination/>
+
                     </c:otherwise>
                 </c:choose>
                 <br>

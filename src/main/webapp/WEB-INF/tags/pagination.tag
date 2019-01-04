@@ -2,9 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row mt-5">
+
+    <%-- celkový počet elementů --%>
     <div class="col-sm-12 col-md-3 col-lg-3 mt-2 d-none d-sm-block">
         Celkem:${pagination.totalElements}
     </div>
+
+    <%-- přepínání stránkek k zobrazení --%>
     <div class="col-sm-12 col-md-6 col-lg-6">
         <div class="row">
             <ul class="pagination mx-auto">
@@ -69,6 +73,7 @@
         </div>
     </div>
 
+    <%-- výběr počtu elementů k zobrazení --%>
     <div class="col-sm-12 col-md-3 col-lg-3 text-right mt-2">
         <div class="d-block d-sm-none">
             Celkem:${pagination.totalElements}
@@ -86,4 +91,5 @@
         <a href="${paginationUrl}?page=0&size=50"
            class="${pagination.size == 50 ? 'pagination-size-active' : 'pagination-size'}">50</a>
     </div>
+
 </div>

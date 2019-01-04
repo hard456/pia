@@ -17,6 +17,7 @@
                     <h6 class="card-header card-header-style">Detail uživatele</h6>
                     <div class="card-body">
 
+                            <%-- formulář pro úpravu uživatele adminem --%>
                         <form:form modelAttribute="userForm"
                                    action="${userEditIdtUrl}${userForm.id}" method="post">
                             <div class="row">
@@ -140,8 +141,11 @@
                             <hr>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+
+                                        <%-- tlačítko pro editování uživatele --%>
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Uložit
                                     </button>
+
                                 </div>
                             </div>
                         </form:form>

@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <a href="${userIdUrl}${request.account.user.id}">
-                                    ${request.account.user.firstname} ${request.account.user.lastname}
+                                        ${request.account.user.firstname} ${request.account.user.lastname}
                                 </a>
                             </div>
                         </div>
@@ -102,15 +102,20 @@
 
                         <div class="row mb-2 mt-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+
+                                    <%-- tlačítko pro schválení žádosti uživatele --%>
                                 <a href="${userRequestConfirmlUrl}${request.id}"
                                    class="text-decoration-none">
                                     <input type="button" class="btn btn-primary btn-sm btn-info"
                                            value="Schválit">
                                 </a>
+
+                                    <%-- tlačítko pro zamítnutí žádosti uživatele --%>
                                 <a href="${userRequestDeleteUrl}${request.id}"
                                    class="text-decoration-none">
                                     <input type="button" class="btn btn-sm btn-danger" value="Zamítnout">
                                 </a>
+
                             </div>
                         </div>
 

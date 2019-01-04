@@ -8,7 +8,6 @@
 <%--URL--%>
 <c:set var="userEditUrl" value="${s:mvcUrl('userController#edit').build()}" scope="page"/>
 
-
 <t:template>
     <jsp:body>
         <div class="row">
@@ -17,6 +16,7 @@
                     <h6 class="card-header card-header-style">Uživatelský profil</h6>
                     <div class="card-body">
 
+                            <%-- formulář pro úpravu profilu uživatele --%>
                         <form:form modelAttribute="userForm" action="${userEditUrl}" method="post">
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <input value="${userForm.firstname}" type="text" class="form-control" disabled>
-                                    <form:hidden path="firstname" />
+                                    <form:hidden path="firstname"/>
                                 </div>
                             </div>
                             <hr>
@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <input value="${userForm.lastname}" type="text" class="form-control" disabled>
-                                    <form:hidden path="lastname" />
+                                    <form:hidden path="lastname"/>
                                 </div>
                             </div>
                             <hr>
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <input value="${userForm.pid}" type="text" class="form-control" disabled>
-                                    <form:hidden path="pid" />
+                                    <form:hidden path="pid"/>
                                 </div>
                             </div>
                             <hr>
@@ -103,8 +103,11 @@
                             <hr>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
+
+                                        <%-- tlačítko pro uložení uživatelského účtu --%>
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Uložit
                                     </button>
+
                                 </div>
                             </div>
                         </form:form>

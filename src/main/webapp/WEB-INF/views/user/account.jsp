@@ -21,7 +21,7 @@
                     <h6 class="card-header card-header-style">Detail účtu</h6>
                     <div class="card-body">
 
-                            <%-- Informace o účtu --%>
+                            <%-- informace o účtu --%>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                 Číslo účtu
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                    <%-- Čekající žádosti --%>
+                    <%-- čekající žádosti ke schválení --%>
                 <c:if test="${not empty requests}">
                     <div class="card card-style mt-3">
                         <h6 class="card-header card-header-style">Seznam žádostí čekající ke zpracování</h6>
@@ -157,7 +157,7 @@
                     </div>
                 </c:if>
 
-                    <%-- Vytváření žádostí --%>
+                    <%-- vytváření žádostí --%>
                 <div class="card card-style mt-3 mb-5">
                     <h6 class="card-header card-header-style">Vytvoření žádosti</h6>
                     <div class="card-body">
@@ -187,16 +187,24 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
+
                             <div class="col-sm-12 col-md-3 col-lg-3 text-right">
                                 <a href="${accountChangeInternationalPaymentUrl}${account.id}">
+
+                                        <%-- pro odeslání žádosti o změnu mezinárodní platby kartou --%>
                                     <button type="button" class="btn btn-primary btn-sm button_primary_new">
                                         Odeslat
                                     </button>
+
                                 </a>
                             </div>
+
                         </div>
                         <hr>
-                        <form action="${pageContext.request.contextPath}/account/changeValueLimitBelow/${account.id}" method="post">
+
+                            <%-- formulář pro úpravy limitu do mínusu --%>
+                        <form action="${pageContext.request.contextPath}/account/changeValueLimitBelow/${account.id}"
+                              method="post">
                             <div class="row">
                                 <div class="col-sm-12 col-md-3 col-lg-5 align-self-center mt-2">
                                     Povolení částky do mínusu
@@ -211,11 +219,14 @@
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-3 align-self-center text-right mt-2">
 
+                                        <%-- tlačítko pro odeslání žádosti o změnu limitu do mínusu --%>
                                     <input type="submit" class="btn btn-primary btn-sm button_primary_new"
                                            value="Odeslat">
+
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
 

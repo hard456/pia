@@ -27,7 +27,8 @@
                                 Částka
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
-                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${transaction.value}" /> CZK
+                                <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                  value="${transaction.value}"/> CZK
                             </div>
                         </div>
                         <hr>

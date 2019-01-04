@@ -15,6 +15,8 @@
                 <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Nový vzor platby</h6>
                     <div class="card-body">
+
+                            <%-- formulář pro přidání nové šablony --%>
                         <form:form modelAttribute="template" action="${templateNewAddtUrl}"
                                    method="post">
                             <div class="row mb-2">
@@ -54,8 +56,10 @@
                                     Částka
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
-                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue" groupingUsed="false"/>
-                                    <form:input path="value" value="${newValue}" type="text" class="form-control" maxlength="15"/>
+                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                      value="${template.value}" var="newValue" groupingUsed="false"/>
+                                    <form:input path="value" value="${newValue}" type="text" class="form-control"
+                                                maxlength="15"/>
                                     <form:errors class="text-danger" path="value"/>
                                 </div>
                                 <div class="col-sm-12 col-md-1 col-lg-1 align-self-center text-right">CZK</div>
@@ -102,12 +106,16 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
+
+                                    <%-- tlačítko pro vytvoření nové šablony --%>
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Uložit
                                     </button>
                                 </div>
+
                             </div>
                         </form:form>
+
                     </div>
                 </div>
             </div>

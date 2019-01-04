@@ -1,13 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
 <%--URL--%>
 <c:set var="templateIdEditUrl" value="${s:mvcUrl('templateController#id-edit').build()}" scope="page"/>
-
 
 <t:template>
     <jsp:body>
@@ -16,6 +15,8 @@
                 <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Úprava vzoru platby</h6>
                     <div class="card-body">
+
+                            <%-- formulář pro úpravu šablony --%>
                         <form:form modelAttribute="template" action="${templateIdEditUrl}${template.id}"
                                    method="post">
                             <div class="row mb-2">
@@ -55,8 +56,10 @@
                                     Částka
                                 </div>
                                 <div class="col-sm-12 col-md-5 col-lg-5">
-                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${template.value}" var="newValue" groupingUsed="false"/>
-                                    <form:input path="value" value="${newValue}" type="text" class="form-control" maxlength="15"/>
+                                    <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
+                                                      value="${template.value}" var="newValue" groupingUsed="false"/>
+                                    <form:input path="value" value="${newValue}" type="text" class="form-control"
+                                                maxlength="15"/>
                                     <form:errors class="text-danger" path="value"/>
                                 </div>
                                 <div class="col-sm-12 col-md-1 col-lg-1 align-self-center text-right">CZK</div>
@@ -103,12 +106,17 @@
                             </div>
                             <hr>
                             <div class="row mb-2">
+
+                                    <%-- tlačítko pro upravení šablony --%>
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Upravit
                                     </button>
                                 </div>
+
                             </div>
                         </form:form>
+
+
                     </div>
                 </div>
             </div>
