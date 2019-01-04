@@ -40,12 +40,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //anonymní uživatel
                 .antMatchers("/", "/login", "/logoutSuccessful").anonymous()
                 //všichni uživatelé
-                .antMatchers("/user", "/user/edit", "/logout").authenticated()
+                .antMatchers("/user", "/user/edit", "/logout", "/request/delete/{id}").authenticated()
                 //admin
                 .antMatchers("/user/list","/user/new","/user/edit/{id}", "/user/{id}",
-                        "/user/new/add", "/request/confirm/{id}", "/request/delete/{id}").hasAuthority("ADMIN")
+                        "/user/new/add", "/request/confirm/{id}").hasAuthority("ADMIN")
                 //user
-                .antMatchers("/account", "/transaction/**", "/template/**", "/request/delete/{id}",
+                .antMatchers("/account", "/transaction/**", "/template/**",
                         "/account/changeValueLimitBelow/{id}", "/account/changeInternationalPayment/{id}").hasAuthority("USER");
 
         //přihlašovací formulář
