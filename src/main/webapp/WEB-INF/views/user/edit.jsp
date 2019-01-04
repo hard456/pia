@@ -4,6 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%--URL--%>
 <c:set var="userEditIdtUrl" value="${s:mvcUrl('userController#edit-id').build()}" scope="page"/>
@@ -13,7 +14,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-style">
-                    <h6 class="card-header card-header-style">Detail uživatele</h6>
+                    <h6 class="card-header card-header-style mb-5">Detail uživatele</h6>
                     <div class="card-body">
 
                         <form:form modelAttribute="userForm"
@@ -24,6 +25,33 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                         ${account.number}/${bankCode}
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Mezinárodní platba kartou
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <c:choose>
+                                        <c:when test="${account.internationalPayment == true}">
+                                            Povolena
+                                        </c:when>
+                                        <c:otherwise>
+                                            Zakázána
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Povolená částka do mínusu
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <fmt:formatNumber type="number" minFractionDigits="2"
+                                                      maxFractionDigits="2"
+                                                      value="${account.limitPayment}"/> CZK
                                 </div>
                             </div>
                             <hr>

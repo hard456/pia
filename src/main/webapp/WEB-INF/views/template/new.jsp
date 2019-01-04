@@ -12,7 +12,7 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-style">
+                <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Nový vzor platby</h6>
                     <div class="card-body">
                         <form:form modelAttribute="template" action="${templateNewAddtUrl}"

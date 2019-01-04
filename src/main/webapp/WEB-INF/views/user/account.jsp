@@ -64,7 +64,7 @@
                         <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                Částka účtu může jít do mínusu
+                                Povolená částka do mínusu
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
@@ -129,7 +129,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <div class="col-sm-12 col-md-3 col-lg-5 align-self-center">
-                                                Změna částky pod nulu
+                                                Povolení částky do mínusu
                                             </div>
                                             <div class="col-sm-12 col-md-3 col-lg-4 align-self-center">
                                                 <fmt:formatNumber type="number" minFractionDigits="2"
@@ -199,10 +199,11 @@
                         <form action="${pageContext.request.contextPath}/account/changeValueLimitBelow/${account.id}" method="post">
                             <div class="row">
                                 <div class="col-sm-12 col-md-3 col-lg-5 align-self-center">
-                                    Změna částky pod nulu
+                                    Povolení částky do mínusu
                                 </div>
                                 <div class="col-sm-12 col-md-3 col-lg-4">
                                     <select name="value" class="form-control">
+                                        <option value="0.00">0.00 CZK</option>
                                         <option value="2000.00">2,000.00 CZK</option>
                                         <option value="5000.00">5,000.00 CZK</option>
                                         <option value="10000.00">10,000.00 CZK</option>

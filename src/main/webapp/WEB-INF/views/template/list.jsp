@@ -15,7 +15,7 @@
 <t:template>
     <jsp:body>
 
-        <div class="card card-style">
+        <div class="card card-style mb-5">
 
             <h6 class="card-header-style card-header">Vzory plateb</h6>
 

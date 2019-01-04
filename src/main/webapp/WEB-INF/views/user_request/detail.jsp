@@ -15,7 +15,7 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-style">
+                <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Detail žádosti</h6>
                     <div class="card-body">
 
@@ -73,7 +73,7 @@
                                         Typ žádosti
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-6">
-                                        Změna částky pod nulu
+                                        Povolení částky do mínusu
                                     </div>
                                 </div>
                                 <hr>

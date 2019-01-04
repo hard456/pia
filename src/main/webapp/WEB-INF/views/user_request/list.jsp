@@ -14,7 +14,7 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-style">
+                <div class="card card-style mb-5">
                     <h6 class="card-header card-header-style">Žádosti uživatelů</h6>
                     <div class="card-body">
 
@@ -57,7 +57,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <div class="col-sm-12 col-md-3 col-lg-4 align-self-center">
-                                                    Změna částky pod nulu
+                                                    Povolení částky do mínusu
                                                 </div>
                                                 <div class="col-sm-12 col-md-3 col-lg-2 align-self-center">
                                                     <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
