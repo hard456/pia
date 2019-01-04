@@ -117,25 +117,6 @@ public class UserController {
         return model;
     }
 
-    @RequestMapping(path = "/user/editStatus/{id}", name = "editstatus-id", method = RequestMethod.GET)
-    public ModelAndView editUserStatus(@PathVariable("id") Integer userId) {
-
-        User user = userService.getUserById(userId);
-        Account account = accountService.getAccount(user);
-        ModelAndView model = new ModelAndView("user/edit");
-        model.addObject("states",stateService.getAllStates());
-        model.addObject("account", account);
-        model.addObject("bankCode", bankConfig.getBankCode());
-        model.addObject("userForm", user);
-
-        accountService.changeAccountStatus(account);
-        //flash message success
-        model.addObject("flashMessageSuccess",true);
-        model.addObject("flashMessageText","Byl změněn stav uživatele.");
-
-        return model;
-    }
-
     @RequestMapping(path = "/user/new", name = "new", method = RequestMethod.GET)
     public ModelAndView showNewUserPage()
     {

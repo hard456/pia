@@ -1,5 +1,7 @@
 package cz.jpalcut.pia.model;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -21,11 +23,20 @@ public class Account implements Serializable {
     @Column(name = "blocked_balance")
     private Double blockedBalance;
 
-    @Column(name = "active")
-    private Boolean active;
-
     @Column(name = "card_number")
     private String cardNumber;
+
+    @Nullable
+    @Column(name = "international_payment")
+    private Boolean internationalPayment;
+
+    @Nullable
+    @Column(name = "limit_payment")
+    private Double limitPayment;
+
+    @Nullable
+    @Column(name = "card_pin")
+    private String cardPin;
 
     @ManyToOne
     @JoinColumn(name="user_id")
@@ -55,14 +66,6 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     public String getCardNumber() {
         return cardNumber;
     }
@@ -85,5 +88,29 @@ public class Account implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getInternationalPayment() {
+        return internationalPayment;
+    }
+
+    public void setInternationalPayment(Boolean internationalPayment) {
+        this.internationalPayment = internationalPayment;
+    }
+
+    public Double getLimitPayment() {
+        return limitPayment;
+    }
+
+    public void setLimitPayment(Double limitPayment) {
+        this.limitPayment = limitPayment;
+    }
+
+    public String getCardPin() {
+        return cardPin;
+    }
+
+    public void setCardPin(String cardPin) {
+        this.cardPin = cardPin;
     }
 }

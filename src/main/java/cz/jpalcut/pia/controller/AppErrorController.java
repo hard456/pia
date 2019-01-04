@@ -14,7 +14,7 @@ public class AppErrorController implements ErrorController {
 
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
-        ModelAndView model = new ModelAndView("error");
+        ModelAndView model = new ModelAndView("error/error");
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         if (status != null) {

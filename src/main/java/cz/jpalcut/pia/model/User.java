@@ -174,4 +174,9 @@ public class User implements Serializable{
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

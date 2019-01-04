@@ -19,16 +19,6 @@ public class AccountService {
         return accountDAO.findAccountByUser(user);
     }
 
-    public Account changeAccountStatus(Account account){
-        if(account.getActive()){
-            account.setActive(false);
-        }
-        else{
-            account.setActive(true);
-        }
-        return accountDAO.save(account);
-    }
-
     public Account getAccountByNumber(String number){
         return accountDAO.findAccountByNumber(number);
     }
@@ -39,6 +29,10 @@ public class AccountService {
 
     public Account save(Account account){
         return accountDAO.save(account);
+    }
+
+    public Account getAccountById(Integer id){
+        return accountDAO.findAccountById(id);
     }
 
 }

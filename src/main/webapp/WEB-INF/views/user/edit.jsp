@@ -7,8 +7,6 @@
 
 <%--URL--%>
 <c:set var="userEditIdtUrl" value="${s:mvcUrl('userController#edit-id').build()}" scope="page"/>
-<c:set var="userEditStatusUrl" value="${s:mvcUrl('userController#editstatus-id').build()}" scope="page"/>
-
 
 <t:template>
     <jsp:body>
@@ -26,26 +24,6 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                         ${account.number}/${bankCode}
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
-                                    Stav účtu
-                                </div>
-                                <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <c:if test="${account.active eq true}">
-                                        Aktivní
-                                        <a href="${userEditStatusUrl}${userForm.id}">
-                                            <input type="button" class="btn btn-danger btn-sm" value="Zablokovat"/>
-                                        </a>
-                                    </c:if>
-                                    <c:if test="${account.active eq false}">
-                                        Blokovaný
-                                        <a href="${userEditStatusUrl}${userForm.id}">
-                                            <input type="button" class="btn btn-success btn-sm" value="Aktivovat"/>
-                                        </a>
-                                    </c:if>
                                 </div>
                             </div>
                             <hr>

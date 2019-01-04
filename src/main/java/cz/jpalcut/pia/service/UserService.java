@@ -115,9 +115,11 @@ public class UserService implements UserDetailsService {
 
         Account account = new Account();
         account.setUser(user);
-        account.setActive(true);
         account.setBalance(0.00);
         account.setBlockedBalance(0.00);
+        account.setInternationalPayment(false);
+        account.setLimitPayment(0.00);
+        account.setCardPin(Utils.hashPassword(Utils.generateNumber(5)));
 
         //Generování čísla účtu
         while(true){

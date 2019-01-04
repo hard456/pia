@@ -54,6 +54,8 @@
 
 <c:set var="accountAccountUrl" value="${s:mvcUrl('accountController#account').build()}" scope="page"/>
 
+<c:set var="userRequestListUrl" value="${s:mvcUrl('userRequestController#list').build()}" scope="page"/>
+
 <c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}" scope="page"/>
 
 <!-- DEFAULT MENU-->
@@ -150,6 +152,11 @@
                 <li class="nav-item">
                     <a class="nav-link navbar-user-color ${currentUrl == userListUrl ? ' active-link2' : ''}" href="${userListUrl}">
                         Uživatelé
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navbar-user-color ${currentUrl == userRequestListUrl ? ' active-link2' : ''}" href="${userRequestListUrl}">
+                        Žádosti
                     </a>
                 </li>
             </ul>
