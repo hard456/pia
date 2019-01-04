@@ -13,8 +13,8 @@
     <jsp:body>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-style">
-                    <h6 class="card-header card-header-style mb-5">Detail uživatele</h6>
+                <div class="card card-style mb-5">
+                    <h6 class="card-header card-header-style">Detail uživatele</h6>
                     <div class="card-body">
 
                         <form:form modelAttribute="userForm"
@@ -51,7 +51,7 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <fmt:formatNumber type="number" minFractionDigits="2"
                                                       maxFractionDigits="2"
-                                                      value="${account.limitPayment}"/> CZK
+                                                      value="${account.limitBelow}"/> CZK
                                 </div>
                             </div>
                             <hr>
@@ -137,6 +137,7 @@
                                     <form:errors class="text-danger" path="email"/>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Uložit

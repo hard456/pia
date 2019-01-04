@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6 col-lg-6">
                                 <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
-                                                  value="${account.limitPayment}"/> CZK
+                                                  value="${account.limitBelow}"/> CZK
                             </div>
                         </div>
                         <hr>
@@ -112,7 +112,7 @@
                                 <div class="row">
 
                                     <c:choose>
-                                        <c:when test="${item.type == 'change_international_payment'}">
+                                        <c:when test="${item.type == 'international_payment'}">
                                             <div class="col-sm-12 col-md-3 col-lg-5 align-self-center">
                                                 Mezinárodní platba kartou
                                             </div>
@@ -198,10 +198,10 @@
                         <hr>
                         <form action="${pageContext.request.contextPath}/account/changeValueLimitBelow/${account.id}" method="post">
                             <div class="row">
-                                <div class="col-sm-12 col-md-3 col-lg-5 align-self-center">
+                                <div class="col-sm-12 col-md-3 col-lg-5 align-self-center mt-2">
                                     Povolení částky do mínusu
                                 </div>
-                                <div class="col-sm-12 col-md-3 col-lg-4">
+                                <div class="col-sm-12 col-md-3 col-lg-4 mt-2">
                                     <select name="value" class="form-control">
                                         <option value="0.00">0.00 CZK</option>
                                         <option value="2000.00">2,000.00 CZK</option>
@@ -209,14 +209,13 @@
                                         <option value="10000.00">10,000.00 CZK</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-12 col-md-3 col-lg-3 align-self-center text-right">
+                                <div class="col-sm-12 col-md-3 col-lg-3 align-self-center text-right mt-2">
 
                                     <input type="submit" class="btn btn-primary btn-sm button_primary_new"
                                            value="Odeslat">
                                 </div>
                             </div>
                         </form>
-                        <hr>
                     </div>
                 </div>
 

@@ -1,12 +1,11 @@
 package cz.jpalcut.pia.service;
 
 import cz.jpalcut.pia.config.AppUser;
-import cz.jpalcut.pia.dao.AccountDAO;
-import cz.jpalcut.pia.dao.RoleDAO;
 import cz.jpalcut.pia.dao.UserDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Role;
 import cz.jpalcut.pia.model.User;
+import cz.jpalcut.pia.utils.Enum;
 import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -110,7 +109,7 @@ public class UserService implements UserDetailsService {
         user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
 
         //Přiřazení rolí uživateli
-        user.setRoleList(roleService.getRoleListByName("USER"));
+        user.setRoleList(roleService.getRoleListByName(Enum.Role.valueOf("USER").toString()));
         user = userDAO.save(user);
 
         Account account = new Account();
@@ -118,7 +117,7 @@ public class UserService implements UserDetailsService {
         account.setBalance(0.00);
         account.setBlockedBalance(0.00);
         account.setInternationalPayment(false);
-        account.setLimitPayment(0.00);
+        account.setLimitBelow(0.00);
         account.setCardPin(Utils.hashPassword(Utils.generateNumber(5)));
 
         //Generování čísla účtu

@@ -101,6 +101,7 @@
                                     <form:errors class="text-danger" path="message"/>
                                 </div>
                             </div>
+                            <hr>
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                     <button type="submit" class="btn btn-primary btn-sm button_primary_new">Upravit

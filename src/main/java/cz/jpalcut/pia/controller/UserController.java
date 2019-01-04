@@ -6,6 +6,7 @@ import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.CaptchaService;
 import cz.jpalcut.pia.service.StateService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -73,7 +74,7 @@ public class UserController {
     public ModelAndView showUserListPage(Pageable pageable)
     {
         ModelAndView model = new ModelAndView("user/list");
-        Page<User> pages = userService.getAllUsersByRolePageable("USER", pageable);
+        Page<User> pages = userService.getAllUsersByRolePageable(Enum.Role.valueOf("USER").toString(), pageable);
         model.addObject("pagination", pages);
         model.addObject("users",pages.getContent());
         return model;

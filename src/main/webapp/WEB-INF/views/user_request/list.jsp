@@ -40,7 +40,7 @@
                                         <div class="col-sm-12 col-md-3 col-lg-3 align-self-center">${item.account.number}/${bankCode}</div>
 
                                         <c:choose>
-                                            <c:when test="${item.type == 'change_international_payment'}">
+                                            <c:when test="${item.type == 'international_payment'}">
                                                 <div class="col-sm-12 col-md-3 col-lg-4 align-self-center">
                                                     Mezinárodní platba kartou
                                                 </div>

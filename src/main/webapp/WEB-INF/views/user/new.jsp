@@ -104,6 +104,7 @@
                                 <form:errors class="text-danger" path="email"/>
                             </div>
                         </div>
+                        <hr>
                         <div class="row mb-2">
                             <div class="col-sm-12 col-md-12 col-lg-12 text-right">
                                 <button class="g-recaptcha btn btn-primary btn-sm button_primary_new"

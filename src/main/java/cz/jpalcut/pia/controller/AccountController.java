@@ -6,6 +6,7 @@ import cz.jpalcut.pia.model.UserRequest;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +65,7 @@ public class AccountController {
             return model;
         }
         else{
-            if(userRequestService.getUserRequestByTypeAndAccount("change_international_payment", account) != null){
+            if(userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString(), account) != null){
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
@@ -73,7 +74,7 @@ public class AccountController {
             UserRequest request = new UserRequest();
             request.setAccount(account);
             request.setValue(null);
-            request.setType("change_international_payment");
+            request.setType(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString());
             userRequestService.saveUserRequest(request);
         }
 
@@ -106,13 +107,13 @@ public class AccountController {
             return model;
         }
         else{
-            if(userRequestService.getUserRequestByTypeAndAccount("change_limit", account) != null){
+            if(userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString(), account) != null){
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
                 return model;
             }
-            if(account.getLimitPayment().equals(value)){
+            if(account.getLimitBelow().equals(value)){
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Nelze poslat požadavek na stejnou částku jako je nastavena.");
@@ -121,7 +122,7 @@ public class AccountController {
             UserRequest request = new UserRequest();
             request.setAccount(account);
             request.setValue(value);
-            request.setType("change_limit");
+            request.setType(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString());
             userRequestService.saveUserRequest(request);
         }
 

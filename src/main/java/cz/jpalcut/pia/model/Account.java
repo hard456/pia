@@ -26,12 +26,11 @@ public class Account implements Serializable {
     @Column(name = "card_number")
     private String cardNumber;
 
-    @Nullable
     @Column(name = "international_payment")
     private Boolean internationalPayment;
 
-    @Column(name = "limit_payment")
-    private Double limitPayment;
+    @Column(name = "limit_below")
+    private Double limitBelow;
 
     @Nullable
     @Column(name = "card_pin")
@@ -97,12 +96,12 @@ public class Account implements Serializable {
         this.internationalPayment = internationalPayment;
     }
 
-    public Double getLimitPayment() {
-        return limitPayment;
+    public Double getLimitBelow() {
+        return limitBelow;
     }
 
-    public void setLimitPayment(Double limitPayment) {
-        this.limitPayment = limitPayment;
+    public void setLimitBelow(Double limitBelow) {
+        this.limitBelow = limitBelow;
     }
 
     public String getCardPin() {

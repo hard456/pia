@@ -40,7 +40,7 @@
                         </div>
                         <hr>
                         <c:choose>
-                            <c:when test="${request.type == 'change_international_payment'}">
+                            <c:when test="${request.type == 'international_payment'}">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                         Typ žádosti
@@ -83,7 +83,7 @@
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-6">
                                         <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2"
-                                                          value="${request.account.limitPayment}"/> CZK
+                                                          value="${request.account.limitBelow}"/> CZK
                                     </div>
                                 </div>
                                 <hr>

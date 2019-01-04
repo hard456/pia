@@ -75,7 +75,6 @@
                                     ${transaction.message}
                             </div>
                         </div>
-                        <hr>
 
                     </div>
                 </div>

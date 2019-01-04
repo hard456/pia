@@ -104,7 +104,7 @@ public class TransactionController {
         }
 
         //Kontrola stavu peněž na účtu po odečtení částky transakce
-        if((account.getBalance()+account.getLimitPayment()-account.getBlockedBalance()-transaction.getValue()) < 0.0){
+        if((account.getBalance()+account.getLimitBelow()-account.getBlockedBalance()-transaction.getValue()) < 0.0){
 
             //flash message danger
             model.addObject("flashMessageSuccess",false);

@@ -8,6 +8,7 @@ import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.RoleService;
 import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -84,8 +85,8 @@ public class UserRequestController {
 
         Account account = userRequest.getAccount();
 
-        if(userRequest.getType().equals("change_limit")){
-            account.setLimitPayment(userRequest.getValue());
+        if(userRequest.getType().equals(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString())){
+            account.setLimitBelow(userRequest.getValue());
             accountService.save(account);
 
             //flash message success
@@ -93,7 +94,7 @@ public class UserRequestController {
             redirectAttributes.addFlashAttribute("flashMessageText", "Limit účtu pod nulu byl změněn.");
 
         }
-        else if(userRequest.getType().equals("change_international_payment")){
+        else if(userRequest.getType().equals(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString())){
             if(account.getInternationalPayment())   {
                 account.setInternationalPayment(false);
                 //flash message success
@@ -126,7 +127,7 @@ public class UserRequestController {
         if(userRequest == null){
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
-            if(user.getRoleList().contains(roleService.getRoleByName("ADMIN"))){
+            if(user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))){
                 model.setViewName("redirect:/request/list");
                 return model;
             }
@@ -140,7 +141,7 @@ public class UserRequestController {
         if(user.getId().equals(userRequest.getAccount().getUser().getId())){
             model.setViewName("redirect:/account");
         }
-        else if (user.getRoleList().contains(roleService.getRoleByName("ADMIN"))){
+        else if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))){
             model.setViewName("redirect:/request/list");
         }
         else{
