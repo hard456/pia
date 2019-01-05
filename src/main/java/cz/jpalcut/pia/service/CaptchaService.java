@@ -21,6 +21,7 @@ public class CaptchaService implements ICaptchaService {
 
     /**
      * Konstruktor třídy
+     *
      * @param captchaSettings CaptchaSettings
      */
     @Autowired

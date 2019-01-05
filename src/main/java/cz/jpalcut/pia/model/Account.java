@@ -52,6 +52,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí id bankovního účtu
+     *
      * @return id
      */
     public Integer getId() {
@@ -60,6 +61,7 @@ public class Account implements Serializable {
 
     /**
      * Změní id bankovního účtu
+     *
      * @param id id bankovního účtu
      */
     public void setId(Integer id) {
@@ -68,6 +70,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí číslo bankovního účtu
+     *
      * @return číslo bankovního účtu
      */
     public String getNumber() {
@@ -76,6 +79,7 @@ public class Account implements Serializable {
 
     /**
      * Změní číslo bankovního účtu
+     *
      * @param number číslo bankovního účtu
      */
     public void setNumber(String number) {
@@ -84,6 +88,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí zůstatek na účtu
+     *
      * @return zůstatek na účtu
      */
     public Double getBalance() {
@@ -92,6 +97,7 @@ public class Account implements Serializable {
 
     /**
      * Změní zůstatek na účtu
+     *
      * @param balance zůstatek ke změně
      */
     public void setBalance(Double balance) {
@@ -100,6 +106,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí číslo kreditní karty
+     *
      * @return
      */
     public String getCardNumber() {
@@ -108,6 +115,7 @@ public class Account implements Serializable {
 
     /**
      * Změní číslo kreditní karty
+     *
      * @param cardNumber číslo kreditní karty
      */
     public void setCardNumber(String cardNumber) {
@@ -116,6 +124,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí hodnotu blokované částky účtu
+     *
      * @return blokovaná částka
      */
     public Double getBlockedBalance() {
@@ -124,6 +133,7 @@ public class Account implements Serializable {
 
     /**
      * Změní hodnotu blokované částky účtu
+     *
      * @param blockedBalance částka ke změně
      */
     public void setBlockedBalance(Double blockedBalance) {
@@ -132,6 +142,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí uživatele účtu
+     *
      * @return uživatel
      */
     public User getUser() {
@@ -140,6 +151,7 @@ public class Account implements Serializable {
 
     /**
      * Změní uživatele účtu
+     *
      * @param user uživatel
      */
     public void setUser(User user) {
@@ -148,6 +160,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí mezinárodní platbu kartou
+     *
      * @return true - povoleno, false - zakázáno
      */
     public Boolean getInternationalPayment() {
@@ -156,6 +169,7 @@ public class Account implements Serializable {
 
     /**
      * Změní nastavení mezinárodní platby kartou
+     *
      * @param internationalPayment true - povoleno, false - zakázáno
      */
     public void setInternationalPayment(Boolean internationalPayment) {
@@ -164,6 +178,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí limit povolení platby pod 0.00
+     *
      * @return limit
      */
     public Double getLimitBelow() {
@@ -172,6 +187,7 @@ public class Account implements Serializable {
 
     /**
      * Nastaví limit povolení platby pod 0.00
+     *
      * @param limitBelow limit
      */
     public void setLimitBelow(Double limitBelow) {
@@ -180,6 +196,7 @@ public class Account implements Serializable {
 
     /**
      * Vrátí pin kreditní karty
+     *
      * @return pin karty
      */
     public String getCardPin() {
@@ -188,6 +205,7 @@ public class Account implements Serializable {
 
     /**
      * Změní pin kreditní karty
+     *
      * @param cardPin pin karty
      */
     public void setCardPin(String cardPin) {

@@ -34,6 +34,7 @@ public interface UserDAO extends JpaRepository<User, Integer> {
 
     /**
      * Vrátí uživatele podle id
+     *
      * @param id id uživatele
      * @return uživatel
      */

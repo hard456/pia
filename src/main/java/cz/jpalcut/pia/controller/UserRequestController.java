@@ -38,11 +38,12 @@ public class UserRequestController {
 
     /**
      * Konstruktor třídy
+     *
      * @param userRequestService UserRequestService
-     * @param bankConfig BankConfig
-     * @param accountService AccountService
-     * @param userService UserService
-     * @param roleService RoleService
+     * @param bankConfig         BankConfig
+     * @param accountService     AccountService
+     * @param userService        UserService
+     * @param roleService        RoleService
      */
     @Autowired
     public UserRequestController(UserRequestService userRequestService, BankConfig bankConfig, AccountService accountService,

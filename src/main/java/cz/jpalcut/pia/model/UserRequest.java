@@ -34,6 +34,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Vrátí id požadavku
+     *
      * @return id požadavku
      */
     public Integer getId() {
@@ -42,6 +43,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Změni id požadavku
+     *
      * @param id id požadavku
      */
     public void setId(Integer id) {
@@ -50,6 +52,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Vrátí typ požadavku
+     *
      * @return typ požadavku
      */
     public String getType() {
@@ -58,6 +61,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Změní typ požadavku
+     *
      * @param type typo požadavku
      */
     public void setType(String type) {
@@ -66,6 +70,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Vrátí hodnotu požadavku
+     *
      * @return hodnota požadavku
      */
     public Double getValue() {
@@ -74,6 +79,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Změní hodnotu požadavku
+     *
      * @param value hodnota požadavku
      */
     public void setValue(Double value) {
@@ -82,6 +88,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Vrátí bankovní účet požadavku
+     *
      * @return bankovní účet
      */
     public Account getAccount() {
@@ -90,6 +97,7 @@ public class UserRequest implements Serializable {
 
     /**
      * Změní bankovní účet požadavku
+     *
      * @param account bankovní účet
      */
     public void setAccount(Account account) {

@@ -21,6 +21,7 @@ public class State implements Serializable {
 
     /**
      * Vrátí id státu
+     *
      * @return id státu
      */
     public Integer getId() {
@@ -29,6 +30,7 @@ public class State implements Serializable {
 
     /**
      * Změní id státu
+     *
      * @param id id státu
      */
     public void setId(Integer id) {
@@ -37,6 +39,7 @@ public class State implements Serializable {
 
     /**
      * Vrátí název státu
+     *
      * @return název státu
      */
     public String getName() {
@@ -45,6 +48,7 @@ public class State implements Serializable {
 
     /**
      * Změní název státu
+     *
      * @param name název státu
      */
     public void setName(String name) {

@@ -20,6 +20,7 @@ public class RoleService implements IRoleService {
 
     /**
      * Konstruktor třídy
+     *
      * @param roleDAO RoleDAO
      */
     @Autowired

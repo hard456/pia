@@ -23,6 +23,7 @@ public class UserRequestService implements IUserRequestService {
 
     /**
      * Konstruktor třídy
+     *
      * @param userRequestDAO UserRequestDAO
      */
     @Autowired

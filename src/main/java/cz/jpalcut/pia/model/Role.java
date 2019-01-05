@@ -26,6 +26,7 @@ public class Role implements Serializable {
 
     /**
      * Vrátí id role
+     *
      * @return id role
      */
     public int getId() {
@@ -34,6 +35,7 @@ public class Role implements Serializable {
 
     /**
      * Změní id role
+     *
      * @param id id role
      */
     public void setId(int id) {
@@ -42,6 +44,7 @@ public class Role implements Serializable {
 
     /**
      * Vrátí název role
+     *
      * @return název role
      */
     public String getName() {
@@ -50,6 +53,7 @@ public class Role implements Serializable {
 
     /**
      * Změní název role
+     *
      * @param name název role
      */
     public void setName(String name) {
@@ -58,6 +62,7 @@ public class Role implements Serializable {
 
     /**
      * Vrátí list uživatelů s touto rolí
+     *
      * @return seznam uživatelů
      */
     public List<User> getUsers() {
@@ -66,6 +71,7 @@ public class Role implements Serializable {
 
     /**
      * Změní seznam uživatelů pro roli
+     *
      * @param users seznam uživatelů
      */
     public void setUsers(List<User> users) {

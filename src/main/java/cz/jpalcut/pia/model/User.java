@@ -91,6 +91,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí id uživatele
+     *
      * @return id uživatele
      */
     public Integer getId() {
@@ -99,6 +100,7 @@ public class User implements Serializable {
 
     /**
      * Změní id uživatele
+     *
      * @param id id uživatele
      */
     public void setId(int id) {
@@ -107,6 +109,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí křestní jméno uživatele
+     *
      * @return křestní jméno
      */
     public String getFirstname() {
@@ -115,6 +118,7 @@ public class User implements Serializable {
 
     /**
      * Změní křestní jméno uživatele
+     *
      * @param firstname křestní jméno
      */
     public void setFirstname(String firstname) {
@@ -123,6 +127,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí příjmení uživatele
+     *
      * @return příjmení uživatele
      */
     public String getLastname() {
@@ -131,6 +136,7 @@ public class User implements Serializable {
 
     /**
      * Změní příjmení uživatele
+     *
      * @param lastname příjmení uživatele
      */
     public void setLastname(String lastname) {
@@ -139,6 +145,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí email uživatele
+     *
      * @return email
      */
     public String getEmail() {
@@ -147,6 +154,7 @@ public class User implements Serializable {
 
     /**
      * Změní email uživatele
+     *
      * @param email email
      */
     public void setEmail(String email) {
@@ -155,6 +163,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí přihlašovací login uživatele
+     *
      * @return login
      */
     public String getLoginId() {
@@ -163,6 +172,7 @@ public class User implements Serializable {
 
     /**
      * Změní přihlašovací login uživatele
+     *
      * @param loginId login
      */
     public void setLoginId(String loginId) {
@@ -171,6 +181,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí přihlašovací heslo uživatele
+     *
      * @return heslo
      */
     public String getPin() {
@@ -179,6 +190,7 @@ public class User implements Serializable {
 
     /**
      * Změní heslo uživatele
+     *
      * @param pin heslo
      */
     public void setPin(String pin) {
@@ -187,6 +199,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí rodné číslo uživatele
+     *
      * @return rodné číslo
      */
     public String getPid() {
@@ -195,6 +208,7 @@ public class User implements Serializable {
 
     /**
      * Změní rodné číslo
+     *
      * @param pid rodné číslo
      */
     public void setPid(String pid) {
@@ -203,6 +217,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí adresu uživatele
+     *
      * @return adresa
      */
     public String getAddress() {
@@ -211,6 +226,7 @@ public class User implements Serializable {
 
     /**
      * Změní adresu uživatele
+     *
      * @param address adresa
      */
     public void setAddress(String address) {
@@ -219,6 +235,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí číslo popisné
+     *
      * @return číslo popisné
      */
     public String getAddressNumber() {
@@ -227,6 +244,7 @@ public class User implements Serializable {
 
     /**
      * Změní číslo popisné
+     *
      * @param addressNumber číslo popisné
      */
     public void setAddressNumber(String addressNumber) {
@@ -235,6 +253,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí PSČ
+     *
      * @return PSČ
      */
     public String getZipCode() {
@@ -243,6 +262,7 @@ public class User implements Serializable {
 
     /**
      * Změní PSČ uživatele
+     *
      * @param zipCode PSČ
      */
     public void setZipCode(String zipCode) {
@@ -251,6 +271,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí stát uživatele
+     *
      * @return stát
      */
     public State getState() {
@@ -259,6 +280,7 @@ public class User implements Serializable {
 
     /**
      * Změní stát uživatele
+     *
      * @param state stát
      */
     public void setState(State state) {
@@ -267,6 +289,7 @@ public class User implements Serializable {
 
     /**
      * Vrátí seznam rolí uživatele
+     *
      * @return seznam rolí
      */
     public List<Role> getRoleList() {
@@ -275,6 +298,7 @@ public class User implements Serializable {
 
     /**
      * Změní seznam rolí uživatele
+     *
      * @param roleList seznam rolí
      */
     public void setRoleList(List<Role> roleList) {

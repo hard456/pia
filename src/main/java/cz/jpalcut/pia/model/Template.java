@@ -74,6 +74,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí id šablony
+     *
      * @return id šablony
      */
     public Integer getId() {
@@ -82,6 +83,7 @@ public class Template implements Serializable {
 
     /**
      * Změní id šablony
+     *
      * @param id id šablony
      */
     public void setId(Integer id) {
@@ -90,6 +92,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí číslo účtu
+     *
      * @return číslo účtu
      */
     public String getNumber() {
@@ -98,6 +101,7 @@ public class Template implements Serializable {
 
     /**
      * Změní číslo účtu
+     *
      * @param number číslo účtu
      */
     public void setNumber(String number) {
@@ -106,6 +110,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí kód banky
+     *
      * @return kód banky
      */
     public String getCode() {
@@ -114,6 +119,7 @@ public class Template implements Serializable {
 
     /**
      * Změní kód banky
+     *
      * @param code kód banky
      */
     public void setCode(String code) {
@@ -122,6 +128,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí částku uloženou v šabloně
+     *
      * @return částka
      */
     public Double getValue() {
@@ -130,6 +137,7 @@ public class Template implements Serializable {
 
     /**
      * Změní částku v šabloně
+     *
      * @param value částka
      */
     public void setValue(Double value) {
@@ -138,6 +146,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí variabilní symbol
+     *
      * @return variabilní symbol
      */
     public String getVariableSymbol() {
@@ -146,6 +155,7 @@ public class Template implements Serializable {
 
     /**
      * Změní variabilní symbol
+     *
      * @param variableSymbol variabilní symbol
      */
     public void setVariableSymbol(String variableSymbol) {
@@ -154,6 +164,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí konstantní symbol
+     *
      * @return konstantní symbol
      */
     public String getConstantSymbol() {
@@ -162,6 +173,7 @@ public class Template implements Serializable {
 
     /**
      * Změní konstantní symbol
+     *
      * @param constantSymbol konstantní symbol
      */
     public void setConstantSymbol(String constantSymbol) {
@@ -170,6 +182,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí specifický symbol
+     *
      * @return specifický symbol
      */
     public String getSpecificSymbol() {
@@ -178,6 +191,7 @@ public class Template implements Serializable {
 
     /**
      * Změní specifický symbol
+     *
      * @param specificSymbol specifický symbol
      */
     public void setSpecificSymbol(String specificSymbol) {
@@ -186,6 +200,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí zprávu pro příjemce
+     *
      * @return zpráva
      */
     public String getMessage() {
@@ -194,6 +209,7 @@ public class Template implements Serializable {
 
     /**
      * Změní zpravu pro příjemce
+     *
      * @param message zpráva
      */
     public void setMessage(String message) {
@@ -202,6 +218,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí název šablony
+     *
      * @return název šablony
      */
     public String getName() {
@@ -210,6 +227,7 @@ public class Template implements Serializable {
 
     /**
      * Změní název šablony
+     *
      * @param name název šablony
      */
     public void setName(String name) {
@@ -218,6 +236,7 @@ public class Template implements Serializable {
 
     /**
      * Vrátí bankovní účet šablony
+     *
      * @return
      */
     public Account getAccount() {
@@ -226,6 +245,7 @@ public class Template implements Serializable {
 
     /**
      * Změní bankovní účet šablony
+     *
      * @param account
      */
     public void setAccount(Account account) {

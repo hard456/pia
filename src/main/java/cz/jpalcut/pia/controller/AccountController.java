@@ -36,10 +36,11 @@ public class AccountController {
 
     /**
      * Konstruktor třídy
-     * @param userService UserService
-     * @param accountService AccountService
+     *
+     * @param userService        UserService
+     * @param accountService     AccountService
      * @param userRequestService UserRequestService
-     * @param bankConfig BankConfig
+     * @param bankConfig         BankConfig
      */
     @Autowired
     public AccountController(UserService userService, AccountService accountService,

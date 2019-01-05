@@ -33,6 +33,7 @@ public interface UserRequestDAO extends JpaRepository<UserRequest, Integer> {
 
     /**
      * Vrátí seznam požadavků uživatele podle bankovního účtu
+     *
      * @param account bankovní účet
      * @return seznam požadavků
      */
@@ -40,7 +41,8 @@ public interface UserRequestDAO extends JpaRepository<UserRequest, Integer> {
 
     /**
      * Vrátí požadavek uživatele podle typu a bankovního účtu
-     * @param type typ požadavku
+     *
+     * @param type    typ požadavku
      * @param account bankovní účet
      * @return uživatelský požadavek
      */

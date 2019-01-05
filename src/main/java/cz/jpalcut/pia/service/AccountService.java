@@ -20,6 +20,7 @@ public class AccountService implements IAccountService {
 
     /**
      * Konstruktor třídy
+     *
      * @param accountDAO AccountDAO
      */
     @Autowired

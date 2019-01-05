@@ -25,6 +25,7 @@ public class TemplateService implements ITemplateService {
 
     /**
      * Konstruktor třídy
+     *
      * @param templateDAO TemplateDAO
      */
     @Autowired

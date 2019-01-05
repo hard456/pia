@@ -84,6 +84,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí id transakce
+     *
      * @return id transakce
      */
     public Integer getId() {
@@ -92,6 +93,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní id transakce
+     *
      * @param id id transakce
      */
     public void setId(Integer id) {
@@ -100,6 +102,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí jestli se jedná o příjem nebo výdej
+     *
      * @return true - příjem, false - výdej
      */
     public Boolean getIncome() {
@@ -108,6 +111,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní příjem/výdej transakce
+     *
      * @param income true - příjem, false - výdej
      */
     public void setIncome(Boolean income) {
@@ -116,6 +120,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí číslo účtu
+     *
      * @return číslo účtu
      */
     public String getNumber() {
@@ -124,6 +129,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní číslo účtu
+     *
      * @param number číslo účtu
      */
     public void setNumber(String number) {
@@ -132,6 +138,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí kód banky
+     *
      * @return kód banky
      */
     public String getCode() {
@@ -140,6 +147,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní kód banky
+     *
      * @param code kód banky
      */
     public void setCode(String code) {
@@ -148,6 +156,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí částku transakce
+     *
      * @return
      */
     public Double getValue() {
@@ -156,6 +165,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní částku transakce
+     *
      * @param value
      */
     public void setValue(Double value) {
@@ -164,6 +174,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí datum splatnosti
+     *
      * @return datum splatnosti
      */
     public Date getDueDate() {
@@ -172,6 +183,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní datum splatnosti
+     *
      * @param dueDate datum splatnosti
      */
     public void setDueDate(Date dueDate) {
@@ -180,6 +192,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí variabilní symbol
+     *
      * @return variabilní symbol
      */
     public String getVariableSymbol() {
@@ -188,6 +201,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní variabilní symbol
+     *
      * @param variableSymbol variabilná symbol
      */
     public void setVariableSymbol(String variableSymbol) {
@@ -196,6 +210,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí konstantní symbol
+     *
      * @return konstantní symbol
      */
     public String getConstantSymbol() {
@@ -204,6 +219,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní konstantní symbol
+     *
      * @param constantSymbol konstantní symbol
      */
     public void setConstantSymbol(String constantSymbol) {
@@ -212,6 +228,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí specifický symbol
+     *
      * @return specifický symbol
      */
     public String getSpecificSymbol() {
@@ -220,6 +237,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní specifický symbol
+     *
      * @param specificSymbol specifický symbol
      */
     public void setSpecificSymbol(String specificSymbol) {
@@ -228,6 +246,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí zprávu pro příjemce
+     *
      * @return zpráva
      */
     public String getMessage() {
@@ -236,6 +255,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní zprávu pro příjemce
+     *
      * @param message zpráva
      */
     public void setMessage(String message) {
@@ -244,6 +264,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí datum provedení transakce
+     *
      * @return datum provedení transakce
      */
     public Date getProcessingDate() {
@@ -252,6 +273,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní datum provedení transakce
+     *
      * @param processingDate datum provedení transakce
      */
     public void setProcessingDate(Date processingDate) {
@@ -260,6 +282,7 @@ public class Transaction implements Serializable {
 
     /**
      * Vrátí bankovní účet transakce
+     *
      * @return bankovní účet transakce
      */
     public Account getAccount() {
@@ -268,6 +291,7 @@ public class Transaction implements Serializable {
 
     /**
      * Změní bankovní účet transakce
+     *
      * @param account bankovní účet
      */
     public void setAccount(Account account) {

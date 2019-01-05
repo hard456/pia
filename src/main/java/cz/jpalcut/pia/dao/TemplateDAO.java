@@ -26,6 +26,7 @@ public interface TemplateDAO extends JpaRepository<Template, Integer> {
 
     /**
      * Vrátí všechny šablony podle bankovního účtu
+     *
      * @param account bankovní účet
      * @return seznam šablon
      */
@@ -33,6 +34,7 @@ public interface TemplateDAO extends JpaRepository<Template, Integer> {
 
     /**
      * Vrátí šablonu podle id
+     *
      * @param id id šablony
      * @return šablona
      */

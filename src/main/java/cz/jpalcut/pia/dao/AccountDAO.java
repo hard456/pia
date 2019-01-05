@@ -37,6 +37,7 @@ public interface AccountDAO extends JpaRepository<Account, Integer> {
 
     /**
      * Vrátí bakovní účet podle id
+     *
      * @param id id bankovního účtu
      * @return bankovní účet
      */

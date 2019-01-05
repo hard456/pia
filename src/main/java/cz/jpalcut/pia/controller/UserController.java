@@ -45,9 +45,10 @@ public class UserController {
 
     /**
      * Konstruktor třídy
-     * @param stateService StateService
-     * @param userService UserService
-     * @param bankConfig BankConfig
+     *
+     * @param stateService   StateService
+     * @param userService    UserService
+     * @param bankConfig     BankConfig
      * @param accountService AccountService
      * @param captchaService CaptchaService
      */

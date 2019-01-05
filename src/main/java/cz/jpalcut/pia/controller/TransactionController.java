@@ -43,12 +43,13 @@ public class TransactionController {
 
     /**
      * Konstruktor třídy
+     *
      * @param transactionService TransactionService
-     * @param userService UserService
-     * @param accountService AccountService
-     * @param templateService TemplateService
-     * @param captchaService CaptchaService
-     * @param bankConfig BankConfig
+     * @param userService        UserService
+     * @param accountService     AccountService
+     * @param templateService    TemplateService
+     * @param captchaService     CaptchaService
+     * @param bankConfig         BankConfig
      */
     @Autowired
     public TransactionController(TransactionService transactionService, UserService userService,

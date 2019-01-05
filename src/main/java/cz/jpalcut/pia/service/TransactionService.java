@@ -33,7 +33,8 @@ public class TransactionService implements ITransactionService {
 
     /**
      * Konstruktor třídy
-     * @param userService UserService
+     *
+     * @param userService    UserService
      * @param accountService AccountService
      * @param transactionDAO TransactionService
      */

@@ -38,8 +38,9 @@ public class TemplateController {
 
     /**
      * Konstruktor třídy
-     * @param userService UserService
-     * @param accountService AccountService
+     *
+     * @param userService     UserService
+     * @param accountService  AccountService
      * @param templateService TemplateService
      */
     @Autowired

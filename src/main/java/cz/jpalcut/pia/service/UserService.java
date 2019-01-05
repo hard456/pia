@@ -40,9 +40,10 @@ public class UserService implements UserDetailsService, IUserService {
 
     /**
      * Konstruktor třídy
+     *
      * @param accountService AccountService
-     * @param roleService RoleService
-     * @param userDAO UserDAO
+     * @param roleService    RoleService
+     * @param userDAO        UserDAO
      */
     @Autowired
     public UserService(IAccountService accountService, IRoleService roleService, UserDAO userDAO) {

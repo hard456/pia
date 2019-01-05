@@ -20,6 +20,7 @@ public class StateService implements IStateService {
 
     /**
      * Konstruktor třídy
+     *
      * @param stateDAO StateDAO
      */
     @Autowired
