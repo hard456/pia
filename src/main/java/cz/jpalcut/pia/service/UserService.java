@@ -22,6 +22,9 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Slubža pro správu uživatelů
+ */
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
@@ -35,6 +38,13 @@ public class UserService implements UserDetailsService {
     @Autowired
     RoleService roleService;
 
+    /**
+     * Načtení uživatele Spring Security
+     *
+     * @param loginId přihlašovací login
+     * @return načtený uživatel Spring Security
+     * @throws UsernameNotFoundException vyjímka pro nenalezení uživatele
+     */
     @Override
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         User user = userDAO.findUserByLoginId(loginId);
@@ -57,12 +67,23 @@ public class UserService implements UserDetailsService {
         return userDetails;
     }
 
-    public User getUser(){
+    /**
+     * Vrátí přihlášeného uživatele
+     *
+     * @return přihlášený uživatel
+     */
+    public User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
     }
 
-    public User editUser(User newUser){
+    /**
+     * Upraví údaje aktuálně přihlášeného uživatele
+     *
+     * @param newUser uživatel k editaci
+     * @return uživatel
+     */
+    public User editUser(User newUser) {
         User user = getUser();
         user.setAddress(newUser.getAddress());
         user.setAddressNumber(newUser.getAddressNumber());
@@ -72,7 +93,14 @@ public class UserService implements UserDetailsService {
         return userDAO.save(user);
     }
 
-    public User editUserByAdmin(User user, User newUser){
+    /**
+     * Upravení uživatele adminem
+     *
+     * @param user    aktulní údaje uživatele
+     * @param newUser nové údaje uživatele
+     * @return úpravený uživatel
+     */
+    public User editUserByAdmin(User user, User newUser) {
         newUser.setId(user.getId());
         newUser.setPin(user.getPin());
         newUser.setLoginId(user.getLoginId());
@@ -80,35 +108,50 @@ public class UserService implements UserDetailsService {
         return userDAO.save(newUser);
     }
 
-    public List<User> getAllUsersByRole(String role){
-        return roleService.getRoleByName(role).getUsers();
-    }
-
-    public Page<User> getAllUsersByRolePageable(String role, Pageable pageable){
+    /**
+     * Vrátí stránku žádostí uživatelů k zobrazení podle omezení a role
+     *
+     * @param role     role uživatele
+     * @param pageable omezení pro výběr uživatelů
+     * @return stránka obsahující uživatele
+     */
+    public Page<User> getAllUsersByRolePageable(String role, Pageable pageable) {
         List<Role> roleList = roleService.getRoleListByName(role);
         return userDAO.findAllByRoleList(roleList, pageable);
     }
 
-    public User getUserById(Integer id){
+    /**
+     * Vrátí uživatele podle id
+     *
+     * @param id id uživatele
+     * @return uživatel
+     */
+    public User getUserById(Integer id) {
         return userDAO.findUserById(id);
     }
 
-    public User addUser(User user){
+    /**
+     * Přidání uživatele včetně vytvoření bankovního účtu a generování potřebných údajů
+     *
+     * @param user uživatel k přidání
+     * @return přidaný uživatel
+     */
+    public User addUser(User user) {
         String tmp;
 
-        //Generování přihlašovacího loginu uživatele
-        while(true){
+        //generování přihlašovacího loginu uživatele
+        while (true) {
             tmp = Utils.generateNumber(8);
-            if(userDAO.findUserByLoginId(tmp) == null){
+            if (userDAO.findUserByLoginId(tmp) == null) {
                 user.setLoginId(tmp);
                 break;
             }
         }
 
-        //Vytvoření hesla uživatele
+        //vytvoření hesla uživatele
         user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
 
-        //Přiřazení rolí uživateli
+        //přiřazení rolí uživateli
         user.setRoleList(roleService.getRoleListByName(Enum.Role.valueOf("USER").toString()));
         user = userDAO.save(user);
 
@@ -120,19 +163,19 @@ public class UserService implements UserDetailsService {
         account.setLimitBelow(0.00);
         account.setCardPin(Utils.hashPassword(Utils.generateNumber(5)));
 
-        //Generování čísla účtu
-        while(true){
+        //generování čísla účtu
+        while (true) {
             tmp = Utils.generateNumber(9);
-            if(accountService.getAccountByNumber(tmp) == null){
+            if (accountService.getAccountByNumber(tmp) == null) {
                 account.setNumber(tmp);
                 break;
             }
         }
 
-        //Generování čísla kreditní karty
-        while(true){
+        //generování čísla kreditní karty
+        while (true) {
             tmp = Utils.generateNumber(16);
-            if(accountService.getAccountByCardNumber(tmp) == null){
+            if (accountService.getAccountByCardNumber(tmp) == null) {
                 account.setCardNumber(tmp);
                 break;
             }

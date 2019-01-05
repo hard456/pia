@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Služba pro správu šablon
+ */
 @Service
 @Transactional
 public class TemplateService {
@@ -24,27 +27,52 @@ public class TemplateService {
     @Autowired
     AccountService accountService;
 
-    public void addTemplate(Template template){
-        template.setAccount(accountService.getAccount(userService.getUser()));
-        templateDAO.save(template);
-    }
-
-    public List<Template> getTemplatesByAccount(Account account){
-        return templateDAO.findAllByAccount(account);
-    }
-
-    public Template getTemplateById(Integer id){
-        return templateDAO.findTemplateById(id);
-    }
-
-    public Template editTemplate(Template template){
+    /**
+     * Uloží nebo edituje šablonu
+     *
+     * @param template šablona
+     * @return šablona
+     */
+    public Template saveTemplate(Template template) {
         return templateDAO.save(template);
     }
 
-    public void deleteTemplate(Template template){
+    /**
+     * Vrátí všechny šablony podle bankovního účtu
+     *
+     * @param account bankovní účet
+     * @return seznam šablon
+     */
+    public List<Template> getTemplatesByAccount(Account account) {
+        return templateDAO.findAllByAccount(account);
+    }
+
+    /**
+     * Vrátí šablonu podle id šablony
+     *
+     * @param id id šablony
+     * @return šablona
+     */
+    public Template getTemplateById(Integer id) {
+        return templateDAO.findTemplateById(id);
+    }
+
+    /**
+     * Smaže šablonu
+     *
+     * @param template šablona k smazání
+     */
+    public void deleteTemplate(Template template) {
         templateDAO.delete(template);
     }
 
+    /**
+     * Vrátí stránku šablon k zobrazení podle omezení a bankovního účtu
+     *
+     * @param account  bankovní účet
+     * @param pageable omezení pro výběr šablon
+     * @return stránka obsahující šablony
+     */
     public Page<Template> getTemplatesByAccountPageable(Account account, Pageable pageable) {
         return templateDAO.findAllByAccount(account, pageable);
     }

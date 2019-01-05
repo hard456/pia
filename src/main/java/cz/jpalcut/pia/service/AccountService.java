@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+/**
+ * Služba pro správu bankovních účtů
+ */
 @Service
 @Transactional
 public class AccountService {
@@ -15,23 +18,53 @@ public class AccountService {
     @Autowired
     AccountDAO accountDAO;
 
-    public Account getAccount(User user){
+    /**
+     * Vratí bankovní účet podle uživatele
+     *
+     * @param user uživatel
+     * @return bankovní účet
+     */
+    public Account getAccount(User user) {
         return accountDAO.findAccountByUser(user);
     }
 
-    public Account getAccountByNumber(String number){
+    /**
+     * Vrátí bankovní účet podle čísla účtu
+     *
+     * @param number číslo bankovního účtu
+     * @return bankovní účet
+     */
+    public Account getAccountByNumber(String number) {
         return accountDAO.findAccountByNumber(number);
     }
 
-    public Account getAccountByCardNumber(String number){
+    /**
+     * Vrátí bankovní účet podle čísla kreditní karty
+     *
+     * @param number číslo kreditnní karty
+     * @return bankovní účet
+     */
+    public Account getAccountByCardNumber(String number) {
         return accountDAO.findAccountByCardNumber(number);
     }
 
-    public Account save(Account account){
+    /**
+     * Uloží nebo úpraví bankovní účet
+     *
+     * @param account bankovní účet
+     * @return bankovní účet
+     */
+    public Account save(Account account) {
         return accountDAO.save(account);
     }
 
-    public Account getAccountById(Integer id){
+    /**
+     * Vrátí bankovní účet podle ID
+     *
+     * @param id indentifikace účtu
+     * @return bankovní účet
+     */
+    public Account getAccountById(Integer id) {
         return accountDAO.findAccountById(id);
     }
 

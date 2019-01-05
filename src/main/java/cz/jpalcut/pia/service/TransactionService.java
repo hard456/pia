@@ -14,6 +14,9 @@ import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Služba pro správu transakcí
+ */
 @Service
 @Transactional
 public class TransactionService {
@@ -27,19 +30,30 @@ public class TransactionService {
     @Autowired
     AccountService accountService;
 
-    public void addTransaction(Transaction transaction){
+    /**
+     * Uložení transakce včetně doplněný výchozích údajů pro vytvoření transakce
+     *
+     * @param transaction tranksace k uložení
+     * @return transakce
+     */
+    public Transaction addTransaction(Transaction transaction) {
         Account account = accountService.getAccount(userService.getUser());
-        account.setBlockedBalance(account.getBlockedBalance()+transaction.getValue());
+        account.setBlockedBalance(account.getBlockedBalance() + transaction.getValue());
         transaction.setProcessingDate(null);
         transaction.setIncome(false);
         transaction.setAccount(account);
-        transactionDAO.save(transaction);
+        return transactionDAO.save(transaction);
     }
 
-    public void addInterBankTransaction(Transaction firstTransaction){
+    /**
+     * Uložení dvou tranksací mezi bankou včetně doplnění potřebných výchozích údajů pro vytvoření transakce
+     *
+     * @param firstTransaction zadaná transakce uživatele
+     */
+    public void addInterBankTransaction(Transaction firstTransaction) {
         //první účet
         Account firstAccount = accountService.getAccount(userService.getUser());
-        firstAccount.setBlockedBalance(firstAccount.getBlockedBalance()+firstTransaction.getValue());
+        firstAccount.setBlockedBalance(firstAccount.getBlockedBalance() + firstTransaction.getValue());
         firstTransaction.setProcessingDate(null);
         firstTransaction.setIncome(false);
         firstTransaction.setAccount(firstAccount);
@@ -61,36 +75,57 @@ public class TransactionService {
         transactionDAO.save(secondTransaction);
     }
 
+    /**
+     * Pravidelné schvalování transakcí podle v opakujícím se čase podle fixedDelay
+     */
     @Scheduled(fixedDelay = 30000)
-    public void processTransactions(){
+    public void processTransactions() {
         Account account = null;
         List<Transaction> transactions = transactionDAO.findAllByProcessingDate(null);
         for (Transaction transaction : transactions) {
             transaction.setProcessingDate(new Date(System.currentTimeMillis()));
             account = transaction.getAccount();
 
-            if(transaction.getIncome()){
-                account.setBalance(account.getBalance()+transaction.getValue());
-            }
-            else{
-                account.setBalance(account.getBalance()-transaction.getValue());
-                account.setBlockedBalance(account.getBlockedBalance()-transaction.getValue());
+            if (transaction.getIncome()) {
+                account.setBalance(account.getBalance() + transaction.getValue());
+            } else {
+                account.setBalance(account.getBalance() - transaction.getValue());
+                account.setBlockedBalance(account.getBlockedBalance() - transaction.getValue());
             }
 
             transactionDAO.save(transaction);
         }
     }
 
-    public List<Transaction> getTransactionsByAccount(Account account){
+    /**
+     * Vrátí seznam transakcí podle bankovního účtu
+     *
+     * @param account bankování účet
+     * @return seznam transakcí
+     */
+    public List<Transaction> getTransactionsByAccount(Account account) {
         return transactionDAO.findAllByAccount(account);
     }
 
-    public Transaction getTransactionById(Integer id){
+    /**
+     * Vrátí transakci podle id
+     *
+     * @param id id transakce
+     * @return transakce
+     */
+    public Transaction getTransactionById(Integer id) {
         return transactionDAO.findTransactionById(id);
     }
 
+    /**
+     * Vrátí stránku transakcí k zobrazení podle omezení a bankovního účtu
+     *
+     * @param account  bankovní účet
+     * @param pageable omezení pro výběr transakcí
+     * @return stránka obsahující transakce
+     */
     public Page<Transaction> getTransactionsByAccountPageable(Account account, Pageable pageable) {
-            return transactionDAO.findAllByAccount(account, pageable);
+        return transactionDAO.findAllByAccount(account, pageable);
     }
 
 }

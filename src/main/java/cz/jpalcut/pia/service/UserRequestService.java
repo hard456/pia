@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Služba pro správu uživatelských žádostí
+ */
 @Service
 @Transactional
 public class UserRequestService {
@@ -18,27 +21,63 @@ public class UserRequestService {
     @Autowired
     UserRequestDAO userRequestDAO;
 
-    public Page<UserRequest> getAllUserRequestPageable(Pageable pageable){
+    /**
+     * Vrátí stránku žádostí uživatelů k zobrazení podle omezení
+     *
+     * @param pageable omezení pro výběr uživatelů
+     * @return stránka obsahující žádosti uživatele
+     */
+    public Page<UserRequest> getAllUserRequestPageable(Pageable pageable) {
         return userRequestDAO.findAll(pageable);
     }
 
-    public UserRequest getUserRequestById(Integer id){
+    /**
+     * Vrátí žádost uživatele podle id
+     *
+     * @param id id žádosti
+     * @return žádost uživatele
+     */
+    public UserRequest getUserRequestById(Integer id) {
         return userRequestDAO.findUserRequestById(id);
     }
 
-    public UserRequest saveUserRequest(UserRequest userRequest){
+    /**
+     * Uloží žádost uživatele
+     *
+     * @param userRequest žádost uživatele k uložení
+     * @return žádost uživatele
+     */
+    public UserRequest saveUserRequest(UserRequest userRequest) {
         return userRequestDAO.save(userRequest);
     }
 
-    public void deleteUserRequest(UserRequest userRequest){
+    /**
+     * Smaže žádost uživatele
+     *
+     * @param userRequest žádost uživatele k smazáí
+     */
+    public void deleteUserRequest(UserRequest userRequest) {
         userRequestDAO.delete(userRequest);
     }
 
-    public List<UserRequest> getUserRequestsByAcount(Account account){
+    /**
+     * Vrátí všechny žádosti uživatele podle bankovního účtu
+     *
+     * @param account bankovní účet
+     * @return seznam žádostí uživatele
+     */
+    public List<UserRequest> getUserRequestsByAcount(Account account) {
         return userRequestDAO.findAllByAccount(account);
     }
 
-    public UserRequest getUserRequestByTypeAndAccount(String type, Account account){
+    /**
+     * Vrátí žádost uživatele podle typu a bankovního účtu
+     *
+     * @param type    typ žádosti
+     * @param account bankovní účet
+     * @return žádost uživatele
+     */
+    public UserRequest getUserRequestByTypeAndAccount(String type, Account account) {
         return userRequestDAO.findUserRequestByTypeAndAccount(type, account);
     }
 

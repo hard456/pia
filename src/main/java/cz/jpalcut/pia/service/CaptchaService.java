@@ -10,6 +10,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
+/**
+ * Služba pro kontrolu Google Captcha
+ */
 @Service
 public class CaptchaService {
 
@@ -19,7 +22,14 @@ public class CaptchaService {
     @Autowired
     private RestOperations restTemplate;
 
-    public boolean processResponse(String response, String remoteIpAddress){
+    /**
+     * Pro ověření Google Captcha
+     *
+     * @param response        google.recaptcha.key.site
+     * @param remoteIpAddress ip adresa uživatele
+     * @return true - ověření v pořádku, false - ověření selhalo
+     */
+    public boolean processResponse(String response, String remoteIpAddress) {
         URI verifyUri = URI.create(String.format(
                 "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s&remoteip=%s",
                 captchaSettings.getSecret(), response, remoteIpAddress));
@@ -29,6 +39,11 @@ public class CaptchaService {
         return captchaResponse.isSuccess();
     }
 
+    /**
+     * RestTemplate pro Google Captcha
+     *
+     * @return vratí nový RestTemplate
+     */
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

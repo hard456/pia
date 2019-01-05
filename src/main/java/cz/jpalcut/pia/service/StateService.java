@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Služba pro správu států
+ */
 @Service
 @Transactional
 public class StateService {
@@ -15,7 +18,12 @@ public class StateService {
     @Autowired
     StateDAO stateDAO;
 
-    public List<State> getAllStates(){
+    /**
+     * Vrátí seznam všech států
+     *
+     * @return seznam států
+     */
+    public List<State> getAllStates() {
         return stateDAO.findAll();
     }
 

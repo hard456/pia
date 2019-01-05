@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Služba pro správu rolí uživatelů
+ */
 @Service
 @Transactional
 public class RoleService {
@@ -15,11 +18,23 @@ public class RoleService {
     @Autowired
     RoleDAO roleDAO;
 
-    public List<Role> getRoleListByName(String role){
+    /**
+     * Vrátí seznam rolí podle názvu role
+     *
+     * @param role název role
+     * @return seznam rolí
+     */
+    public List<Role> getRoleListByName(String role) {
         return roleDAO.findRoleListByName(role);
     }
 
-    public Role getRoleByName(String role){
+    /**
+     * Vrátí roli podle názvu role
+     *
+     * @param role název role
+     * @return role
+     */
+    public Role getRoleByName(String role) {
         return roleDAO.findByName(role);
     }
 
