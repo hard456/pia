@@ -45,8 +45,11 @@
                         Integer vulputate
                         sem a nibh rutrum consequat. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas
                         nulla, et sollicitudin
-                        sem purus in lacus. Sed ac dolor sit amet purus malesuada congue.
+                        sem purus in lacus. Sed ac dolor sit amet purus malesuada congue.<br>
 
+                        <label class="font-weight-bold mt-2">Kontakt</label><br>
+                        email: pozadavek@e-banking.cz<br>
+                        tel: +420 737 995 645
 
                     </div>
                 </div>
