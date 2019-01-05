@@ -9,12 +9,27 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-
+/**
+ * Rozhraní pro přístup k uživatelům
+ */
 @Repository
 public interface UserDAO extends JpaRepository<User, Integer> {
 
+    /**
+     * Vrátí seznam uživatelů podle omezení a rolí
+     *
+     * @param roleList seznam rolí uživatele
+     * @param pageable omezení pro výběr uživatelů
+     * @return stránku uživatelů
+     */
     Page<User> findAllByRoleList(List<Role> roleList, Pageable pageable);
 
+    /**
+     * Vrátí uživatele podle přihlašovacího id
+     *
+     * @param loginId přihlašovací id uživatele
+     * @return uživatel
+     */
     User findUserByLoginId(String loginId);
 
     User findUserById(Integer id);
