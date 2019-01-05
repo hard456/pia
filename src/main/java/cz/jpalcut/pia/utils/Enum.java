@@ -8,16 +8,27 @@ public class Enum {
     /**
      * Uživatelské role
      */
-    public enum Role{
+    public enum Role {
         ADMIN("ADMIN"),
         USER("USER");
 
+        //uživatelská role
         private String role;
 
+        /**
+         * Konstruktor výčtového typu enum pro role uživatele
+         *
+         * @param role role uživatele
+         */
         Role(String role) {
             this.role = role;
         }
 
+        /**
+         * Vrací roli uživatele
+         *
+         * @return role uživatele
+         */
         @Override
         public String toString() {
             return role;
@@ -27,16 +38,27 @@ public class Enum {
     /**
      * Typy požadavků na schválení adminem
      */
-    public enum UserRequestType{
+    public enum UserRequestType {
         LIMIT_BELOW("limit_below"),
         INTERNATIONAL_PAYMENT("international_payment");
 
+        //typ uživatelské žádosti
         private String type;
 
+        /**
+         * Konstruktor výčtového typu enum pro typ žádosti uživatele
+         *
+         * @param type typ žádosti
+         */
         UserRequestType(String type) {
             this.type = type;
         }
 
+        /**
+         * Vrací typ žádosti uživatele
+         *
+         * @return typ žádosti uživatele
+         */
         @Override
         public String toString() {
             return type;

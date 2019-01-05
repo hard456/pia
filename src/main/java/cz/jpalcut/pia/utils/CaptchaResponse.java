@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Pomocná třída pro zpracování odpovědi v podobě JSONu od Googlu na ověření Google Captcha
+ * zdroj: https://www.baeldung.com/spring-security-registration-captcha
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({"success", "challenge_ts", "hostname", "error-codes"})
