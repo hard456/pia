@@ -74,6 +74,7 @@ public class User implements Serializable {
     @Column(name = "zip_code")
     private String zipCode;
 
+    @Pattern(regexp="^(Muž|Žena)$", message = "Pohlaví může být muž nebo žena!")
     @NotNull(message = "Pohlaví musí být vybráno!")
     @Column(name = "sex")
     private String sex;
