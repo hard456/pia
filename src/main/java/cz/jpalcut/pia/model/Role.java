@@ -4,19 +4,24 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Tabulka rolí uživatelů
+ */
 @Entity
 @Table(schema = "public", name = "role")
 public class Role implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
+    //jméno role
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy="roleList")
+    //seznam uživatelů s touto rolí
+    @ManyToMany(mappedBy = "roleList")
     private List<User> users;
 
     public int getId() {

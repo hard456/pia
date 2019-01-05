@@ -5,39 +5,49 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Tabulka bankovních účtů
+ */
 @Entity
 @Table(schema = "public", name = "account")
 public class Account implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    //číslo účtu
     @Column(name = "number")
     private String number;
 
+    //zůstatek na účtu
     @Column(name = "balance")
     private Double balance;
 
+    //blokovaná suma nezpracovanými transakcemi
     @Column(name = "blocked_balance")
     private Double blockedBalance;
 
     @Column(name = "card_number")
     private String cardNumber;
 
+    //povolení nebo zamítnutí mezinárodní platby kartou
     @Column(name = "international_payment")
     private Boolean internationalPayment;
 
+    //limit do kterého může jít uživatel pod 0.00
     @Column(name = "limit_below")
     private Double limitBelow;
 
+    //pin karty
     @Nullable
     @Column(name = "card_pin")
     private String cardPin;
 
+    //vlastník účtu
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Integer getId() {

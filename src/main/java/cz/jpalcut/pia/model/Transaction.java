@@ -9,34 +9,41 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.sql.Date;
 
-
+/**
+ * Tabulka transakcí
+ */
 @Entity
 @Table(schema = "public", name = "transaction")
 public class Transaction implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    //příjem ano/ne
     @Column(name = "income")
     private Boolean income;
 
+    //číslo účtu
     @Size(min = 1, max = 17, message = "Číslo účtu musí mít 1-17 znaků!")
     @Pattern(regexp = "[\\d -]+", message = "Číslo účtu obsahuje nepovolené znaky!")
     @NotNull
     @Column(name = "number")
     private String number;
 
+    //kód účtu
     @Size(min = 4, max = 4, message = "Kód banky musí mít 4 znaky!")
     @Pattern(regexp = "^[0-9]*$", message = "Kód banky musí obsahovat pouze čísla!")
     @Column(name = "code")
     private String code;
 
+    //hodnota k poslání
     @NotNull(message = "Částka musí být vyplněna!")
     @Column(name = "value")
     private Double value;
 
+    //datum splatnosti
     @NotNull(message = "Datum splatnosti musí být vyplněn!")
     @Column(name = "due_date")
     private Date dueDate;
@@ -64,13 +71,15 @@ public class Transaction implements Serializable {
     @Column(name = "message")
     private String message;
 
+    //datum reálného zpracování transakce
     @Nullable
     @Column(name = "processing_date")
     private Date processingDate;
 
+    //účet ke kterému transakce patří
     @Nullable
     @ManyToOne
-    @JoinColumn(name="account_id")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     public Integer getId() {

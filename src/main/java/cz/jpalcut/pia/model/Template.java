@@ -8,31 +8,38 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+/**
+ * Tabulka šablon
+ */
 @Entity
 @Table(schema = "public", name = "template")
 public class Template implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    //název šablony
     @Size(min = 1, max = 50, message = "Název vzoru musí mít 1-50 znaků!")
     @NotNull
     @Column(name = "name")
     private String name;
 
+    //číslo účtu
     @Size(min = 1, max = 17, message = "Číslo účtu musí mít 1-17 znaků!")
     @Pattern(regexp = "[\\d -]+", message = "Číslo účtu obsahuje nepovolené znaky!")
     @NotNull
     @Column(name = "number")
     private String number;
 
+    //kód účtu
     @Size(min = 4, max = 4, message = "Kód banky musí mít 4 znaky!")
     @Pattern(regexp = "^[0-9]*$", message = "Kód banky musí obsahovat pouze čísla!")
     @Column(name = "code")
     private String code;
 
+    //hodnota k poslání
     @Nullable
     @Column(name = "value")
     private Double value;
@@ -62,7 +69,7 @@ public class Template implements Serializable {
 
     @Nullable
     @ManyToOne
-    @JoinColumn(name="account_id")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     public Integer getId() {

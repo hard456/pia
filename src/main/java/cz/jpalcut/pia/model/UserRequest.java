@@ -5,25 +5,31 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Tabulka požadavků uživatelů ke změně
+ */
 @Entity
 @Table(schema = "public", name = "user_request")
 public class UserRequest implements Serializable {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
+    //typ požadavku uživatele
     @Nullable
     @Column(name = "type")
     private String type;
 
+    //hodnota ke změnění
     @Nullable
     @Column(name = "value")
     private Double value;
 
+    //účet ke změně
     @ManyToOne
-    @JoinColumn(name="account_id")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     public Integer getId() {
