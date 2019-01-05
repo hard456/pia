@@ -54,6 +54,8 @@
 
 <c:set var="accountAccountUrl" value="${s:mvcUrl('accountController#account').build()}" scope="page"/>
 
+<c:set var="hometUrl" value="${s:mvcUrl('homeController#home').build()}" scope="page"/>
+
 <c:set var="userRequestListUrl" value="${s:mvcUrl('userRequestController#list').build()}" scope="page"/>
 
 <c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}" scope="page"/>
@@ -62,7 +64,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-bg">
 
     <div class="container-fluid container-max-width">
-        <a class="navbar-brand navbar-color">e-Banking</a>
+        <a href="${hometUrl}" class="navbar-brand navbar-color">e-Banking</a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +73,9 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <%-- další odkazy hlavního menu sem --%>
+                <li class="nav-item">
+                    <a class="nav-link navbar-color" href="${hometUrl}">O nás</a>
+                </li>
             </ul>
             <ul class="navbar-nav navbar-right">
 

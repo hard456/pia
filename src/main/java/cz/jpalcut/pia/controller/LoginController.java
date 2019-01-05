@@ -19,7 +19,7 @@ public class LoginController {
      * @param error parametr error GET požadavku
      * @return ModelAndView
      */
-    @RequestMapping(path = {"/login", "/"}, name = "login", method = RequestMethod.GET)
+    @RequestMapping(path = {"/login"}, name = "login", method = RequestMethod.GET)
     public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error) {
         ModelAndView model = new ModelAndView("authentication/login");
         model.addObject("activeLink", "login");

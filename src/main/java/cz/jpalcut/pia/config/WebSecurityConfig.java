@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //definování přístupu v aplikaci
         http.authorizeRequests()
                 //anonymní uživatel
-                .antMatchers("/", "/login", "/logoutSuccessful").anonymous()
+                .antMatchers("/login", "/logoutSuccessful").anonymous()
                 //všichni uživatelé
                 .antMatchers("/user", "/user/edit", "/logout", "/request/delete/{id}").authenticated()
                 //admin
