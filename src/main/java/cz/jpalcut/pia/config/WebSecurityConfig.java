@@ -11,6 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+/**
+ * Třída sloužící pro konfiguraci Spring Security
+ */
 @Configuration
 @EnableWebSecurity
 @EnableScheduling
@@ -19,17 +22,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userDetailsService;
 
+    /**
+     * Vratí BCryptPasswordEncoder
+     *
+     * @return BCryptPasswordEncoder
+     */
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-
+    /**
+     * Definuje způsob hashování hesla
+     *
+     * @param auth
+     * @throws Exception
+     */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
+    /**
+     * Konfigurace Spring Security - přihlašování a přístup ke stránkám
+     *
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -42,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //všichni uživatelé
                 .antMatchers("/user", "/user/edit", "/logout", "/request/delete/{id}").authenticated()
                 //admin
-                .antMatchers("/user/list","/user/new","/user/edit/{id}", "/user/{id}",
+                .antMatchers("/user/list", "/user/new", "/user/edit/{id}", "/user/{id}",
                         "/user/new/add", "/request/confirm/{id}").hasAuthority("ADMIN")
                 //user
                 .antMatchers("/account", "/transaction/**", "/template/**",
