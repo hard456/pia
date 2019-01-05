@@ -1,6 +1,7 @@
 package cz.jpalcut.pia.config;
 
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +20,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableScheduling
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private IUserService userService;
+
+    /**
+     * Konstruktor třídy
+     *
+     * @param userService UserService
+     */
     @Autowired
-    UserService userDetailsService;
+    public WebSecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     /**
      * Vratí BCryptPasswordEncoder
@@ -36,18 +46,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      * Definuje způsob hashování hesla
      *
      * @param auth
-     * @throws Exception
+     * @throws Exception vyjímka
      */
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService((UserService) userService).passwordEncoder(passwordEncoder());
     }
 
     /**
      * Konfigurace Spring Security - přihlašování a přístup ke stránkám
      *
-     * @param http
-     * @throws Exception
+     * @param http HttpSecurity
+     * @throws Exception vyjímka
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
