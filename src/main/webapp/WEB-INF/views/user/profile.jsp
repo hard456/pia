@@ -50,6 +50,34 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Pohlaví
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <c:choose>
+                                                <c:when test="${userForm.sex == 'Muž'}">
+                                                    <form:radiobutton path="sex" value="Muž" checked="checked"/>Muž
+                                                    <form:radiobutton path="sex" value="Žena"/>Žena
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <form:radiobutton path="sex" value="Muž" />Muž
+                                                    <form:radiobutton path="sex" value="Žena" checked="checked"/>Žena
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <form:errors class="text-danger" path="sex"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Adresa
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6">

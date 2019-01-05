@@ -74,6 +74,10 @@ public class User implements Serializable {
     @Column(name = "zip_code")
     private String zipCode;
 
+    @NotNull(message = "Pohlaví musí být vybráno!")
+    @Column(name = "sex")
+    private String sex;
+
     //stát
     @NotNull
     @ManyToOne
@@ -305,4 +309,21 @@ public class User implements Serializable {
         this.roleList = roleList;
     }
 
+    /**
+     * Vrátí pohlaví uživatele
+     *
+     * @return pohlaví
+     */
+    public String getSex() {
+        return sex;
+    }
+
+    /**
+     * Změní pohlaví uživatele
+     *
+     * @param sex pohlaví
+     */
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 }

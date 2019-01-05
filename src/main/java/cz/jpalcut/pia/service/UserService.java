@@ -106,6 +106,7 @@ public class UserService implements UserDetailsService, IUserService {
         user.setZipCode(newUser.getZipCode());
         user.setState(newUser.getState());
         user.setEmail(newUser.getEmail());
+        user.setSex(newUser.getSex());
         return userDAO.save(user);
     }
 
