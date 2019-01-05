@@ -89,104 +89,196 @@ public class User implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roleList;
 
+    /**
+     * Vrátí id uživatele
+     * @return id uživatele
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Změní id uživatele
+     * @param id id uživatele
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Vrátí křestní jméno uživatele
+     * @return křestní jméno
+     */
     public String getFirstname() {
         return firstname;
     }
 
+    /**
+     * Změní křestní jméno uživatele
+     * @param firstname křestní jméno
+     */
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
 
+    /**
+     * Vrátí příjmení uživatele
+     * @return příjmení uživatele
+     */
     public String getLastname() {
         return lastname;
     }
 
+    /**
+     * Změní příjmení uživatele
+     * @param lastname příjmení uživatele
+     */
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
+    /**
+     * Vrátí email uživatele
+     * @return email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Změní email uživatele
+     * @param email email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Vrátí přihlašovací login uživatele
+     * @return login
+     */
     public String getLoginId() {
         return loginId;
     }
 
+    /**
+     * Změní přihlašovací login uživatele
+     * @param loginId login
+     */
     public void setLoginId(String loginId) {
         this.loginId = loginId;
     }
 
+    /**
+     * Vrátí přihlašovací heslo uživatele
+     * @return heslo
+     */
     public String getPin() {
         return pin;
     }
 
+    /**
+     * Změní heslo uživatele
+     * @param pin heslo
+     */
     public void setPin(String pin) {
         this.pin = pin;
     }
 
+    /**
+     * Vrátí rodné číslo uživatele
+     * @return rodné číslo
+     */
     public String getPid() {
         return pid;
     }
 
+    /**
+     * Změní rodné číslo
+     * @param pid rodné číslo
+     */
     public void setPid(String pid) {
         this.pid = pid;
     }
 
+    /**
+     * Vrátí adresu uživatele
+     * @return adresa
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Změní adresu uživatele
+     * @param address adresa
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * Vrátí číslo popisné
+     * @return číslo popisné
+     */
     public String getAddressNumber() {
         return addressNumber;
     }
 
+    /**
+     * Změní číslo popisné
+     * @param addressNumber číslo popisné
+     */
     public void setAddressNumber(String addressNumber) {
         this.addressNumber = addressNumber;
     }
 
+    /**
+     * Vrátí PSČ
+     * @return PSČ
+     */
     public String getZipCode() {
         return zipCode;
     }
 
+    /**
+     * Změní PSČ uživatele
+     * @param zipCode PSČ
+     */
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 
+    /**
+     * Vrátí stát uživatele
+     * @return stát
+     */
     public State getState() {
         return state;
     }
 
+    /**
+     * Změní stát uživatele
+     * @param state stát
+     */
     public void setState(State state) {
         this.state = state;
     }
 
+    /**
+     * Vrátí seznam rolí uživatele
+     * @return seznam rolí
+     */
     public List<Role> getRoleList() {
         return roleList;
     }
 
+    /**
+     * Změní seznam rolí uživatele
+     * @param roleList seznam rolí
+     */
     public void setRoleList(List<Role> roleList) {
         this.roleList = roleList;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
 }

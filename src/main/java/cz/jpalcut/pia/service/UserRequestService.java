@@ -3,6 +3,7 @@ package cz.jpalcut.pia.service;
 import cz.jpalcut.pia.dao.UserRequestDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.UserRequest;
+import cz.jpalcut.pia.service.interfaces.IUserRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,10 +17,18 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserRequestService {
+public class UserRequestService implements IUserRequestService {
 
+    private UserRequestDAO userRequestDAO;
+
+    /**
+     * Konstruktor třídy
+     * @param userRequestDAO UserRequestDAO
+     */
     @Autowired
-    UserRequestDAO userRequestDAO;
+    public UserRequestService(UserRequestDAO userRequestDAO) {
+        this.userRequestDAO = userRequestDAO;
+    }
 
     /**
      * Vrátí stránku žádostí uživatelů k zobrazení podle omezení
@@ -27,6 +36,7 @@ public class UserRequestService {
      * @param pageable omezení pro výběr uživatelů
      * @return stránka obsahující žádosti uživatele
      */
+    @Override
     public Page<UserRequest> getAllUserRequestPageable(Pageable pageable) {
         return userRequestDAO.findAll(pageable);
     }
@@ -37,6 +47,7 @@ public class UserRequestService {
      * @param id id žádosti
      * @return žádost uživatele
      */
+    @Override
     public UserRequest getUserRequestById(Integer id) {
         return userRequestDAO.findUserRequestById(id);
     }
@@ -47,6 +58,7 @@ public class UserRequestService {
      * @param userRequest žádost uživatele k uložení
      * @return žádost uživatele
      */
+    @Override
     public UserRequest saveUserRequest(UserRequest userRequest) {
         return userRequestDAO.save(userRequest);
     }
@@ -56,6 +68,7 @@ public class UserRequestService {
      *
      * @param userRequest žádost uživatele k smazáí
      */
+    @Override
     public void deleteUserRequest(UserRequest userRequest) {
         userRequestDAO.delete(userRequest);
     }
@@ -66,6 +79,7 @@ public class UserRequestService {
      * @param account bankovní účet
      * @return seznam žádostí uživatele
      */
+    @Override
     public List<UserRequest> getUserRequestsByAcount(Account account) {
         return userRequestDAO.findAllByAccount(account);
     }
@@ -77,6 +91,7 @@ public class UserRequestService {
      * @param account bankovní účet
      * @return žádost uživatele
      */
+    @Override
     public UserRequest getUserRequestByTypeAndAccount(String type, Account account) {
         return userRequestDAO.findUserRequestByTypeAndAccount(type, account);
     }

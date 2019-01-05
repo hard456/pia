@@ -1,8 +1,12 @@
 package cz.jpalcut.pia.service;
 
+import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.dao.TransactionDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Transaction;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.ITransactionService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,23 +23,34 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class TransactionService {
+public class TransactionService implements ITransactionService {
 
-    @Autowired
-    TransactionDAO transactionDAO;
+    private TransactionDAO transactionDAO;
 
-    @Autowired
-    UserService userService;
+    private IUserService userService;
 
-    @Autowired
-    AccountService accountService;
+    private IAccountService accountService;
 
     /**
-     * Uložení transakce včetně doplněný výchozích údajů pro vytvoření transakce
+     * Konstruktor třídy
+     * @param userService UserService
+     * @param accountService AccountService
+     * @param transactionDAO TransactionService
+     */
+    @Autowired
+    public TransactionService(UserService userService, AccountService accountService, TransactionDAO transactionDAO) {
+        this.userService = userService;
+        this.accountService = accountService;
+        this.transactionDAO = transactionDAO;
+    }
+
+    /**
+     * Uložení transakci včetně doplněný výchozích údajů pro vytvoření transakce
      *
      * @param transaction tranksace k uložení
      * @return transakce
      */
+    @Override
     public Transaction addTransaction(Transaction transaction) {
         Account account = accountService.getAccount(userService.getUser());
         account.setBlockedBalance(account.getBlockedBalance() + transaction.getValue());
@@ -50,6 +65,7 @@ public class TransactionService {
      *
      * @param firstTransaction zadaná transakce uživatele
      */
+    @Override
     public void addInterBankTransaction(Transaction firstTransaction) {
         //první účet
         Account firstAccount = accountService.getAccount(userService.getUser());
@@ -76,9 +92,10 @@ public class TransactionService {
     }
 
     /**
-     * Pravidelné schvalování transakcí podle v opakujícím se čase podle fixedDelay
+     * Pravidelné schvalování transakcí podle v opakujícím se čase podle fixedDelayString
      */
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelayString = "${appvar.proccess_transaction_time}")
+    @Override
     public void processTransactions() {
         Account account = null;
         List<Transaction> transactions = transactionDAO.findAllByProcessingDate(null);
@@ -103,6 +120,7 @@ public class TransactionService {
      * @param account bankování účet
      * @return seznam transakcí
      */
+    @Override
     public List<Transaction> getTransactionsByAccount(Account account) {
         return transactionDAO.findAllByAccount(account);
     }
@@ -113,6 +131,7 @@ public class TransactionService {
      * @param id id transakce
      * @return transakce
      */
+    @Override
     public Transaction getTransactionById(Integer id) {
         return transactionDAO.findTransactionById(id);
     }
@@ -124,6 +143,7 @@ public class TransactionService {
      * @param pageable omezení pro výběr transakcí
      * @return stránka obsahující transakce
      */
+    @Override
     public Page<Transaction> getTransactionsByAccountPageable(Account account, Pageable pageable) {
         return transactionDAO.findAllByAccount(account, pageable);
     }

@@ -24,26 +24,50 @@ public class Role implements Serializable {
     @ManyToMany(mappedBy = "roleList")
     private List<User> users;
 
+    /**
+     * Vrátí id role
+     * @return id role
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Změní id role
+     * @param id id role
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Vrátí název role
+     * @return název role
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Změní název role
+     * @param name název role
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Vrátí list uživatelů s touto rolí
+     * @return seznam uživatelů
+     */
     public List<User> getUsers() {
         return users;
     }
 
+    /**
+     * Změní seznam uživatelů pro roli
+     * @param users seznam uživatelů
+     */
     public void setUsers(List<User> users) {
         this.users = users;
     }

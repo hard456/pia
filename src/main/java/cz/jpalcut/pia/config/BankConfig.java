@@ -1,6 +1,5 @@
 package cz.jpalcut.pia.config;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,11 +16,10 @@ public class BankConfig {
     /**
      * Vrací kód banky
      *
-     * @return
+     * @return kód banky
      */
     public String getBankCode() {
         return bankCode;
     }
-
 
 }

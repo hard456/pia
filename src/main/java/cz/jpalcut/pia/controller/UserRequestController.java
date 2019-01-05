@@ -26,20 +26,34 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(name = "userRequestController")
 public class UserRequestController {
 
-    @Autowired
     private UserRequestService userRequestService;
 
-    @Autowired
     private BankConfig bankConfig;
 
-    @Autowired
     private AccountService accountService;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private RoleService roleService;
+
+    /**
+     * Konstruktor třídy
+     * @param userRequestService UserRequestService
+     * @param bankConfig BankConfig
+     * @param accountService AccountService
+     * @param userService UserService
+     * @param roleService RoleService
+     */
+    @Autowired
+    public UserRequestController(UserRequestService userRequestService, BankConfig bankConfig, AccountService accountService,
+                                 UserService userService, RoleService roleService) {
+
+        this.userRequestService = userRequestService;
+        this.bankConfig = bankConfig;
+        this.accountService = accountService;
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     /**
      * Zobrazí stránku uživatelských požadavků

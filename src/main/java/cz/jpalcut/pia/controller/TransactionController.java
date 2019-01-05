@@ -5,6 +5,7 @@ import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
 import cz.jpalcut.pia.service.*;
+import cz.jpalcut.pia.service.interfaces.*;
 import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,23 +29,39 @@ import javax.validation.Valid;
 @RequestMapping(name = "transactionController")
 public class TransactionController {
 
-    @Autowired
-    TransactionService transactionService;
+    private ITransactionService transactionService;
 
-    @Autowired
-    UserService userService;
+    private IUserService userService;
 
-    @Autowired
-    AccountService accountService;
+    private IAccountService accountService;
 
-    @Autowired
-    TemplateService templateService;
+    private BankConfig bankConfig;
 
-    @Autowired
-    BankConfig bankConfig;
+    private ITemplateService templateService;
 
+    private ICaptchaService captchaService;
+
+    /**
+     * Konstruktor třídy
+     * @param transactionService TransactionService
+     * @param userService UserService
+     * @param accountService AccountService
+     * @param templateService TemplateService
+     * @param captchaService CaptchaService
+     * @param bankConfig BankConfig
+     */
     @Autowired
-    CaptchaService captchaService;
+    public TransactionController(TransactionService transactionService, UserService userService,
+                                 AccountService accountService, TemplateService templateService,
+                                 CaptchaService captchaService, BankConfig bankConfig) {
+
+        this.transactionService = transactionService;
+        this.userService = userService;
+        this.accountService = accountService;
+        this.templateService = templateService;
+        this.captchaService = captchaService;
+        this.bankConfig = bankConfig;
+    }
 
     /**
      * Zobrazí stránku s formulářem pro vytvoření nové transakce

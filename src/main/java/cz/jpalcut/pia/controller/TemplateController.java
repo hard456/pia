@@ -6,6 +6,9 @@ import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.TemplateService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.ITemplateService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,14 +30,24 @@ import javax.validation.Valid;
 @RequestMapping(name = "templateController")
 public class TemplateController {
 
-    @Autowired
-    UserService userService;
+    private IUserService userService;
 
-    @Autowired
-    AccountService accountService;
+    private IAccountService accountService;
 
+    private ITemplateService templateService;
+
+    /**
+     * Konstruktor třídy
+     * @param userService UserService
+     * @param accountService AccountService
+     * @param templateService TemplateService
+     */
     @Autowired
-    TemplateService templateService;
+    public TemplateController(UserService userService, AccountService accountService, TemplateService templateService) {
+        this.userService = userService;
+        this.accountService = accountService;
+        this.templateService = templateService;
+    }
 
     /**
      * Zobrazí stránku s seznamem šablon

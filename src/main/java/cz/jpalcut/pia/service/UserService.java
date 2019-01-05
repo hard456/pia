@@ -5,6 +5,9 @@ import cz.jpalcut.pia.dao.UserDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Role;
 import cz.jpalcut.pia.model.User;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.IRoleService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import cz.jpalcut.pia.utils.Enum;
 import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +30,26 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class UserService implements UserDetailsService {
+public class UserService implements UserDetailsService, IUserService {
 
-    @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
-    @Autowired
-    AccountService accountService;
+    private IAccountService accountService;
 
+    private IRoleService roleService;
+
+    /**
+     * Konstruktor třídy
+     * @param accountService AccountService
+     * @param roleService RoleService
+     * @param userDAO UserDAO
+     */
     @Autowired
-    RoleService roleService;
+    public UserService(IAccountService accountService, IRoleService roleService, UserDAO userDAO) {
+        this.accountService = accountService;
+        this.roleService = roleService;
+        this.userDAO = userDAO;
+    }
 
     /**
      * Načtení uživatele Spring Security
@@ -72,6 +85,7 @@ public class UserService implements UserDetailsService {
      *
      * @return přihlášený uživatel
      */
+    @Override
     public User getUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return userDAO.findUserByLoginId(((UserDetails) principal).getUsername());
@@ -83,6 +97,7 @@ public class UserService implements UserDetailsService {
      * @param newUser uživatel k editaci
      * @return uživatel
      */
+    @Override
     public User editUser(User newUser) {
         User user = getUser();
         user.setAddress(newUser.getAddress());
@@ -100,6 +115,7 @@ public class UserService implements UserDetailsService {
      * @param newUser nové údaje uživatele
      * @return úpravený uživatel
      */
+    @Override
     public User editUserByAdmin(User user, User newUser) {
         newUser.setId(user.getId());
         newUser.setPin(user.getPin());
@@ -115,6 +131,7 @@ public class UserService implements UserDetailsService {
      * @param pageable omezení pro výběr uživatelů
      * @return stránka obsahující uživatele
      */
+    @Override
     public Page<User> getAllUsersByRolePageable(String role, Pageable pageable) {
         List<Role> roleList = roleService.getRoleListByName(role);
         return userDAO.findAllByRoleList(roleList, pageable);
@@ -126,6 +143,7 @@ public class UserService implements UserDetailsService {
      * @param id id uživatele
      * @return uživatel
      */
+    @Override
     public User getUserById(Integer id) {
         return userDAO.findUserById(id);
     }
@@ -136,6 +154,7 @@ public class UserService implements UserDetailsService {
      * @param user uživatel k přidání
      * @return přidaný uživatel
      */
+    @Override
     public User addUser(User user) {
         String tmp;
 

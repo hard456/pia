@@ -50,74 +50,146 @@ public class Account implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    /**
+     * Vrátí id bankovního účtu
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Změní id bankovního účtu
+     * @param id id bankovního účtu
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Vrátí číslo bankovního účtu
+     * @return číslo bankovního účtu
+     */
     public String getNumber() {
         return number;
     }
 
+    /**
+     * Změní číslo bankovního účtu
+     * @param number číslo bankovního účtu
+     */
     public void setNumber(String number) {
         this.number = number;
     }
 
+    /**
+     * Vrátí zůstatek na účtu
+     * @return zůstatek na účtu
+     */
     public Double getBalance() {
         return balance;
     }
 
+    /**
+     * Změní zůstatek na účtu
+     * @param balance zůstatek ke změně
+     */
     public void setBalance(Double balance) {
         this.balance = balance;
     }
 
+    /**
+     * Vrátí číslo kreditní karty
+     * @return
+     */
     public String getCardNumber() {
         return cardNumber;
     }
 
+    /**
+     * Změní číslo kreditní karty
+     * @param cardNumber číslo kreditní karty
+     */
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
 
+    /**
+     * Vrátí hodnotu blokované částky účtu
+     * @return blokovaná částka
+     */
     public Double getBlockedBalance() {
         return blockedBalance;
     }
 
+    /**
+     * Změní hodnotu blokované částky účtu
+     * @param blockedBalance částka ke změně
+     */
     public void setBlockedBalance(Double blockedBalance) {
         this.blockedBalance = blockedBalance;
     }
 
+    /**
+     * Vrátí uživatele účtu
+     * @return uživatel
+     */
     public User getUser() {
         return user;
     }
 
+    /**
+     * Změní uživatele účtu
+     * @param user uživatel
+     */
     public void setUser(User user) {
         this.user = user;
     }
 
+    /**
+     * Vrátí mezinárodní platbu kartou
+     * @return true - povoleno, false - zakázáno
+     */
     public Boolean getInternationalPayment() {
         return internationalPayment;
     }
 
+    /**
+     * Změní nastavení mezinárodní platby kartou
+     * @param internationalPayment true - povoleno, false - zakázáno
+     */
     public void setInternationalPayment(Boolean internationalPayment) {
         this.internationalPayment = internationalPayment;
     }
 
+    /**
+     * Vrátí limit povolení platby pod 0.00
+     * @return limit
+     */
     public Double getLimitBelow() {
         return limitBelow;
     }
 
+    /**
+     * Nastaví limit povolení platby pod 0.00
+     * @param limitBelow limit
+     */
     public void setLimitBelow(Double limitBelow) {
         this.limitBelow = limitBelow;
     }
 
+    /**
+     * Vrátí pin kreditní karty
+     * @return pin karty
+     */
     public String getCardPin() {
         return cardPin;
     }
 
+    /**
+     * Změní pin kreditní karty
+     * @param cardPin pin karty
+     */
     public void setCardPin(String cardPin) {
         this.cardPin = cardPin;
     }

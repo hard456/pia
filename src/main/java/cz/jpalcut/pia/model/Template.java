@@ -72,82 +72,162 @@ public class Template implements Serializable {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    /**
+     * Vrátí id šablony
+     * @return id šablony
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Změní id šablony
+     * @param id id šablony
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Vrátí číslo účtu
+     * @return číslo účtu
+     */
     public String getNumber() {
         return number;
     }
 
+    /**
+     * Změní číslo účtu
+     * @param number číslo účtu
+     */
     public void setNumber(String number) {
         this.number = number;
     }
 
+    /**
+     * Vrátí kód banky
+     * @return kód banky
+     */
     public String getCode() {
         return code;
     }
 
+    /**
+     * Změní kód banky
+     * @param code kód banky
+     */
     public void setCode(String code) {
         this.code = code;
     }
 
+    /**
+     * Vrátí částku uloženou v šabloně
+     * @return částka
+     */
     public Double getValue() {
         return value;
     }
 
+    /**
+     * Změní částku v šabloně
+     * @param value částka
+     */
     public void setValue(Double value) {
         this.value = value;
     }
 
+    /**
+     * Vrátí variabilní symbol
+     * @return variabilní symbol
+     */
     public String getVariableSymbol() {
         return variableSymbol;
     }
 
+    /**
+     * Změní variabilní symbol
+     * @param variableSymbol variabilní symbol
+     */
     public void setVariableSymbol(String variableSymbol) {
         this.variableSymbol = variableSymbol;
     }
 
+    /**
+     * Vrátí konstantní symbol
+     * @return konstantní symbol
+     */
     public String getConstantSymbol() {
         return constantSymbol;
     }
 
+    /**
+     * Změní konstantní symbol
+     * @param constantSymbol konstantní symbol
+     */
     public void setConstantSymbol(String constantSymbol) {
         this.constantSymbol = constantSymbol;
     }
 
+    /**
+     * Vrátí specifický symbol
+     * @return specifický symbol
+     */
     public String getSpecificSymbol() {
         return specificSymbol;
     }
 
+    /**
+     * Změní specifický symbol
+     * @param specificSymbol specifický symbol
+     */
     public void setSpecificSymbol(String specificSymbol) {
         this.specificSymbol = specificSymbol;
     }
 
+    /**
+     * Vrátí zprávu pro příjemce
+     * @return zpráva
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Změní zpravu pro příjemce
+     * @param message zpráva
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Vrátí název šablony
+     * @return název šablony
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Změní název šablony
+     * @param name název šablony
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Vrátí bankovní účet šablony
+     * @return
+     */
     public Account getAccount() {
         return account;
     }
 
+    /**
+     * Změní bankovní účet šablony
+     * @param account
+     */
     public void setAccount(Account account) {
         this.account = account;
     }

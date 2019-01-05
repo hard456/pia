@@ -1,12 +1,11 @@
 package cz.jpalcut.pia.service;
 
 import cz.jpalcut.pia.config.CaptchaSettings;
+import cz.jpalcut.pia.service.interfaces.ICaptchaService;
 import cz.jpalcut.pia.utils.CaptchaResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestOperations;
-import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
@@ -14,13 +13,21 @@ import java.net.URI;
  * Služba pro kontrolu Google Captcha
  */
 @Service
-public class CaptchaService {
+public class CaptchaService implements ICaptchaService {
 
-    @Autowired
     private CaptchaSettings captchaSettings;
 
-    @Autowired
     private RestOperations restTemplate;
+
+    /**
+     * Konstruktor třídy
+     * @param captchaSettings CaptchaSettings
+     */
+    @Autowired
+    public CaptchaService(CaptchaSettings captchaSettings, RestOperations restTemplate) {
+        this.captchaSettings = captchaSettings;
+        this.restTemplate = restTemplate;
+    }
 
     /**
      * Pro ověření Google Captcha
@@ -29,6 +36,7 @@ public class CaptchaService {
      * @param remoteIpAddress ip adresa uživatele
      * @return true - ověření v pořádku, false - ověření selhalo
      */
+    @Override
     public boolean processResponse(String response, String remoteIpAddress) {
         URI verifyUri = URI.create(String.format(
                 "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s&remoteip=%s",
@@ -37,16 +45,6 @@ public class CaptchaService {
         CaptchaResponse captchaResponse = restTemplate.getForObject(verifyUri, CaptchaResponse.class);
 
         return captchaResponse.isSuccess();
-    }
-
-    /**
-     * RestTemplate pro Google Captcha
-     *
-     * @return vratí nový RestTemplate
-     */
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 
 }

@@ -31,8 +31,19 @@ public interface UserRequestDAO extends JpaRepository<UserRequest, Integer> {
      */
     UserRequest findUserRequestById(Integer id);
 
+    /**
+     * Vrátí seznam požadavků uživatele podle bankovního účtu
+     * @param account bankovní účet
+     * @return seznam požadavků
+     */
     List<UserRequest> findAllByAccount(Account account);
 
+    /**
+     * Vrátí požadavek uživatele podle typu a bankovního účtu
+     * @param type typ požadavku
+     * @param account bankovní účet
+     * @return uživatelský požadavek
+     */
     UserRequest findUserRequestByTypeAndAccount(String type, Account account);
 
 }

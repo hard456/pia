@@ -24,8 +24,18 @@ public interface TemplateDAO extends JpaRepository<Template, Integer> {
      */
     Page<Template> findAllByAccount(Account account, Pageable pageable);
 
+    /**
+     * Vrátí všechny šablony podle bankovního účtu
+     * @param account bankovní účet
+     * @return seznam šablon
+     */
     List<Template> findAllByAccount(Account account);
 
+    /**
+     * Vrátí šablonu podle id
+     * @param id id šablony
+     * @return šablona
+     */
     Template findTemplateById(Integer id);
 
 }

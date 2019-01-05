@@ -35,6 +35,11 @@ public interface AccountDAO extends JpaRepository<Account, Integer> {
      */
     Account findAccountByUser(User user);
 
+    /**
+     * Vrátí bakovní účet podle id
+     * @param id id bankovního účtu
+     * @return bankovní účet
+     */
     Account findAccountById(Integer id);
 
 }

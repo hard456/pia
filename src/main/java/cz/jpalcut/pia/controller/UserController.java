@@ -6,6 +6,10 @@ import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.CaptchaService;
 import cz.jpalcut.pia.service.StateService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.ICaptchaService;
+import cz.jpalcut.pia.service.interfaces.IStateService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,20 +33,34 @@ import javax.validation.Valid;
 @RequestMapping(name = "userController")
 public class UserController {
 
-    @Autowired
-    StateService stateService;
+    private IStateService stateService;
 
-    @Autowired
-    private UserService userService;
+    private IUserService userService;
 
-    @Autowired
-    AccountService accountService;
-
-    @Autowired
     private BankConfig bankConfig;
 
+    private IAccountService accountService;
+
+    private ICaptchaService captchaService;
+
+    /**
+     * Konstruktor třídy
+     * @param stateService StateService
+     * @param userService UserService
+     * @param bankConfig BankConfig
+     * @param accountService AccountService
+     * @param captchaService CaptchaService
+     */
     @Autowired
-    private CaptchaService captchaService;
+    public UserController(StateService stateService, UserService userService, BankConfig bankConfig,
+                          AccountService accountService, CaptchaService captchaService) {
+
+        this.stateService = stateService;
+        this.userService = userService;
+        this.accountService = accountService;
+        this.captchaService = captchaService;
+        this.bankConfig = bankConfig;
+    }
 
     /**
      * Zobrazí stránku s osobními údaji přihlášeného uživatele

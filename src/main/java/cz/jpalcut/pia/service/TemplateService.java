@@ -3,6 +3,9 @@ package cz.jpalcut.pia.service;
 import cz.jpalcut.pia.dao.TemplateDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.ITemplateService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +19,18 @@ import java.util.List;
  */
 @Service
 @Transactional
-public class TemplateService {
+public class TemplateService implements ITemplateService {
 
-    @Autowired
-    UserService userService;
+    private TemplateDAO templateDAO;
 
+    /**
+     * Konstruktor třídy
+     * @param templateDAO TemplateDAO
+     */
     @Autowired
-    TemplateDAO templateDAO;
-
-    @Autowired
-    AccountService accountService;
+    public TemplateService(TemplateDAO templateDAO) {
+        this.templateDAO = templateDAO;
+    }
 
     /**
      * Uloží nebo edituje šablonu
@@ -33,6 +38,7 @@ public class TemplateService {
      * @param template šablona
      * @return šablona
      */
+    @Override
     public Template saveTemplate(Template template) {
         return templateDAO.save(template);
     }
@@ -43,6 +49,7 @@ public class TemplateService {
      * @param account bankovní účet
      * @return seznam šablon
      */
+    @Override
     public List<Template> getTemplatesByAccount(Account account) {
         return templateDAO.findAllByAccount(account);
     }
@@ -53,6 +60,7 @@ public class TemplateService {
      * @param id id šablony
      * @return šablona
      */
+    @Override
     public Template getTemplateById(Integer id) {
         return templateDAO.findTemplateById(id);
     }
@@ -62,6 +70,7 @@ public class TemplateService {
      *
      * @param template šablona k smazání
      */
+    @Override
     public void deleteTemplate(Template template) {
         templateDAO.delete(template);
     }
@@ -73,6 +82,7 @@ public class TemplateService {
      * @param pageable omezení pro výběr šablon
      * @return stránka obsahující šablony
      */
+    @Override
     public Page<Template> getTemplatesByAccountPageable(Account account, Pageable pageable) {
         return templateDAO.findAllByAccount(account, pageable);
     }

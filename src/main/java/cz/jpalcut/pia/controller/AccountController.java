@@ -6,6 +6,9 @@ import cz.jpalcut.pia.model.UserRequest;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.IUserRequestService;
+import cz.jpalcut.pia.service.interfaces.IUserService;
 import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,17 +26,29 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping(name = "accountController")
 public class AccountController {
 
-    @Autowired
-    private UserService userService;
+    private IUserService userService;
 
-    @Autowired
-    private AccountService accountService;
+    private IAccountService accountService;
 
-    @Autowired
     private BankConfig bankConfig;
 
+    private IUserRequestService userRequestService;
+
+    /**
+     * Konstruktor třídy
+     * @param userService UserService
+     * @param accountService AccountService
+     * @param userRequestService UserRequestService
+     * @param bankConfig BankConfig
+     */
     @Autowired
-    private UserRequestService userRequestService;
+    public AccountController(UserService userService, AccountService accountService,
+                             UserRequestService userRequestService, BankConfig bankConfig) {
+        this.userService = userService;
+        this.accountService = accountService;
+        this.userRequestService = userRequestService;
+        this.bankConfig = bankConfig;
+    }
 
     /**
      * Zobrazí informace o bankovním účtu uživatele
