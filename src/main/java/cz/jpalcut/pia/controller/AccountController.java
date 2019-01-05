@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller pro správu bankovních účtů
+ */
 @Controller
 @RequestMapping(name = "accountController")
 public class AccountController {
@@ -32,43 +35,55 @@ public class AccountController {
     @Autowired
     private UserRequestService userRequestService;
 
+    /**
+     * Zobrazí informace o bankovním účtu uživatele
+     *
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/account", name = "account", method = RequestMethod.GET)
-    public ModelAndView showAccountPage()
-    {
+    public ModelAndView showAccountPage() {
         ModelAndView model = new ModelAndView("user/account");
-        Account account =  accountService.getAccount(userService.getUser());
-        model.addObject("account",account);
+        Account account = accountService.getAccount(userService.getUser());
+        model.addObject("account", account);
         model.addObject("requests", userRequestService.getUserRequestsByAcount(account));
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;
     }
 
+    /**
+     * Změní hodnotu mezinárodní platby kartou
+     *
+     * @param accountId          id bankovního účtu
+     * @param redirectAttributes pro přenos objektů na stránku přesměrování
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/account/changeInternationalPayment/{id}", name = "id-change-payment", method = RequestMethod.GET)
-    public ModelAndView confirmRequest(@PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes)
-    {
+    public ModelAndView confirmRequest(@PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
 
-        //Kontrola existence účtu
-        if(account == null){
+        //kontrola existence účtu
+        if (account == null) {
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+
             return model;
         }
 
-        //Ověření uživatele pro změnu
-        if(!userService.getUser().getId().equals(account.getUser().getId())){
+        //ověření uživatele pro změnu
+        if (!userService.getUser().getId().equals(account.getUser().getId())) {
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+
             return model;
-        }
-        else{
-            if(userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString(), account) != null){
+        } else {
+            if (userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString(), account) != null) {
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
+
                 return model;
             }
             UserRequest request = new UserRequest();
@@ -85,38 +100,48 @@ public class AccountController {
         return model;
     }
 
+    /**
+     * Změní limit možnosti provedení transakce pod nulovou hodnotu účtu
+     *
+     * @param value              hodnota pro změnu
+     * @param accountId          id bankovního účtu
+     * @param redirectAttributes pro přenos objektů na stránku přesměrování
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/account/changeValueLimitBelow/{id}", name = "id-change-limit", method = RequestMethod.POST)
-    public ModelAndView confirmRequest(@RequestParam("value")Double value, @PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes)
-    {
+    public ModelAndView confirmRequest(@RequestParam("value") Double value, @PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
 
-        //Kontrola existence účtu
-        if(account == null){
+        //kontrola existence účtu
+        if (account == null) {
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+
             return model;
         }
 
-        //Ověření uživatele pro změnu
-        if(!userService.getUser().getId().equals(account.getUser().getId())){
+        //ověření uživatele pro změnu
+        if (!userService.getUser().getId().equals(account.getUser().getId())) {
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+
             return model;
-        }
-        else{
-            if(userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString(), account) != null){
+        } else {
+            if (userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString(), account) != null) {
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
+
                 return model;
             }
-            if(account.getLimitBelow().equals(value)){
+            if (account.getLimitBelow().equals(value)) {
                 //flash message danger
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Nelze poslat požadavek na stejnou částku jako je nastavena.");
+
                 return model;
             }
             UserRequest request = new UserRequest();

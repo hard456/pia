@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * Controller pro správu uživatelských požadavků
+ */
 @Controller
 @RequestMapping(name = "userRequestController")
 public class UserRequestController {
@@ -38,9 +41,14 @@ public class UserRequestController {
     @Autowired
     private RoleService roleService;
 
+    /**
+     * Zobrazí stránku uživatelských požadavků
+     *
+     * @param pageable omezuje zobrazení na počet elementů a číslo stránky
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/request/list", name = "list", method = RequestMethod.GET)
-    public ModelAndView showUserRequestListPage(Pageable pageable)
-    {
+    public ModelAndView showUserRequestListPage(Pageable pageable) {
         ModelAndView model = new ModelAndView("user_request/list");
         Page<UserRequest> pages = userRequestService.getAllUserRequestPageable(pageable);
         model.addObject("pagination", pages);
@@ -49,18 +57,25 @@ public class UserRequestController {
         return model;
     }
 
+    /**
+     * Zobrazí stránku s detailem uživatelského požadavku
+     *
+     * @param userRequestId      id požadavku
+     * @param redirectAttributes pro přenos objektů na stránku přesměrování
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/request/detail/{id}", name = "id-detail", method = RequestMethod.GET)
-    public ModelAndView showUserRequestDetailPage(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
-    {
+    public ModelAndView showUserRequestDetailPage(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("user_request/detail");
         UserRequest request = userRequestService.getUserRequestById(userRequestId);
 
-        //Kontrola existence požadavku
-        if(request == null){
+        //kontrola existence požadavku
+        if (request == null) {
             model.setViewName("redirect:/request/list");
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
+
             return model;
         }
 
@@ -69,23 +84,30 @@ public class UserRequestController {
         return model;
     }
 
+    /**
+     * Potvrdí uživatelskou žádost o změnu
+     *
+     * @param userRequestId      id žádosti
+     * @param redirectAttributes pro přenos objektů na stránku přesměrování
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/request/confirm/{id}", name = "id-confirm", method = RequestMethod.GET)
-    public ModelAndView confirmUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
-    {
+    public ModelAndView confirmUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("redirect:/request/list");
         UserRequest userRequest = userRequestService.getUserRequestById(userRequestId);
 
         //kontrola existence požadavku
-        if(userRequest == null){
+        if (userRequest == null) {
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
+
             return model;
         }
 
         Account account = userRequest.getAccount();
 
-        if(userRequest.getType().equals(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString())){
+        if (userRequest.getType().equals(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString())) {
             account.setLimitBelow(userRequest.getValue());
             accountService.save(account);
 
@@ -93,15 +115,13 @@ public class UserRequestController {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
             redirectAttributes.addFlashAttribute("flashMessageText", "Limit účtu pod nulu byl změněn.");
 
-        }
-        else if(userRequest.getType().equals(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString())){
-            if(account.getInternationalPayment())   {
+        } else if (userRequest.getType().equals(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString())) {
+            if (account.getInternationalPayment()) {
                 account.setInternationalPayment(false);
                 //flash message success
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
                 redirectAttributes.addFlashAttribute("flashMessageText", "Mezinárdní platba kartou byla zakázána.");
-            }
-            else{
+            } else {
                 account.setInternationalPayment(true);
                 //flash message success
                 redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
@@ -116,38 +136,43 @@ public class UserRequestController {
         return model;
     }
 
+    /**
+     * Smaže uživatelskou žádost o změnu
+     *
+     * @param userRequestId      id žádosti
+     * @param redirectAttributes pro přenos objektů na stránku přesměrování
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/request/delete/{id}", name = "id-delete", method = RequestMethod.GET)
-    public ModelAndView deleteUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes)
-    {
+    public ModelAndView deleteUserRequest(@PathVariable("id") Integer userRequestId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView();
         UserRequest userRequest = userRequestService.getUserRequestById(userRequestId);
         User user = userService.getUser();
 
-        //Kontrola existence žádosti
-        if(userRequest == null){
+        //kontrola existence žádosti
+        if (userRequest == null) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
-            if(user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))){
+            if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))) {
                 model.setViewName("redirect:/request/list");
                 return model;
-            }
-            else{
+            } else {
                 model.setViewName("redirect:/account");
                 return model;
             }
         }
 
-        //Kontrola uživatele
-        if(user.getId().equals(userRequest.getAccount().getUser().getId())){
+        //kontrola uživatele
+        if (user.getId().equals(userRequest.getAccount().getUser().getId())) {
             model.setViewName("redirect:/account");
-        }
-        else if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))){
+        } else if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))) {
             model.setViewName("redirect:/request/list");
-        }
-        else{
+        } else {
+
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
+
             model.setViewName("redirect:/account");
             return model;
         }

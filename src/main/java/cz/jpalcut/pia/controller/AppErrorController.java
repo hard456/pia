@@ -9,9 +9,18 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Controller pro zpracování errorů
+ */
 @Controller
 public class AppErrorController implements ErrorController {
 
+    /**
+     * Zobrazí stránku s příslušným http status error codem
+     *
+     * @param request požadavek na server
+     * @return ModelAndView
+     */
     @RequestMapping("/error")
     public ModelAndView handleError(HttpServletRequest request) {
         ModelAndView model = new ModelAndView("error/error");

@@ -6,30 +6,43 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Controller pro přihlašení a odhlášení uživatele
+ */
 @Controller
 @RequestMapping(name = "loginController")
 public class LoginController {
 
-    @RequestMapping(path = {"/login","/"}, name = "login", method = RequestMethod.GET)
-    public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error)
-    {
+    /**
+     * Zobrazí stránku pro přihlášení uživatele
+     *
+     * @param error parametr error GET požadavku
+     * @return ModelAndView
+     */
+    @RequestMapping(path = {"/login", "/"}, name = "login", method = RequestMethod.GET)
+    public ModelAndView showLoginPage(@RequestParam(value = "error", required = false) String error) {
         ModelAndView model = new ModelAndView("authentication/login");
-        model.addObject("activeLink","login");
-        if(error != null){
+        model.addObject("activeLink", "login");
+        if (error != null) {
             //flash message danger
-            model.addObject("flashMessageSuccess",false);
-            model.addObject("flashMessageText","Byly zadány špatné přihlašovací údaje.");
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Byly zadány špatné přihlašovací údaje.");
         }
 
         return model;
     }
 
+    /**
+     * Zobrazí stránku pro úspěšné odhlášení z aplikace
+     *
+     * @return ModelAndView
+     */
     @RequestMapping(path = "/logoutSuccessful", name = "logout", method = RequestMethod.GET)
-    public ModelAndView showSuccessFulLogoutPage(){
+    public ModelAndView showSuccessFulLogoutPage() {
         ModelAndView model = new ModelAndView("authentication/login");
         //flash message success
-        model.addObject("flashMessageSuccess",true);
-        model.addObject("flashMessageText","Byl jste úspěšně odhlášen z aplikace.");
+        model.addObject("flashMessageSuccess", true);
+        model.addObject("flashMessageText", "Byl jste úspěšně odhlášen z aplikace.");
 
         return model;
     }
