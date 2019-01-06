@@ -128,6 +128,7 @@ public class UserService implements UserDetailsService, IUserService {
         newUser.setPin(user.getPin());
         newUser.setLoginId(user.getLoginId());
         newUser.setRoleList(user.getRoleList());
+        newUser.setDeleted(user.getDeleted());
         return userDAO.save(newUser);
     }
 
