@@ -113,7 +113,7 @@
                                     <%-- tlačítko pro zamítnutí žádosti uživatele --%>
                                 <a href="${userRequestDeleteUrl}${request.id}"
                                    class="text-decoration-none">
-                                    <input type="button" class="btn btn-sm btn-danger" value="Zamítnout">
+                                    <input type="button" class="btn btn-sm btn-danger" value="Zamítnout" onclick="return confirm('Opravdu chcete požadavek zamítnout?')">
                                 </a>
 
                             </div>

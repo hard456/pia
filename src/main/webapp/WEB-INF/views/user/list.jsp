@@ -6,6 +6,7 @@
 
 <%--URL--%>
 <c:set var="userIdUrl" value="${s:mvcUrl('userController#id').build()}" scope="page"/>
+<c:set var="userDeleteUrl" value="${s:mvcUrl('userController#id-delete').build()}" scope="page"/>
 <c:set var="paginationUrl" value="${s:mvcUrl('userController#list').build()}" scope="page"/>
 
 <t:template>
@@ -42,10 +43,16 @@
                                         </div>
                                         <div class="col-sm-12 col-md-3 col-lg-3 text-right">
 
+                                            <a href="${userDeleteUrl}${item.id}" class="text-decoration-none">
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="return confirm('Opravdu chcete uživatele smazat?')">
+                                                    Smazat
+                                                </button>
+                                            </a>
+
                                                 <%-- odkaz na účet uživatele --%>
-                                            <a href="${userIdUrl}${item.id}">
+                                            <a href="${userIdUrl}${item.id}" class="text-decoration-none">
                                                 <button type="button" class="btn btn-primary btn-sm button_primary_new">
-                                                    Detail
+                                                    Zobrazit
                                                 </button>
                                             </a>
 

@@ -19,7 +19,7 @@ public interface IUserService {
     /**
      * Upraví údaje aktuálně přihlášeného uživatele
      *
-     * @param user přihlášený uživatel
+     * @param user    přihlášený uživatel
      * @param newUser nové osobní údaje uživatele
      * @return uživatel
      */
@@ -59,4 +59,11 @@ public interface IUserService {
      */
     User getUserById(Integer id);
 
+    /**
+     * Smaže uživatele (nastaví hodnotu deleted na true)
+     *
+     * @param user uživatel
+     * @return uživatel
+     */
+    User deleteUser(User user);
 }

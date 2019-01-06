@@ -73,7 +73,8 @@
                                         <%-- smazání šablony --%>
                                     <a href="${templateIdDeleteUrl}${item.id}"
                                        class="text-decoration-none">
-                                        <input type="button" class="btn btn-sm btn-danger" value="Smazat">
+                                        <input type="button" class="btn btn-sm btn-danger" value="Smazat"
+                                               onclick="return confirm('Opravdu chcete šablonu smazat?')">
                                     </a>
 
                                 </div>

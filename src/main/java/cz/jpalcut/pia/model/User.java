@@ -84,6 +84,11 @@ public class User implements Serializable {
     @Column(name = "town")
     private String town;
 
+    //zablokování uživatele
+    @Nullable
+    @Column(name = "deleted")
+    private Boolean deleted;
+
     //stát
     @NotNull
     @ManyToOne
@@ -349,5 +354,23 @@ public class User implements Serializable {
      */
     public void setTown(String town) {
         this.town = town;
+    }
+
+    /**
+     * Vrátí stav uživatele
+     *
+     * @return true - smazaný účet
+     */
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    /**
+     * Změní stav uživatele
+     *
+     * @param deleted true - smazaný účet
+     */
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

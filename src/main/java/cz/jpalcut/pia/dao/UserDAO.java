@@ -22,7 +22,7 @@ public interface UserDAO extends JpaRepository<User, Integer> {
      * @param pageable omezení pro výběr uživatelů
      * @return stránku uživatelů
      */
-    Page<User> findAllByRoleList(List<Role> roleList, Pageable pageable);
+    Page<User> findAllByRoleListAndDeleted(List<Role> roleList, Pageable pageable, Boolean deleted);
 
     /**
      * Vrátí uživatele podle přihlašovacího id

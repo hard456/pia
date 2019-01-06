@@ -48,4 +48,10 @@ public interface UserRequestDAO extends JpaRepository<UserRequest, Integer> {
      */
     UserRequest findUserRequestByTypeAndAccount(String type, Account account);
 
+    /**
+     * Smaže požadavky uživatele podle bankovního účtu
+     *
+     * @param account bankovní účet
+     */
+    void deleteByAccount(Account account);
 }

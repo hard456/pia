@@ -1,11 +1,10 @@
 package cz.jpalcut.pia;
 
 import cz.jpalcut.pia.dao.UserDAO;
-import cz.jpalcut.pia.model.Role;
-import cz.jpalcut.pia.model.State;
-import cz.jpalcut.pia.model.User;
+import cz.jpalcut.pia.model.*;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.RoleService;
+import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,7 +23,7 @@ import static org.mockito.Mockito.when;
 /**
  * Třída testující UserService
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class UserServiceIntegrationTest {
 
     private UserDAO userDAO = mock(UserDAO.class);
@@ -35,9 +34,11 @@ public class UserServiceIntegrationTest {
 
     private UserService userService;
 
+    private UserRequestService userRequestService;
+
     @Before
     public void setUp() {
-        userService = new UserService(accountService, roleService, userDAO);
+        userService = new UserService(accountService, roleService, userDAO, userRequestService);
     }
 
     /**
@@ -81,6 +82,7 @@ public class UserServiceIntegrationTest {
         first.setPin("12345");
         first.setFirstname("Karel");
         first.setLastname("Novák");
+        first.setDeleted(false);
 
         when(userDAO.findUserByLoginId(first.getLoginId())).thenReturn(first);
 
@@ -225,6 +227,9 @@ public class UserServiceIntegrationTest {
         userFirst.setLoginId("12345678");
         userFirst.setRoleList(roleList);
         userFirst.setPid("1234567899");
+        userFirst.setDeleted(false);
+        userFirst.setLastname("Novotný");
+        userFirst.setFirstname("Karel");
 
         User user = new User();
         user.setSex("Muž");
@@ -235,7 +240,6 @@ public class UserServiceIntegrationTest {
         user.setEmail("test@test.cz");
         user.setZipCode("39701");
         user.setFirstname("Jan");
-        user.setLastname("Novotný");
         user.setRoleList(roleList);
 
         when(userDAO.save(any())).thenAnswer(i -> i.getArguments()[0]);
@@ -247,12 +251,12 @@ public class UserServiceIntegrationTest {
         Assert.assertNotNull(second.getTown());
         Assert.assertNotNull(second.getSex());
         Assert.assertNotNull(second.getEmail());
-        Assert.assertNotNull(second.getLastname());
-        Assert.assertNotNull(second.getFirstname());
         Assert.assertNotNull(second.getAddressNumber());
         Assert.assertNotNull(second.getAddress());
 
         //kontrola přepsání starých nezměnitelných údajů
+        Assert.assertEquals(second.getFirstname(), userFirst.getFirstname());
+        Assert.assertEquals(second.getLastname(), userFirst.getLastname());
         Assert.assertEquals(second.getPid(), userFirst.getPid());
         Assert.assertEquals(second.getRoleList(), userFirst.getRoleList());
         Assert.assertEquals(second.getLoginId(), userFirst.getLoginId());

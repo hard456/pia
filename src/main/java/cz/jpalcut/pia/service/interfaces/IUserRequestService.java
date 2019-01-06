@@ -60,4 +60,10 @@ public interface IUserRequestService {
      */
     UserRequest getUserRequestByTypeAndAccount(String type, Account account);
 
+    /**
+     * Smaže požadavky uživatele podle bankovního účtu
+     *
+     * @param account bankovní účet
+     */
+    void deleteUserRequestByAccount(Account account);
 }

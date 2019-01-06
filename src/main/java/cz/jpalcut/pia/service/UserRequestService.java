@@ -97,4 +97,14 @@ public class UserRequestService implements IUserRequestService {
         return userRequestDAO.findUserRequestByTypeAndAccount(type, account);
     }
 
+    /**
+     * Smaže požadavky uživatele podle bankovního účtu
+     *
+     * @param account bankovní účet
+     */
+    @Override
+    public void deleteUserRequestByAccount(Account account) {
+        userRequestDAO.deleteByAccount(account);
+    }
+
 }

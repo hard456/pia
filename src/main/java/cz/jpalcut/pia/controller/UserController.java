@@ -95,7 +95,7 @@ public class UserController {
             return model;
         }
 
-        userService.editUser(userService.getUser(),user);
+        userService.editUser(userService.getUser(), user);
 
         //flash message success
         model.addObject("flashMessageSuccess", true);
@@ -132,7 +132,7 @@ public class UserController {
         ModelAndView model = new ModelAndView("user/edit");
 
         //kontrola existence uživatele
-        if (user == null) {
+        if (user == null || user.getDeleted()) {
             model.setViewName("redirect:/user/list");
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
@@ -163,7 +163,7 @@ public class UserController {
         ModelAndView model = new ModelAndView("user/edit");
 
         //kontrola existence uživatele
-        if (user == null) {
+        if (user == null || user.getDeleted()) {
             model.setViewName("redirect:/user/list");
             //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
@@ -238,6 +238,31 @@ public class UserController {
         //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Uživatel byl přidán.");
+
+        return model;
+    }
+
+    @RequestMapping(path = "/user/delete/{id}", name = "id-delete", method = RequestMethod.GET)
+    public ModelAndView deleteUser(@PathVariable("id") Integer userId, RedirectAttributes redirectAttributes) {
+
+        ModelAndView model = new ModelAndView("redirect:/user/list");
+
+        User user = userService.getUserById(userId);
+
+        //kontrola existence uživatele
+        if (user == null) {
+            //flash message danger
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
+
+            return model;
+        }
+
+        userService.deleteUser(user);
+
+        //flash message success
+        redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
+        redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel byl smazán.");
 
         return model;
     }

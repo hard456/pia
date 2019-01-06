@@ -7,6 +7,7 @@ import cz.jpalcut.pia.model.Role;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.interfaces.IAccountService;
 import cz.jpalcut.pia.service.interfaces.IRoleService;
+import cz.jpalcut.pia.service.interfaces.IUserRequestService;
 import cz.jpalcut.pia.service.interfaces.IUserService;
 import cz.jpalcut.pia.utils.Enum;
 import cz.jpalcut.pia.utils.Utils;
@@ -38,6 +39,8 @@ public class UserService implements UserDetailsService, IUserService {
 
     private IRoleService roleService;
 
+    private IUserRequestService userRequestService;
+
     /**
      * Konstruktor třídy
      *
@@ -46,10 +49,11 @@ public class UserService implements UserDetailsService, IUserService {
      * @param userDAO        UserDAO
      */
     @Autowired
-    public UserService(IAccountService accountService, IRoleService roleService, UserDAO userDAO) {
+    public UserService(IAccountService accountService, IRoleService roleService, UserDAO userDAO, IUserRequestService userRequestService) {
         this.accountService = accountService;
         this.roleService = roleService;
         this.userDAO = userDAO;
+        this.userRequestService = userRequestService;
     }
 
     /**
@@ -63,7 +67,7 @@ public class UserService implements UserDetailsService, IUserService {
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         User user = userDAO.findUserByLoginId(loginId);
 
-        if (user == null) {
+        if (user == null || user.getDeleted()) {
             throw new UsernameNotFoundException("User" + loginId + " not found!");
         }
 
@@ -95,7 +99,7 @@ public class UserService implements UserDetailsService, IUserService {
     /**
      * Upraví údaje aktuálně přihlášeného uživatele
      *
-     * @param user aktuálně přihlášený uživatel
+     * @param user    aktuálně přihlášený uživatel
      * @param newUser nová osobní data uživatele k editaci
      * @return uživatel
      */
@@ -137,7 +141,7 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public Page<User> getAllUsersByRolePageable(String role, Pageable pageable) {
         List<Role> roleList = roleService.getRoleListByName(role);
-        return userDAO.findAllByRoleList(roleList, pageable);
+        return userDAO.findAllByRoleListAndDeleted(roleList, pageable, false);
     }
 
     /**
@@ -149,6 +153,19 @@ public class UserService implements UserDetailsService, IUserService {
     @Override
     public User getUserById(Integer id) {
         return userDAO.findUserById(id);
+    }
+
+    /**
+     * Smaže uživatele (nastaví hodnotu deleted na true)
+     *
+     * @param user uživatel
+     * @return uživatel
+     */
+    @Override
+    public User deleteUser(User user) {
+        user.setDeleted(true);
+        userRequestService.deleteUserRequestByAccount(accountService.getAccount(user));
+        return userDAO.save(user);
     }
 
     /**
@@ -175,6 +192,9 @@ public class UserService implements UserDetailsService, IUserService {
 
         //přiřazení rolí uživateli
         user.setRoleList(roleService.getRoleListByName(Enum.Role.valueOf("USER").toString()));
+
+        user.setDeleted(false);
+
         user = userDAO.save(user);
 
         Account account = new Account();
