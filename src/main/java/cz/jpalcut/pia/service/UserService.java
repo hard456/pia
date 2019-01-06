@@ -95,12 +95,12 @@ public class UserService implements UserDetailsService, IUserService {
     /**
      * Upraví údaje aktuálně přihlášeného uživatele
      *
-     * @param newUser uživatel k editaci
+     * @param user aktuálně přihlášený uživatel
+     * @param newUser nová osobní data uživatele k editaci
      * @return uživatel
      */
     @Override
-    public User editUser(User newUser) {
-        User user = getUser();
+    public User editUser(User user, User newUser) {
         user.setAddress(newUser.getAddress());
         user.setAddressNumber(newUser.getAddressNumber());
         user.setZipCode(newUser.getZipCode());

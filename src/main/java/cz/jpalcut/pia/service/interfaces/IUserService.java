@@ -19,10 +19,11 @@ public interface IUserService {
     /**
      * Upraví údaje aktuálně přihlášeného uživatele
      *
-     * @param newUser uživatel k editaci
+     * @param user přihlášený uživatel
+     * @param newUser nové osobní údaje uživatele
      * @return uživatel
      */
-    User editUser(User newUser);
+    User editUser(User user, User newUser);
 
     /**
      * Upravení uživatele adminem

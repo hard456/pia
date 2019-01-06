@@ -95,7 +95,7 @@ public class UserController {
             return model;
         }
 
-        userService.editUser(user);
+        userService.editUser(userService.getUser(),user);
 
         //flash message success
         model.addObject("flashMessageSuccess", true);
