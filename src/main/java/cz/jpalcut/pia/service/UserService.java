@@ -107,6 +107,7 @@ public class UserService implements UserDetailsService, IUserService {
         user.setState(newUser.getState());
         user.setEmail(newUser.getEmail());
         user.setSex(newUser.getSex());
+        user.setTown(newUser.getTown());
         return userDAO.save(user);
     }
 

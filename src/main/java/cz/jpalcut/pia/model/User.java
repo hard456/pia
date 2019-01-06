@@ -74,10 +74,15 @@ public class User implements Serializable {
     @Column(name = "zip_code")
     private String zipCode;
 
-    @Pattern(regexp="^(Muž|Žena)$", message = "Pohlaví může být muž nebo žena!")
+    @Pattern(regexp = "^(Muž|Žena)$", message = "Pohlaví může být muž nebo žena!")
     @NotNull(message = "Pohlaví musí být vybráno!")
     @Column(name = "sex")
     private String sex;
+
+    @Size(max = 50, message = "Město má maximálně 50 znaků!")
+    @NotNull
+    @Column(name = "town")
+    private String town;
 
     //stát
     @NotNull
@@ -326,5 +331,23 @@ public class User implements Serializable {
      */
     public void setSex(String sex) {
         this.sex = sex;
+    }
+
+    /**
+     * Vrátí město uživatele
+     *
+     * @return město
+     */
+    public String getTown() {
+        return town;
+    }
+
+    /**
+     * Změní město uživatele
+     *
+     * @param town město
+     */
+    public void setTown(String town) {
+        this.town = town;
     }
 }

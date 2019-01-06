@@ -62,14 +62,14 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <div class="row">
                                         <div class="col-12">
-                                            <form:radiobutton path="sex" value="Muž" />Muž
+                                            <form:radiobutton path="sex" value="Muž"/>Muž
                                             <form:radiobutton path="sex" value="Žena"/>Žena
                                         </div>
 
                                     </div>
                                     <div class="row">
                                         <div class="col-12">
-                                        <form:errors class="text-danger" path="sex"/>
+                                            <form:errors class="text-danger" path="sex"/>
                                         </div>
                                     </div>
                                 </div>
@@ -93,6 +93,16 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <form:input path="addressNumber" type="text" class="form-control" maxlength="8"/>
                                     <form:errors class="text-danger" path="addressNumber"/>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
+                                    Město
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <form:input path="town" type="text" class="form-control" maxlength="50"/>
+                                    <form:errors class="text-danger" path="town"/>
                                 </div>
                             </div>
                             <hr>
