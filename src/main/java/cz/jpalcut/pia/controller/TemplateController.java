@@ -81,6 +81,7 @@ public class TemplateController {
     public ModelAndView showAddTemplatePage() {
         ModelAndView model = new ModelAndView("template/new");
         model.addObject("template", new Template());
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         return model;
     }
 
@@ -111,6 +112,7 @@ public class TemplateController {
 
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Šablona byla vytvořena.");
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         model.addObject("template", new Template());
         return model;
     }
