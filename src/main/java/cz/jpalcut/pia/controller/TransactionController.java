@@ -4,9 +4,9 @@ import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
+import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.*;
 import cz.jpalcut.pia.service.interfaces.*;
-import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,8 +35,6 @@ public class TransactionController {
 
     private IAccountService accountService;
 
-    private BankConfig bankConfig;
-
     private ITemplateService templateService;
 
     private ICaptchaService captchaService;
@@ -61,7 +59,6 @@ public class TransactionController {
         this.accountService = accountService;
         this.templateService = templateService;
         this.captchaService = captchaService;
-        this.bankConfig = bankConfig;
     }
 
     /**
@@ -95,92 +92,62 @@ public class TransactionController {
         model.addObject("templates", templateService.getTemplatesByAccount(account));
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
-
             return model;
         }
 
-        String captchaResponse = request.getParameter("g-recaptcha-response");
-
         //ověření google captcha
-        if (!captchaService.processResponse(captchaResponse, request.getRemoteAddr())) {
+        if (!captchaService.processResponse(request.getParameter("g-recaptcha-response"), request.getRemoteAddr())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při ověření formuláře - Google reCAPTCHA ");
             return model;
         }
 
         //validace data splatnosti
-        if (!Utils.isValidTransactionDate(transaction.getDueDate())) {
-            //flash message danger
+        if (!transactionService.isValidDueDate(transaction.getDueDate())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Datum splatnosti nesmí být v minulosti");
-
             return model;
         }
 
         //zakazání poslání peněz na vlastní účet
-        if (account.getNumber().equals(transaction.getNumber()) && transaction.getCode().equals(bankConfig.getBankCode())) {
-            //flash message danger
+        if (transactionService.isAccountEqual(account, transaction.getNumber(), transaction.getCode())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nemůžete poslat peníze na vlastní účet.");
-
-            return model;
-        }
-
-        //kontrola zadané částky transakce na větší než 0.00
-        if (transaction.getValue() <= 0.00) {
-            //flash message danger
-            model.addObject("flashMessageSuccess", false);
-            model.addObject("flashMessageText", "Lze poslat jen částku větší než nula.");
-
             return model;
         }
 
         //kontrola stavu peněž na účtu po odečtení částky transakce
-        if ((account.getBalance() + account.getLimitBelow() - account.getBlockedBalance() - transaction.getValue()) < 0.0) {
-
-            //flash message danger
+        if (!transactionService.hasMoneyToExecuteTransaction(account, transaction.getValue())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nemáte dostatek peněz na účtu.");
-
             return model;
 
         }
 
         //kontrola existence účtu v bance
-        if (transaction.getCode().equals(bankConfig.getBankCode())) {
-            if (accountService.getAccountByNumber(transaction.getNumber()) == null) {
-                //flash message danger
-                model.addObject("flashMessageSuccess", false);
-                model.addObject("flashMessageText", "Zvolený účet v naší bance neexistuje.");
-
-                return model;
-            } else {
-                transactionService.addInterBankTransaction(transaction);
-
-                //flash message success
-                model.addObject("flashMessageSuccess", true);
-                model.addObject("flashMessageText", "Byla přijata transakce ke zpracování.");
-
-                model.addObject("transaction", new Transaction());
-                return model;
-            }
+        if (transactionService.isLocalNonExistentAccount(transaction.getNumber(), transaction.getCode())) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Zvolený účet v naší bance neexistuje.");
+            return model;
         }
 
-        transactionService.addTransaction(transaction);
+        //přidání transakce
+        if (transactionService.addTransaction(transaction) == null) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Byla přijata transakce ke zpracování.");
-
         model.addObject("transaction", new Transaction());
         return model;
     }
 
     /**
-     * Zobrazí stránku s seznam transakcí
+     * Zobrazí stránku se seznam transakcí
      *
      * @param pageable omezuje zobrazení na počet elementů a číslo stránky
      * @return ModelAndView
@@ -206,20 +173,19 @@ public class TransactionController {
     public ModelAndView showTransactionDetailPage(@PathVariable("id") Integer transactionId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("transaction/detail");
         Transaction transaction = transactionService.getTransactionById(transactionId);
+        User user = userService.getUser();
 
         //kontrola existence šablony
         if (transaction == null) {
             model.setViewName("redirect:/transaction/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Transakce neexistuje.");
             return model;
         }
 
         //ověření uživatele pro zobrazení
-        if (!userService.getUser().getId().equals(transaction.getAccount().getUser().getId())) {
+        if (!transactionService.belongsTransactionToUser(transaction, user)) {
             model.setViewName("redirect:/transaction/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
@@ -245,32 +211,20 @@ public class TransactionController {
         //kontrola existence šablony
         if (template == null) {
             model.setViewName("redirect:/transaction/new");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
             return model;
         }
 
         //ověření uživatele pro použití šablony
-        if (!userService.getUser().getId().equals(template.getAccount().getUser().getId())) {
+        if (!templateService.belongsTemplateToUser(template, account.getUser())) {
             model.setViewName("redirect:/transaction/new");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
 
-        //předáního hodnot šablony do transakce
-        Transaction transaction = new Transaction();
-        transaction.setNumber(template.getNumber());
-        transaction.setCode(template.getCode());
-        transaction.setMessage(template.getMessage());
-        transaction.setConstantSymbol(template.getConstantSymbol());
-        transaction.setSpecificSymbol(template.getSpecificSymbol());
-        transaction.setVariableSymbol(template.getVariableSymbol());
-        transaction.setValue(template.getValue());
-
-        model.addObject("transaction", transaction);
+        model.addObject("transaction", transactionService.convertTemplateToTransaction(template));
         model.addObject("templates", templateService.getTemplatesByAccount(account));
         model.addObject("template", template);
         return model;

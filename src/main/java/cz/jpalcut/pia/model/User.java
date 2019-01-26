@@ -105,6 +105,48 @@ public class User implements Serializable {
     private List<Role> roleList;
 
     /**
+     * Konstruktor
+     */
+    public User() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření uživatele
+     *
+     * @param firstname     křestní jméno
+     * @param lastname      příjmení
+     * @param email         email
+     * @param loginId       přihlašovací id
+     * @param pin           heslo
+     * @param pid           rodné číslo
+     * @param address       adresa
+     * @param addressNumber číslo popisné
+     * @param zipCode       psč
+     * @param sex           pohlaví
+     * @param town          město
+     * @param deleted       zablokovaný účet ano/ne
+     * @param state         stát
+     * @param roleList      seznam rolí
+     */
+    public User(String firstname, String lastname, String email, String loginId, String pin, String pid, String address,
+                String addressNumber, String zipCode, String sex, String town, Boolean deleted, State state, List<Role> roleList) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email = email;
+        this.loginId = loginId;
+        this.pin = pin;
+        this.pid = pid;
+        this.address = address;
+        this.addressNumber = addressNumber;
+        this.zipCode = zipCode;
+        this.sex = sex;
+        this.town = town;
+        this.deleted = deleted;
+        this.state = state;
+        this.roleList = roleList;
+    }
+
+    /**
      * Vrátí id uživatele
      *
      * @return id uživatele
@@ -361,7 +403,7 @@ public class User implements Serializable {
      *
      * @return true - smazaný účet
      */
-    public Boolean getDeleted() {
+    public Boolean isDeleted() {
         return deleted;
     }
 

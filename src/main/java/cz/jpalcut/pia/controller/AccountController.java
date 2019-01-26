@@ -2,7 +2,7 @@ package cz.jpalcut.pia.controller;
 
 import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
-import cz.jpalcut.pia.model.UserRequest;
+import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
@@ -61,7 +61,7 @@ public class AccountController {
         ModelAndView model = new ModelAndView("user/account");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("account", account);
-        model.addObject("requests", userRequestService.getUserRequestsByAcount(account));
+        model.addObject("requests", userRequestService.getUserRequestsByAccount(account));
         model.addObject("bankCode", bankConfig.getBankCode());
         return model;
     }
@@ -77,42 +77,39 @@ public class AccountController {
     public ModelAndView confirmRequest(@PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
+        User user = userService.getUser();
+        String requestType = Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString();
 
         //kontrola existence účtu
         if (account == null) {
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
-
             return model;
         }
 
         //ověření uživatele pro změnu
-        if (!userService.getUser().getId().equals(account.getUser().getId())) {
-            //flash message danger
+        if (!accountService.belongsAccountToUser(account, user)) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
-
             return model;
-        } else {
-            if (userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString(), account) != null) {
-                //flash message danger
-                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
-                redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
-
-                return model;
-            }
-            UserRequest request = new UserRequest();
-            request.setAccount(account);
-            request.setValue(null);
-            request.setType(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString());
-            userRequestService.saveUserRequest(request);
         }
 
-        //flash message success
+        //ověření že už žádost neexistuje
+        if (userRequestService.getUserRequestByTypeAndAccount(requestType, account) != null) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
+            return model;
+        }
+
+        //uložení žádosti
+        if (userRequestService.saveNewUserRequest(account, requestType, null) == null) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
+
         redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
         redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek na změnu mezinárdní platba kartou byl poslán.");
-
         return model;
     }
 
@@ -128,49 +125,46 @@ public class AccountController {
     public ModelAndView confirmRequest(@RequestParam("value") Double value, @PathVariable("id") Integer accountId, RedirectAttributes redirectAttributes) {
         ModelAndView model = new ModelAndView("redirect:/account");
         Account account = accountService.getAccountById(accountId);
+        User user = userService.getUser();
+        String requestType = Enum.UserRequestType.valueOf("LIMIT_BELOW").toString();
 
         //kontrola existence účtu
         if (account == null) {
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
-
             return model;
         }
 
         //ověření uživatele pro změnu
-        if (!userService.getUser().getId().equals(account.getUser().getId())) {
-            //flash message danger
+        if (!accountService.belongsAccountToUser(account, user)) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
-
             return model;
-        } else {
-            if (userRequestService.getUserRequestByTypeAndAccount(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString(), account) != null) {
-                //flash message danger
-                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
-                redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
-
-                return model;
-            }
-            if (account.getLimitBelow().equals(value)) {
-                //flash message danger
-                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
-                redirectAttributes.addFlashAttribute("flashMessageText", "Nelze poslat požadavek na stejnou částku jako je nastavena.");
-
-                return model;
-            }
-            UserRequest request = new UserRequest();
-            request.setAccount(account);
-            request.setValue(value);
-            request.setType(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString());
-            userRequestService.saveUserRequest(request);
         }
 
-        //flash message success
+        //ověření že už žádost neexistuje
+        if (userRequestService.getUserRequestByTypeAndAccount(requestType, account) != null) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek tohoto typu už existuje.");
+            return model;
+        }
+
+        //ověření změny limitu na jinou hodnotu než je aktuální
+        if (accountService.isLimitValueBelowEqual(account, value)) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nelze poslat požadavek na stejnou částku jako je nastavena.");
+            return model;
+        }
+
+        //uložení žádosti
+        if (userRequestService.saveNewUserRequest(account, requestType, value) == null) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
+
         redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
         redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek na změnu částky do mínusu byl odeslán.");
-
         return model;
     }
 

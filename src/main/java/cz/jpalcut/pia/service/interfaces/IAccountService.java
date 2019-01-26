@@ -49,4 +49,39 @@ public interface IAccountService {
      */
     Account getAccountById(Integer id);
 
+    /**
+     * Změní limit platby do mínusu u bankovního účtu
+     *
+     * @param account bankovní účet
+     * @param value   hodnota
+     * @return bankovní účet
+     */
+    Account changeLimitBelow(Account account, Double value);
+
+    /**
+     * Povolí nebo zakáže mezinárodní platbu kartou
+     *
+     * @param account bankovní účet
+     * @return bankovní účet
+     */
+    Account changeInternationalPayment(Account account);
+
+    /**
+     * Ověření jestli účet patří uživateli
+     *
+     * @param account uživatelský účet
+     * @param user    uživatel
+     * @return true - účet patří uživateli, false - nepatří uživateli
+     */
+    boolean belongsAccountToUser(Account account, User user);
+
+    /**
+     * Porovná shodu hodnotu limitu účtu pod nulu s zadanou hodnotou
+     *
+     * @param account uživatelský účet
+     * @param value   hodnota k porovnání
+     * @return true - jsou shodné, false - jsou odlišné
+     */
+    boolean isLimitValueBelowEqual(Account account, Double value);
+
 }

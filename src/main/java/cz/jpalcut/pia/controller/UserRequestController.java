@@ -8,7 +8,6 @@ import cz.jpalcut.pia.service.AccountService;
 import cz.jpalcut.pia.service.RoleService;
 import cz.jpalcut.pia.service.UserRequestService;
 import cz.jpalcut.pia.service.UserService;
-import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,8 +33,6 @@ public class UserRequestController {
 
     private UserService userService;
 
-    private RoleService roleService;
-
     /**
      * Konstruktor třídy
      *
@@ -53,7 +50,6 @@ public class UserRequestController {
         this.bankConfig = bankConfig;
         this.accountService = accountService;
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     /**
@@ -87,10 +83,8 @@ public class UserRequestController {
         //kontrola existence požadavku
         if (request == null) {
             model.setViewName("redirect:/request/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
-
             return model;
         }
 
@@ -113,37 +107,33 @@ public class UserRequestController {
 
         //kontrola existence požadavku
         if (userRequest == null) {
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
-
             return model;
         }
 
         Account account = userRequest.getAccount();
 
-        if (userRequest.getType().equals(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString())) {
-            account.setLimitBelow(userRequest.getValue());
-            accountService.save(account);
+        if (userRequestService.isLimitBelowType(userRequest.getType())) {
 
-            //flash message success
+            //změna limitu platby do mínusu
+            if (accountService.changeLimitBelow(account, userRequest.getValue()) == null) {
+                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+                redirectAttributes.addFlashAttribute("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+                return model;
+            }
             redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
             redirectAttributes.addFlashAttribute("flashMessageText", "Limit účtu pod nulu byl změněn.");
+        } else if (userRequestService.isLimitBelowType(userRequest.getType())) {
 
-        } else if (userRequest.getType().equals(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString())) {
-            if (account.getInternationalPayment()) {
-                account.setInternationalPayment(false);
-                //flash message success
-                redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
-                redirectAttributes.addFlashAttribute("flashMessageText", "Mezinárdní platba kartou byla zakázána.");
-            } else {
-                account.setInternationalPayment(true);
-                //flash message success
-                redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
-                redirectAttributes.addFlashAttribute("flashMessageText", "Mezinárdní platba kartou byla aktivována.");
+            //změna mezinárodní platby kartou
+            if (accountService.changeInternationalPayment(account) == null) {
+                redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+                redirectAttributes.addFlashAttribute("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+                return model;
             }
-            accountService.save(account);
-
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek na změnu mezinárodní platy kartou byl proveden.");
         }
 
         userRequestService.deleteUserRequest(userRequest);
@@ -168,7 +158,7 @@ public class UserRequestController {
         if (userRequest == null) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Požadavek neexistuje.");
-            if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))) {
+            if (userService.hasRoleAdmin(user)) {
                 model.setViewName("redirect:/request/list");
                 return model;
             } else {
@@ -178,16 +168,14 @@ public class UserRequestController {
         }
 
         //kontrola uživatele
-        if (user.getId().equals(userRequest.getAccount().getUser().getId())) {
+        if (userRequestService.belongsUserRequestToUser(userRequest, user)) {
             model.setViewName("redirect:/account");
-        } else if (user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()))) {
+        } else if (userService.hasRoleAdmin(user)) {
             model.setViewName("redirect:/request/list");
         } else {
 
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
-
             model.setViewName("redirect:/account");
             return model;
         }

@@ -3,9 +3,8 @@ package cz.jpalcut.pia.service;
 import cz.jpalcut.pia.dao.TemplateDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
-import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.interfaces.ITemplateService;
-import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,10 +36,12 @@ public class TemplateService implements ITemplateService {
      * Uloží nebo edituje šablonu
      *
      * @param template šablona
+     * @param account  bankovní účet
      * @return šablona
      */
     @Override
-    public Template saveTemplate(Template template) {
+    public Template saveTemplate(Template template, Account account) {
+        template.setAccount(account);
         return templateDAO.save(template);
     }
 
@@ -86,6 +87,18 @@ public class TemplateService implements ITemplateService {
     @Override
     public Page<Template> getTemplatesByAccountPageable(Account account, Pageable pageable) {
         return templateDAO.findAllByAccount(account, pageable);
+    }
+
+    /**
+     * Ověří zda-li šablona patří k uživateli
+     *
+     * @param template šablona
+     * @param user     uživatel
+     * @return true - patří k uživateli, false - nepatří k uživateli
+     */
+    @Override
+    public boolean belongsTemplateToUser(Template template, User user) {
+        return template.getAccount().getUser().getId().equals(user.getId());
     }
 
 }

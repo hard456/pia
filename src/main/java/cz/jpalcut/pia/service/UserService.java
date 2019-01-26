@@ -67,7 +67,7 @@ public class UserService implements UserDetailsService, IUserService {
     public UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException {
         User user = userDAO.findUserByLoginId(loginId);
 
-        if (user == null || user.getDeleted()) {
+        if (user == null || user.isDeleted()) {
             throw new UsernameNotFoundException("User" + loginId + " not found!");
         }
 
@@ -128,7 +128,7 @@ public class UserService implements UserDetailsService, IUserService {
         newUser.setPin(user.getPin());
         newUser.setLoginId(user.getLoginId());
         newUser.setRoleList(user.getRoleList());
-        newUser.setDeleted(user.getDeleted());
+        newUser.setDeleted(user.isDeleted());
         return userDAO.save(newUser);
     }
 
@@ -157,7 +157,7 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     /**
-     * Smaže uživatele (nastaví hodnotu deleted na true)
+     * Smaže uživatele (nastaví hodnotu deleted na true) včetně jeho žádostí
      *
      * @param user uživatel
      * @return uživatel
@@ -170,6 +170,17 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     /**
+     * Zkontroluje zda-li se jedná o smazaného uživatele
+     *
+     * @param user uživatel
+     * @return true - je smazaný, false - není smazaný
+     */
+    @Override
+    public boolean isDeletedUser(User user) {
+        return user.isDeleted();
+    }
+
+    /**
      * Přidání uživatele včetně vytvoření bankovního účtu a generování potřebných údajů
      *
      * @param user uživatel k přidání
@@ -177,54 +188,79 @@ public class UserService implements UserDetailsService, IUserService {
      */
     @Override
     public User addUser(User user) {
-        String tmp;
 
-        //generování přihlašovacího loginu uživatele
-        while (true) {
-            tmp = Utils.generateNumber(8);
-            if (userDAO.findUserByLoginId(tmp) == null) {
-                user.setLoginId(tmp);
-                break;
-            }
-        }
-
-        //vytvoření hesla uživatele
+        //uživatel
+        user.setLoginId(generateLoginId());
         user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
-
-        //přiřazení rolí uživateli
         user.setRoleList(roleService.getRoleListByName(Enum.Role.valueOf("USER").toString()));
-
         user.setDeleted(false);
 
-        user = userDAO.save(user);
+        //bankovní účet
+        Account account = new Account(generateAccountNumber(), 0.00, 0.00,
+                generateCreditCardNumber(), false, 0.00, Utils.generateNumber(5), user);
 
-        Account account = new Account();
-        account.setUser(user);
-        account.setBalance(0.00);
-        account.setBlockedBalance(0.00);
-        account.setInternationalPayment(false);
-        account.setLimitBelow(0.00);
-        account.setCardPin(Utils.hashPassword(Utils.generateNumber(5)));
-
-        //generování čísla účtu
-        while (true) {
-            tmp = Utils.generateNumber(9);
-            if (accountService.getAccountByNumber(tmp) == null) {
-                account.setNumber(tmp);
-                break;
-            }
-        }
-
-        //generování čísla kreditní karty
-        while (true) {
-            tmp = Utils.generateNumber(16);
-            if (accountService.getAccountByCardNumber(tmp) == null) {
-                account.setCardNumber(tmp);
-                break;
-            }
-        }
         accountService.save(account);
+
         return user;
+    }
+
+    /**
+     * Generuje unikatní přihlašovací login
+     *
+     * @return přihlašovací login
+     */
+    @Override
+    public String generateLoginId() {
+        String loginId;
+        while (true) {
+            loginId = Utils.generateNumber(8);
+            if (userDAO.findUserByLoginId(loginId) == null) {
+                return loginId;
+            }
+        }
+    }
+
+    /**
+     * Generuje unikatní číslo karty
+     *
+     * @return číslo karty
+     */
+    @Override
+    public String generateCreditCardNumber() {
+        String creditCard;
+        while (true) {
+            creditCard = Utils.generateNumber(16);
+            if (accountService.getAccountByCardNumber(creditCard) == null) {
+                return creditCard;
+            }
+        }
+    }
+
+    /**
+     * Generuje unikatní číslo účtu
+     *
+     * @return číslo účtu
+     */
+    @Override
+    public String generateAccountNumber() {
+        String accountNumber;
+        while (true) {
+            accountNumber = Utils.generateNumber(9);
+            if (accountService.getAccountByNumber(accountNumber) == null) {
+                return accountNumber;
+            }
+        }
+    }
+
+    /**
+     * Kontrola zda-li má uživatel roli ADMIN
+     *
+     * @param user uživatel
+     * @return true - admin, false - není admin
+     */
+    @Override
+    public boolean hasRoleAdmin(User user) {
+        return user.getRoleList().contains(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString()));
     }
 
 }

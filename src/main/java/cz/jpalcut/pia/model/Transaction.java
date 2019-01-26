@@ -3,9 +3,7 @@ package cz.jpalcut.pia.model;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -40,6 +38,7 @@ public class Transaction implements Serializable {
 
     //hodnota k poslání
     @NotNull(message = "Částka musí být vyplněna!")
+    @DecimalMin(value = "0.01", message = "Hodnota musí být větší než 0.00")
     @Column(name = "value")
     private Double value;
 
@@ -81,6 +80,42 @@ public class Transaction implements Serializable {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    /**
+     * Konstruktor
+     */
+    public Transaction() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření nové transakce
+     *
+     * @param income         příjem ano/ne
+     * @param number         číslo účtu
+     * @param code           bankovní kód
+     * @param value          hodnota
+     * @param dueDate        datum splatnosti
+     * @param variableSymbol variabilní symbol
+     * @param constantSymbol konstantní symbol
+     * @param specificSymbol specifický symbol
+     * @param message        zpráva
+     * @param processingDate datum zpracování transakce bankou
+     * @param account        bankovní účet
+     */
+    public Transaction(Boolean income, String number, String code, Double value, Date dueDate, String variableSymbol,
+                       String constantSymbol, String specificSymbol, String message, Date processingDate, Account account) {
+        this.income = income;
+        this.number = number;
+        this.code = code;
+        this.value = value;
+        this.dueDate = dueDate;
+        this.variableSymbol = variableSymbol;
+        this.constantSymbol = constantSymbol;
+        this.specificSymbol = specificSymbol;
+        this.message = message;
+        this.processingDate = processingDate;
+        this.account = account;
+    }
 
     /**
      * Vrátí id transakce

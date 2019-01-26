@@ -19,8 +19,7 @@ public class HomeController {
      */
     @RequestMapping(path = "/", name = "home", method = RequestMethod.GET)
     public ModelAndView showHomePage() {
-        ModelAndView model = new ModelAndView("home");
-        return model;
+        return new ModelAndView("home");
     }
 
 }

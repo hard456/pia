@@ -25,6 +25,23 @@ public class Role implements Serializable {
     private List<User> users;
 
     /**
+     * Konstruktor
+     */
+    public Role() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření role
+     *
+     * @param name  název role
+     * @param users seznam uživatelů pro přiřazení role
+     */
+    public Role(String name, List<User> users) {
+        this.name = name;
+        this.users = users;
+    }
+
+    /**
      * Vrátí id role
      *
      * @return id role

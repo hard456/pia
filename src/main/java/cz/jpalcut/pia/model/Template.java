@@ -73,6 +73,38 @@ public class Template implements Serializable {
     private Account account;
 
     /**
+     * Konstruktor
+     */
+    public Template() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření šablony
+     *
+     * @param name           název šablony
+     * @param number         číslo účtu
+     * @param code           bankovní kód
+     * @param value          hodnota
+     * @param variableSymbol variabilní symbol
+     * @param constantSymbol konstantní symbol
+     * @param specificSymbol specifický symbol
+     * @param message        zpráva
+     * @param account        bankovní účet
+     */
+    public Template(String name, String number, String code, Double value, String variableSymbol, String constantSymbol,
+                    String specificSymbol, String message, Account account) {
+        this.name = name;
+        this.number = number;
+        this.code = code;
+        this.value = value;
+        this.variableSymbol = variableSymbol;
+        this.constantSymbol = constantSymbol;
+        this.specificSymbol = specificSymbol;
+        this.message = message;
+        this.account = account;
+    }
+
+    /**
      * Vrátí id šablony
      *
      * @return id šablony

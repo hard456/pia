@@ -2,8 +2,10 @@ package cz.jpalcut.pia.service;
 
 import cz.jpalcut.pia.dao.UserRequestDAO;
 import cz.jpalcut.pia.model.Account;
+import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.model.UserRequest;
 import cz.jpalcut.pia.service.interfaces.IUserRequestService;
+import cz.jpalcut.pia.utils.Enum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,17 +56,6 @@ public class UserRequestService implements IUserRequestService {
     }
 
     /**
-     * Uloží žádost uživatele
-     *
-     * @param userRequest žádost uživatele k uložení
-     * @return žádost uživatele
-     */
-    @Override
-    public UserRequest saveUserRequest(UserRequest userRequest) {
-        return userRequestDAO.save(userRequest);
-    }
-
-    /**
      * Smaže žádost uživatele
      *
      * @param userRequest žádost uživatele k smazáí
@@ -81,7 +72,7 @@ public class UserRequestService implements IUserRequestService {
      * @return seznam žádostí uživatele
      */
     @Override
-    public List<UserRequest> getUserRequestsByAcount(Account account) {
+    public List<UserRequest> getUserRequestsByAccount(Account account) {
         return userRequestDAO.findAllByAccount(account);
     }
 
@@ -106,5 +97,54 @@ public class UserRequestService implements IUserRequestService {
     public void deleteUserRequestByAccount(Account account) {
         userRequestDAO.deleteByAccount(account);
     }
+
+    /**
+     * Ověří typ žádosti pro změnu mezinárodní platby kartou
+     *
+     * @param type typ žádosti
+     * @return true - správný typ žádosti, false - jiný typ žádosti
+     */
+    @Override
+    public boolean isInternationalPaymentType(String type) {
+        return type.equals(Enum.UserRequestType.valueOf("INTERNATIONAL_PAYMENT").toString());
+    }
+
+    /**
+     * Ověří typ žádosti pro změnu limitu do mínusu
+     *
+     * @param type typ žádosti
+     * @return true - správný typ žádosti, false - jiný typ žádosti
+     */
+    @Override
+    public boolean isLimitBelowType(String type) {
+        return type.equals(Enum.UserRequestType.valueOf("LIMIT_BELOW").toString());
+    }
+
+    /**
+     * Uloží novou uživatelskou žádost o změnu
+     *
+     * @param account uživatelský účet
+     * @param type    typ žádosti
+     * @param value   hodnota ke změně
+     * @return uživatelská žádost
+     */
+    @Override
+    public UserRequest saveNewUserRequest(Account account, String type, Double value) {
+        UserRequest userRequest = new UserRequest(type, value, account);
+        return userRequestDAO.save(userRequest);
+    }
+
+    /**
+     * Kontroluje zda-li uživatelský požadavek patří k uživateli
+     *
+     * @param userRequest uživatelský požadavek
+     * @param user        uživatel
+     * @return true - požadavek patří k uživateli, false - nepatří k uživateli
+     */
+    @Override
+    public boolean belongsUserRequestToUser(UserRequest userRequest, User user) {
+        return userRequest.getAccount().getUser().getId().equals(user.getId());
+    }
+
 
 }

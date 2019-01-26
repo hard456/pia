@@ -1,6 +1,7 @@
 package cz.jpalcut.pia.service.interfaces;
 
 import cz.jpalcut.pia.model.Account;
+import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.model.UserRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,14 +30,6 @@ public interface IUserRequestService {
     UserRequest getUserRequestById(Integer id);
 
     /**
-     * Uloží žádost uživatele
-     *
-     * @param userRequest žádost uživatele k uložení
-     * @return žádost uživatele
-     */
-    UserRequest saveUserRequest(UserRequest userRequest);
-
-    /**
      * Smaže žádost uživatele
      *
      * @param userRequest žádost uživatele k smazáí
@@ -49,7 +42,7 @@ public interface IUserRequestService {
      * @param account bankovní účet
      * @return seznam žádostí uživatele
      */
-    List<UserRequest> getUserRequestsByAcount(Account account);
+    List<UserRequest> getUserRequestsByAccount(Account account);
 
     /**
      * Vrátí žádost uživatele podle typu a bankovního účtu
@@ -66,4 +59,40 @@ public interface IUserRequestService {
      * @param account bankovní účet
      */
     void deleteUserRequestByAccount(Account account);
+
+    /**
+     * Ověří typ žádosti pro změnu mezinárodní platby kartou
+     *
+     * @param type typ žádosti
+     * @return true - správný typ žádosti, false - jiný typ žádosti
+     */
+    boolean isInternationalPaymentType(String type);
+
+    /**
+     * Ověří typ žádosti pro změnu limitu do mínusu
+     *
+     * @param type typ žádosti
+     * @return true - správný typ žádosti, false - jiný typ žádosti
+     */
+    boolean isLimitBelowType(String type);
+
+    /**
+     * Uloží novou žádost o změnu limitu platby do mínusu
+     *
+     * @param account uživatelský účet
+     * @param type    typ žádosti
+     * @param value   hodnota ke změně
+     * @return uživatelská žádost
+     */
+    UserRequest saveNewUserRequest(Account account, String type, Double value);
+
+    /**
+     * Kontroluje zda-li uživatelský požadavek patří k uživateli
+     *
+     * @param userRequest uživatelský požadavek
+     * @param user        uživatel
+     * @return true - požadavek patří k uživateli, false - nepatří k uživateli
+     */
+    boolean belongsUserRequestToUser(UserRequest userRequest, User user);
+
 }

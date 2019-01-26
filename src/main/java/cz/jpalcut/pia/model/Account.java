@@ -51,6 +51,36 @@ public class Account implements Serializable {
     private User user;
 
     /**
+     * Konstruktor
+     */
+    public Account() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření bankovního účtu
+     *
+     * @param number               číslo účtu
+     * @param balance              zůstatek
+     * @param blockedBalance       blokovaná částka
+     * @param cardNumber           číslo karty
+     * @param internationalPayment mezinárodní platba kartou ano/ne
+     * @param limitBelow           limit pro platbu do mínusu
+     * @param cardPin              pin karty
+     * @param user                 uživatel
+     */
+    public Account(String number, Double balance, Double blockedBalance, String cardNumber,
+                   Boolean internationalPayment, Double limitBelow, String cardPin, User user) {
+        this.number = number;
+        this.balance = balance;
+        this.blockedBalance = blockedBalance;
+        this.cardNumber = cardNumber;
+        this.internationalPayment = internationalPayment;
+        this.limitBelow = limitBelow;
+        this.cardPin = cardPin;
+        this.user = user;
+    }
+
+    /**
      * Vrátí id bankovního účtu
      *
      * @return id

@@ -83,4 +83,59 @@ public class AccountService implements IAccountService {
         return accountDAO.findAccountById(id);
     }
 
+    /**
+     * Změní limit platby do mínusu u bankovního účtu
+     *
+     * @param account bankovní účet
+     * @param value   hodnota
+     * @return bankovní účet
+     */
+    @Override
+    public Account changeLimitBelow(Account account, Double value) {
+        account.setLimitBelow(value);
+        accountDAO.save(account);
+        return account;
+    }
+
+    /**
+     * Povolí nebo zakáže mezinárodní platbu kartou
+     *
+     * @param account bankovní účet
+     * @return bankovní účet
+     */
+    @Override
+    public Account changeInternationalPayment(Account account) {
+        if (account.getInternationalPayment()) {
+            account.setInternationalPayment(false);
+        } else {
+            account.setInternationalPayment(true);
+        }
+        return account;
+    }
+
+
+    /**
+     * Ověření jestli účet patří uživateli
+     *
+     * @param account uživatelský účet
+     * @param user    uživatel
+     * @return true - účet patří uživateli, false - nepatří uživateli
+     */
+    @Override
+    public boolean belongsAccountToUser(Account account, User user) {
+        return account.getUser().getId().equals(user.getId());
+    }
+
+    /**
+     * Porovná shodu hodnotu limitu účtu pod nulu s zadanou hodnotou
+     *
+     * @param account uživatelský účet
+     * @param value   hodnota k porovnání
+     * @return true - jsou shodné, false - jsou odlišné
+     */
+    @Override
+    public boolean isLimitValueBelowEqual(Account account, Double value) {
+        return account.getLimitBelow().equals(value);
+    }
+
 }

@@ -89,18 +89,20 @@ public class UserController {
         model.addObject("states", stateService.getAllStates());
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
-        userService.editUser(userService.getUser(), user);
+        //úprava uživatele
+        if (userService.editUser(userService.getUser(), user) == null) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Uživatelský profil byl upraven.");
-
         return model;
     }
 
@@ -132,9 +134,8 @@ public class UserController {
         ModelAndView model = new ModelAndView("user/edit");
 
         //kontrola existence uživatele
-        if (user == null || user.getDeleted()) {
+        if (user == null || userService.isDeletedUser(user)) {
             model.setViewName("redirect:/user/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
         }
@@ -163,9 +164,8 @@ public class UserController {
         ModelAndView model = new ModelAndView("user/edit");
 
         //kontrola existence uživatele
-        if (user == null || user.getDeleted()) {
+        if (user == null || userService.isDeletedUser(user)) {
             model.setViewName("redirect:/user/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
         }
@@ -175,18 +175,20 @@ public class UserController {
         model.addObject("bankCode", bankConfig.getBankCode());
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
-        userService.editUserByAdmin(user, newUser);
+        //úprava uživatele
+        if (userService.editUserByAdmin(user, newUser) == null) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Uživatel byl úspěšně upraven.");
-
         return model;
     }
 
@@ -218,27 +220,27 @@ public class UserController {
         model.addObject("states", stateService.getAllStates());
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
             return model;
         }
 
-        String captchaResponse = request.getParameter("g-recaptcha-response");
-        if (!captchaService.processResponse(captchaResponse, request.getRemoteAddr())) {
-            //flash message danger
+        if (!captchaService.processResponse(request.getParameter("g-recaptcha-response"), request.getRemoteAddr())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při ověření formuláře - Google reCAPTCHA ");
             return model;
         }
 
-        userService.addUser(user);
-        model.addObject("userForm", new User());
+        //přidání uživatele
+        if (userService.addUser(user) == null) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Uživatel byl přidán.");
-
+        model.addObject("userForm", new User());
         return model;
     }
 
@@ -250,20 +252,16 @@ public class UserController {
         User user = userService.getUserById(userId);
 
         //kontrola existence uživatele
-        if (user == null) {
-            //flash message danger
+        if (user == null || userService.isDeletedUser(user)) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel neexistuje.");
-
             return model;
         }
 
         userService.deleteUser(user);
 
-        //flash message success
         redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
         redirectAttributes.addFlashAttribute("flashMessageText", "Uživatel byl smazán.");
-
         return model;
     }
 

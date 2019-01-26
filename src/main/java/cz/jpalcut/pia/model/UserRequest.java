@@ -1,7 +1,5 @@
 package cz.jpalcut.pia.model;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -18,12 +16,10 @@ public class UserRequest implements Serializable {
     private Integer id;
 
     //typ požadavku uživatele
-    @Nullable
     @Column(name = "type")
     private String type;
 
     //hodnota ke změnění
-    @Nullable
     @Column(name = "value")
     private Double value;
 
@@ -31,6 +27,25 @@ public class UserRequest implements Serializable {
     @ManyToOne
     @JoinColumn(name = "account_id")
     private Account account;
+
+    /**
+     * Konstruktor
+     */
+    public UserRequest() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření uživatelské žádosti
+     *
+     * @param type    typ žádosti
+     * @param value   hodnota ke změně
+     * @param account uživatelský účet
+     */
+    public UserRequest(String type, Double value, Account account) {
+        this.type = type;
+        this.value = value;
+        this.account = account;
+    }
 
     /**
      * Vrátí id požadavku

@@ -89,22 +89,23 @@ public class TemplateController {
     @RequestMapping(path = "/template/new/add", name = "new-add", method = RequestMethod.POST)
     public ModelAndView addNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView("template/new");
+        Account account = accountService.getAccount(userService.getUser());
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
-
             return model;
         }
 
-        template.setAccount(accountService.getAccount(userService.getUser()));
-        templateService.saveTemplate(template);
+        //uložení šablony
+        if (templateService.saveTemplate(template, account) == null) {
+            model.addObject("flashMessageSuccess", false);
+            model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Šablona byla vytvořena.");
-
         model.addObject("template", new Template());
         return model;
     }
@@ -119,27 +120,24 @@ public class TemplateController {
     @RequestMapping(path = "/template/{id}", name = "id", method = RequestMethod.GET)
     public ModelAndView showEditTemplatePage(@PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes) {
 
-        ModelAndView model = new ModelAndView("template/edit");
+        ModelAndView model = new ModelAndView("redirect:/template/list");
         Template template = templateService.getTemplateById(templateId);
 
         //kontrola existence šablony
         if (template == null) {
-            model.setViewName("redirect:/template/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
             return model;
         }
 
         //ověření uživatele pro zobrazení
-        if (!userService.getUser().getId().equals(template.getAccount().getUser().getId())) {
-            model.setViewName("redirect:/template/list");
-            //flash message danger
+        if (!templateService.belongsTemplateToUser(template, userService.getUser())) {
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
 
+        model.setViewName("template/edit");
         model.addObject("template", template);
 
         return model;
@@ -159,9 +157,9 @@ public class TemplateController {
                                      @PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes) {
 
         ModelAndView model = new ModelAndView("template/edit");
+        Account account = accountService.getAccount(userService.getUser());
 
         if (bindingResult.hasErrors()) {
-            //flash message danger
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
             return model;
@@ -172,28 +170,28 @@ public class TemplateController {
         //kontrola existence šablony
         if (template == null) {
             model.setViewName("redirect:/template/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Šablona neexistuje.");
             return model;
         }
 
         //ověření uživatele pro zobrazení
-        if (!userService.getUser().getId().equals(template.getAccount().getUser().getId())) {
+        if (!templateService.belongsTemplateToUser(template, userService.getUser())) {
             model.setViewName("redirect:/template/list");
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
 
-        newTemplate.setAccount(template.getAccount());
-        templateService.saveTemplate(newTemplate);
+        //upravení šablony
+        if (templateService.saveTemplate(newTemplate, account) == null) {
+            redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
+            redirectAttributes.addFlashAttribute("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
+            return model;
+        }
 
-        //flash message success
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Šablona byla upravena.");
-
         return model;
     }
 
@@ -219,19 +217,16 @@ public class TemplateController {
         }
 
         //ověření uživatele
-        if (template.getAccount().getUser().getId().equals(user.getId())) {
+        if (templateService.belongsTemplateToUser(template, user)) {
             templateService.deleteTemplate(template);
         } else {
-            //flash message danger
             redirectAttributes.addFlashAttribute("flashMessageSuccess", false);
             redirectAttributes.addFlashAttribute("flashMessageText", "Nepovolený požadavek.");
             return model;
         }
 
-        //flash message success
         redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
         redirectAttributes.addFlashAttribute("flashMessageText", "Šablona byla smazána.");
-
         return model;
     }
 

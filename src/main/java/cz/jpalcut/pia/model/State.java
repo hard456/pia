@@ -20,6 +20,21 @@ public class State implements Serializable {
     private String name;
 
     /**
+     * Konstruktor
+     */
+    public State() {
+    }
+
+    /**
+     * Konstruktor pro vytvoření státu
+     *
+     * @param name název státu
+     */
+    public State(String name) {
+        this.name = name;
+    }
+
+    /**
      * Vrátí id státu
      *
      * @return id státu

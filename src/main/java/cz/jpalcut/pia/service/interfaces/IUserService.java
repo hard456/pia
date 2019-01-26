@@ -66,4 +66,42 @@ public interface IUserService {
      * @return uživatel
      */
     User deleteUser(User user);
+
+    /**
+     * Zkontroluje zda-li se jedná o smazaného uživatele
+     *
+     * @param user uživatel
+     * @return true - je smazaný, false - není smazaný
+     */
+    boolean isDeletedUser(User user);
+
+    /**
+     * Generuje unikatní přihlašovací login
+     *
+     * @return přihlašovací login
+     */
+    String generateLoginId();
+
+    /**
+     * Generuje unikatní číslo karty
+     *
+     * @return číslo karty
+     */
+    String generateCreditCardNumber();
+
+    /**
+     * Generuje unikatní číslo účtu
+     *
+     * @return číslo účtu
+     */
+    String generateAccountNumber();
+
+    /**
+     * Kontrola zda-li má uživatel roli ADMIN
+     *
+     * @param user uživatel
+     * @return true - admin, false - není admin
+     */
+    boolean hasRoleAdmin(User user);
+
 }
