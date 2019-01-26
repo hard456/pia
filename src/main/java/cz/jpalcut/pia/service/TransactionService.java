@@ -16,7 +16,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
@@ -55,10 +54,11 @@ public class TransactionService implements ITransactionService {
      * Přidá transakci k provedení
      *
      * @param transaction transakce
+     * @param localBankTransaction transakce uvnitř banky
      * @return transakce
      */
     @Override
-    public Transaction addTransaction(Transaction transaction) {
+    public Transaction addTransaction(Transaction transaction, boolean localBankTransaction) {
         Account account = accountService.getAccount(userService.getUser());
         account.setBlockedBalance(account.getBlockedBalance() + transaction.getValue());
 
@@ -67,7 +67,7 @@ public class TransactionService implements ITransactionService {
         transaction.setAccount(account);
         transactionDAO.save(transaction);
 
-        if (isLocalBankCode(transaction.getCode())) {
+        if (localBankTransaction && isLocalBankCode(transaction.getCode())) {
             Account secondAccount = accountService.getAccountByNumber(transaction.getNumber());
             Transaction secondTransaction = new Transaction(true, transaction.getNumber(), transaction.getCode(),
                     transaction.getValue(), transaction.getDueDate(), transaction.getVariableSymbol(), transaction.getConstantSymbol(),

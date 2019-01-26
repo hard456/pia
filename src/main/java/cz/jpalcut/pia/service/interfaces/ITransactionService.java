@@ -19,9 +19,10 @@ public interface ITransactionService {
      * Přidá transakci k provedení
      *
      * @param transaction transakce
+     * @param localBankTransaction transakce uvnitř firmy
      * @return transakce
      */
-    Transaction addTransaction(Transaction transaction);
+    Transaction addTransaction(Transaction transaction, boolean localBankTransaction);
 
     /**
      * Pravidelné schvalování transakcí podle v opakujícím

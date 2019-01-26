@@ -81,6 +81,9 @@ public class Transaction implements Serializable {
     @JoinColumn(name = "account_id")
     private Account account;
 
+    @Transient
+    private boolean checkAccount;
+
     /**
      * Konstruktor
      */
@@ -115,6 +118,7 @@ public class Transaction implements Serializable {
         this.message = message;
         this.processingDate = processingDate;
         this.account = account;
+        this.checkAccount = true;
     }
 
     /**
@@ -333,4 +337,21 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
+    /**
+     * Kontrolovat reálnou existenci účtu ano/ne
+     *
+     * @return true - kontrolovat, false - nekontrolovat
+     */
+    public boolean checkAccount() {
+        return checkAccount;
+    }
+
+    /**
+     * Nastavení kontroli existence účtu
+     *
+     * @param checkAccount
+     */
+    public void setCheckAccount(boolean checkAccount) {
+        this.checkAccount = checkAccount;
+    }
 }

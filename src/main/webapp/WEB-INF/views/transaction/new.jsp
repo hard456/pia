@@ -5,13 +5,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/tags" %>
 
+<%--JS--%>
+<s:url value="${pageContext.request.contextPath}/js/transaction.js" var="transactionjs"/>
+<script src="${transactionjs}" language="JavaScript" type="text/javascript"></script>
+
 <%-- captcha --%>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-<script>
-    function onSubmit(token) {
-        document.getElementById("new_transaction_form").submit();
-    }
-</script>
 
 <%--URL --%>
 <c:set var="transactionNewAddUrl" value="${s:mvcUrl('transactionController#new-add').build()}" scope="page"/>
@@ -30,6 +29,9 @@
                             <%-- formulář pro přidání transakce --%>
                         <form:form id="new_transaction_form" modelAttribute="transaction"
                                    action="${transactionNewAddUrl}" method="post">
+
+                            <input name="checkAccount" id="checkAccountId" value="true" type="hidden"/>
+
                             <div class="row mb-2">
                                 <div class="col-sm-12 col-md-6 col-lg-6 align-self-center font-weight-bold">
                                     Použít vzor
@@ -70,13 +72,13 @@
                                 <div class="col-sm-12 col-md-6 col-lg-6 col">
                                     <div class="row">
                                         <div class="col-sm-7 col-md-7 col-lg-7">
-                                            <form:input path="number" type="text" class="form-control" maxlength="17"/>
+                                            <form:input path="number" type="text" class="form-control" maxlength="17" id="accountNumber"/>
                                         </div>
                                         <div class="col-sm-1 col-md-1 col-lg-1 align-self-center text-center size-25">
                                             /
                                         </div>
                                         <div class="col-sm-4 col-md-4 col-lg-4">
-                                            <form:input path="code" type="text" class="form-control" maxlength="4"/>
+                                            <form:input path="code" type="text" class="form-control" maxlength="4" id="bankCode"/>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -188,5 +190,27 @@
                 </div>
             </div>
         </div>
+
+        <%--modální okno--%>
+        <div id="myModal" class="modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Potvrzení transakce</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Zvolený účet neexistuje. Opravdu chcete transakci potvrdit?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" onclick="sendTransaction()">ANO</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="captchaReset()">NE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </jsp:body>
 </t:template>

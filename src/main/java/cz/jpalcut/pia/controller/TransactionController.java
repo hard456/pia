@@ -12,15 +12,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * Controller pro správu transakcí
@@ -96,28 +94,24 @@ public class TransactionController {
             model.addObject("flashMessageText", "Nastala chyba při vyplnění formuláře.");
             return model;
         }
-
         //ověření google captcha
         if (!captchaService.processResponse(request.getParameter("g-recaptcha-response"), request.getRemoteAddr())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba při ověření formuláře - Google reCAPTCHA ");
             return model;
         }
-
         //validace data splatnosti
         if (!transactionService.isValidDueDate(transaction.getDueDate())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Datum splatnosti nesmí být v minulosti");
             return model;
         }
-
         //zakazání poslání peněz na vlastní účet
         if (transactionService.isAccountEqual(account, transaction.getNumber(), transaction.getCode())) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nemůžete poslat peníze na vlastní účet.");
             return model;
         }
-
         //kontrola stavu peněž na účtu po odečtení částky transakce
         if (!transactionService.hasMoneyToExecuteTransaction(account, transaction.getValue())) {
             model.addObject("flashMessageSuccess", false);
@@ -125,21 +119,23 @@ public class TransactionController {
             return model;
 
         }
-
-        //kontrola existence účtu v bance
-        if (transactionService.isLocalNonExistentAccount(transaction.getNumber(), transaction.getCode())) {
-            model.addObject("flashMessageSuccess", false);
-            model.addObject("flashMessageText", "Zvolený účet v naší bance neexistuje.");
-            return model;
+        if(transaction.checkAccount()){
+            if (transactionService.isLocalNonExistentAccount(transaction.getNumber(), transaction.getCode())) {
+                model.addObject("flashMessageSuccess", false);
+                model.addObject("flashMessageText", "Zvolený účet v naší bance neexistuje.");
+                return model;
+            }
+            transaction = transactionService.addTransaction(transaction, true);
         }
-
-        //přidání transakce
-        if (transactionService.addTransaction(transaction) == null) {
+        else{
+            transaction = transactionService.addTransaction(transaction, false);
+        }
+        //kontrola provedení transakce
+        if (transaction == null) {
             model.addObject("flashMessageSuccess", false);
             model.addObject("flashMessageText", "Nastala chyba s datovým uložištěm, opakujte akci později.");
             return model;
         }
-
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Byla přijata transakce ke zpracování.");
         model.addObject("transaction", new Transaction());
@@ -229,5 +225,18 @@ public class TransactionController {
         model.addObject("template", template);
         return model;
     }
+
+    @RequestMapping(value = "/transaction/check-account", method = RequestMethod.GET)
+    @ResponseBody
+    public boolean notLocalBankAccount(@RequestParam String number, @RequestParam String bankCode) {
+        if(number == null || bankCode == null){
+            return false;
+        }
+        if(!transactionService.isLocalBankCode(bankCode)){
+            return false;
+        }
+        return accountService.getAccountByNumber(number) == null;
+    }
+
 
 }
