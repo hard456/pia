@@ -13,6 +13,10 @@ public class BankConfig {
     @Value("${appvar.bank_code}")
     private String bankCode;
 
+    //url pro stažení kódů bank
+    @Value("${appvar.bank_codes_url}")
+    private String bankCodesUrl;
+
     /**
      * Vrací kód banky
      *
@@ -22,4 +26,12 @@ public class BankConfig {
         return bankCode;
     }
 
+    /**
+     * Vrátí url pro stažení kódů bank
+     *
+     * @return url
+     */
+    public String getBankCodesUrl() {
+        return bankCodesUrl;
+    }
 }

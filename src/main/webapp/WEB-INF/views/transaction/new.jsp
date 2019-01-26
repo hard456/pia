@@ -71,23 +71,35 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6 col-lg-6 col">
                                     <div class="row">
-                                        <div class="col-sm-7 col-md-7 col-lg-7">
-                                            <form:input path="number" type="text" class="form-control" maxlength="17" id="accountNumber"/>
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
+                                            <form:input path="number" type="text" class="form-control" maxlength="17"
+                                                        id="accountNumber"/>
                                         </div>
                                         <div class="col-sm-1 col-md-1 col-lg-1 align-self-center text-center size-25">
                                             /
                                         </div>
-                                        <div class="col-sm-4 col-md-4 col-lg-4">
-                                            <form:input path="code" type="text" class="form-control" maxlength="4" id="bankCode"/>
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
+                                            <form:select cssClass="form-control" path="code">
+                                                <c:forEach var="item" items="${bankCodes}">
+                                                    <c:if test="${template != null && template.code == item.bankCode}">
+                                                        <option selected="selected" value="${item.bankCode}"><c:out
+                                                                value="${item.bankCode} - ${item.name}"/></option>
+                                                    </c:if>
+                                                    <c:if test="${template == null || template.code != item.bankCode}">
+                                                        <option value="${item.bankCode}"><c:out
+                                                                value="${item.bankCode} - ${item.name}"/></option>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </form:select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-7 col-md-7 col-lg-7">
+                                        <div class="col-sm-5 col-md-5 col-lg-5">
                                             <form:errors class="text-danger" path="number"/>
                                         </div>
                                         <div class="col-sm-1 col-md-1 col-lg-1 align-self-center text-center size-25">
                                         </div>
-                                        <div class="col-sm-4 col-md-4 col-lg-4">
+                                        <div class="col-sm-6 col-md-6 col-lg-6">
                                             <form:errors class="text-danger" path="code"/>
                                         </div>
                                     </div>
@@ -206,7 +218,9 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="sendTransaction()">ANO</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="captchaReset()">NE</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="captchaReset()">
+                            NE
+                        </button>
                     </div>
                 </div>
             </div>

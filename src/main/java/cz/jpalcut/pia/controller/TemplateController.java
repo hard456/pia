@@ -4,9 +4,11 @@ import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.AccountService;
+import cz.jpalcut.pia.service.BankCodeService;
 import cz.jpalcut.pia.service.TemplateService;
 import cz.jpalcut.pia.service.UserService;
 import cz.jpalcut.pia.service.interfaces.IAccountService;
+import cz.jpalcut.pia.service.interfaces.IBankCodeService;
 import cz.jpalcut.pia.service.interfaces.ITemplateService;
 import cz.jpalcut.pia.service.interfaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class TemplateController {
 
     private ITemplateService templateService;
 
+    private IBankCodeService bankCodeService;
+
     /**
      * Konstruktor třídy
      *
@@ -44,10 +48,12 @@ public class TemplateController {
      * @param templateService TemplateService
      */
     @Autowired
-    public TemplateController(UserService userService, AccountService accountService, TemplateService templateService) {
+    public TemplateController(UserService userService, AccountService accountService, TemplateService templateService,
+                              BankCodeService bankCodeService) {
         this.userService = userService;
         this.accountService = accountService;
         this.templateService = templateService;
+        this.bankCodeService = bankCodeService;
     }
 
     /**
@@ -62,7 +68,6 @@ public class TemplateController {
         ModelAndView model = new ModelAndView("template/list");
         Page<Template> pages = templateService.getTemplatesByAccountPageable(account, pageable);
         model.addObject("pagination", pages);
-        model.addObject("transactions", pages.getContent());
         model.addObject("templates", pages.getContent());
         return model;
     }
@@ -138,6 +143,7 @@ public class TemplateController {
         }
 
         model.setViewName("template/edit");
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         model.addObject("template", template);
 
         return model;
@@ -157,6 +163,7 @@ public class TemplateController {
                                      @PathVariable("id") Integer templateId, RedirectAttributes redirectAttributes) {
 
         ModelAndView model = new ModelAndView("template/edit");
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         Account account = accountService.getAccount(userService.getUser());
 
         if (bindingResult.hasErrors()) {

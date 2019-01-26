@@ -72,10 +72,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user", "/user/edit", "/logout", "/request/delete/{id}").authenticated()
                 //admin
                 .antMatchers("/user/list", "/user/new", "/user/edit/{id}", "/user/{id}",
-                        "/user/new/add", "/request/confirm/{id}", "/user/delete/{id}").hasAuthority("ADMIN")
+                        "/user/new/add", "/request/confirm/{id}", "/user/delete/{id}", "/bankcode/list",
+                        "/bankcode/update").hasAuthority("ADMIN")
                 //user
                 .antMatchers("/account", "/transaction/**", "/template/**",
-                        "/account/changeValueLimitBelow/{id}", "/account/changeInternationalPayment/{id}").hasAuthority("USER");
+                        "/account/changeValueLimitBelow/{id}", "/account/changeInternationalPayment/{id}",
+                        "/transaction/check-account").hasAuthority("USER");
 
         //přihlašovací formulář
         http.authorizeRequests().and().formLogin()//

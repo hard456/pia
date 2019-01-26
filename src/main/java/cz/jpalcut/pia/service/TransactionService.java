@@ -53,7 +53,7 @@ public class TransactionService implements ITransactionService {
     /**
      * Přidá transakci k provedení
      *
-     * @param transaction transakce
+     * @param transaction          transakce
      * @param localBankTransaction transakce uvnitř banky
      * @return transakce
      */
@@ -85,7 +85,7 @@ public class TransactionService implements ITransactionService {
     @Scheduled(fixedDelayString = "${appvar.proccess_transaction_time}")
     @Override
     public void processTransactions() {
-        Account account = null;
+        Account account;
         List<Transaction> transactions = transactionDAO.findAllByProcessingDate(null);
         for (Transaction transaction : transactions) {
             transaction.setProcessingDate(new Date(System.currentTimeMillis()));

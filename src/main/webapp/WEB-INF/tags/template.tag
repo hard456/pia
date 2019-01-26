@@ -56,6 +56,8 @@
 
 <c:set var="userRequestListUrl" value="${s:mvcUrl('userRequestController#list').build()}" scope="page"/>
 
+<c:set var="bankCodeListUrl" value="${s:mvcUrl('bankCodeController#list').build()}" scope="page"/>
+
 <c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}" scope="page"/>
 
 <!-- DEFAULT MENU-->
@@ -159,6 +161,12 @@
                     <a class="nav-link navbar-user-color ${currentUrl == userRequestListUrl ? ' active-link2' : ''}"
                        href="${userRequestListUrl}">
                         Žádosti
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link navbar-user-color ${currentUrl == bankCodeListUrl ? ' active-link2' : ''}"
+                       href="${bankCodeListUrl}">
+                        Kódy
                     </a>
                 </li>
             </ul>

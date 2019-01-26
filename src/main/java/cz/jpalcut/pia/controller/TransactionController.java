@@ -1,6 +1,5 @@
 package cz.jpalcut.pia.controller;
 
-import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Template;
 import cz.jpalcut.pia.model.Transaction;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 /**
  * Controller pro správu transakcí
@@ -37,6 +35,8 @@ public class TransactionController {
 
     private ICaptchaService captchaService;
 
+    private IBankCodeService bankCodeService;
+
     /**
      * Konstruktor třídy
      *
@@ -45,18 +45,18 @@ public class TransactionController {
      * @param accountService     AccountService
      * @param templateService    TemplateService
      * @param captchaService     CaptchaService
-     * @param bankConfig         BankConfig
      */
     @Autowired
     public TransactionController(TransactionService transactionService, UserService userService,
                                  AccountService accountService, TemplateService templateService,
-                                 CaptchaService captchaService, BankConfig bankConfig) {
+                                 CaptchaService captchaService, BankCodeService bankCodeService) {
 
         this.transactionService = transactionService;
         this.userService = userService;
         this.accountService = accountService;
         this.templateService = templateService;
         this.captchaService = captchaService;
+        this.bankCodeService = bankCodeService;
     }
 
     /**
@@ -70,6 +70,7 @@ public class TransactionController {
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("transaction", new Transaction());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         return model;
     }
 
@@ -88,6 +89,7 @@ public class TransactionController {
         ModelAndView model = new ModelAndView("transaction/new");
         Account account = accountService.getAccount(userService.getUser());
         model.addObject("templates", templateService.getTemplatesByAccount(account));
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
 
         if (bindingResult.hasErrors()) {
             model.addObject("flashMessageSuccess", false);
@@ -119,15 +121,14 @@ public class TransactionController {
             return model;
 
         }
-        if(transaction.checkAccount()){
+        if (transaction.checkAccount()) {
             if (transactionService.isLocalNonExistentAccount(transaction.getNumber(), transaction.getCode())) {
                 model.addObject("flashMessageSuccess", false);
                 model.addObject("flashMessageText", "Zvolený účet v naší bance neexistuje.");
                 return model;
             }
             transaction = transactionService.addTransaction(transaction, true);
-        }
-        else{
+        } else {
             transaction = transactionService.addTransaction(transaction, false);
         }
         //kontrola provedení transakce
@@ -222,17 +223,25 @@ public class TransactionController {
 
         model.addObject("transaction", transactionService.convertTemplateToTransaction(template));
         model.addObject("templates", templateService.getTemplatesByAccount(account));
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
         model.addObject("template", template);
         return model;
     }
 
+    /**
+     * Zkontroluje existenci bankovního účtu v bance
+     *
+     * @param number   číslo účtu
+     * @param bankCode bankovní kód
+     * @return true - účet existuje, false - účet neexistuje
+     */
     @RequestMapping(value = "/transaction/check-account", method = RequestMethod.GET)
     @ResponseBody
     public boolean notLocalBankAccount(@RequestParam String number, @RequestParam String bankCode) {
-        if(number == null || bankCode == null){
+        if (number == null || bankCode == null) {
             return false;
         }
-        if(!transactionService.isLocalBankCode(bankCode)){
+        if (!transactionService.isLocalBankCode(bankCode)) {
             return false;
         }
         return accountService.getAccountByNumber(number) == null;

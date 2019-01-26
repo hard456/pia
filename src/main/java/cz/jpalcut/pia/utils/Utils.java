@@ -1,6 +1,7 @@
 package cz.jpalcut.pia.utils;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Random;
 
 /**
@@ -32,6 +33,21 @@ public class Utils {
     public static String hashPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
+    }
+
+    /**
+     * Zkontroluje jestli je řetězec číslo
+     *
+     * @param string řetězec
+     * @return true - je číslo, false - není číslo
+     */
+    public static boolean isNumber(String string) {
+        try {
+            Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
     }
 
 }
