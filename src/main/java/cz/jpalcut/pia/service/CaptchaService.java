@@ -14,7 +14,6 @@ import java.net.URI;
  * Služba pro kontrolu Google Captcha
  */
 @Service
-@Transactional
 public class CaptchaService implements ICaptchaService {
 
     private CaptchaSettings captchaSettings;

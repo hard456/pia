@@ -5,10 +5,7 @@ import cz.jpalcut.pia.dao.UserDAO;
 import cz.jpalcut.pia.model.Account;
 import cz.jpalcut.pia.model.Role;
 import cz.jpalcut.pia.model.User;
-import cz.jpalcut.pia.service.interfaces.IAccountService;
-import cz.jpalcut.pia.service.interfaces.IRoleService;
-import cz.jpalcut.pia.service.interfaces.IUserRequestService;
-import cz.jpalcut.pia.service.interfaces.IUserService;
+import cz.jpalcut.pia.service.interfaces.*;
 import cz.jpalcut.pia.utils.Enum;
 import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,8 @@ public class UserService implements UserDetailsService, IUserService {
 
     private IUserRequestService userRequestService;
 
+    private IMailSenderService mailService;
+
     /**
      * Konstruktor třídy
      *
@@ -49,11 +48,13 @@ public class UserService implements UserDetailsService, IUserService {
      * @param userDAO        UserDAO
      */
     @Autowired
-    public UserService(IAccountService accountService, IRoleService roleService, UserDAO userDAO, IUserRequestService userRequestService) {
+    public UserService(AccountService accountService, RoleService roleService, UserDAO userDAO,
+                       UserRequestService userRequestService, MailSenderService mailSenderService) {
         this.accountService = accountService;
         this.roleService = roleService;
         this.userDAO = userDAO;
         this.userRequestService = userRequestService;
+        this.mailService = mailSenderService;
     }
 
     /**
@@ -129,7 +130,12 @@ public class UserService implements UserDetailsService, IUserService {
         newUser.setLoginId(user.getLoginId());
         newUser.setRoleList(user.getRoleList());
         newUser.setDeleted(user.isDeleted());
-        return userDAO.save(newUser);
+        newUser = userDAO.save(newUser);
+
+        if(newUser != null){
+            mailService.sendEditedUserMail(newUser);
+        }
+        return newUser;
     }
 
     /**
@@ -166,7 +172,11 @@ public class UserService implements UserDetailsService, IUserService {
     public User deleteUser(User user) {
         user.setDeleted(true);
         userRequestService.deleteUserRequestByAccount(accountService.getAccount(user));
-        return userDAO.save(user);
+        user = userDAO.save(user);
+        if(user != null){
+            mailService.sendDeletedUserMail(user);
+        }
+        return user;
     }
 
     /**
@@ -190,17 +200,22 @@ public class UserService implements UserDetailsService, IUserService {
     public User addUser(User user) {
 
         //uživatel
+        String pin = Utils.generateNumber(5);
         user.setLoginId(generateLoginId());
-        user.setPin(Utils.hashPassword(Utils.generateNumber(5)));
+        user.setPin(Utils.hashPassword(pin));
         user.setRoleList(roleService.getRoleListByName(Enum.Role.valueOf("USER").toString()));
         user.setDeleted(false);
+        user = userDAO.save(user);
 
         //bankovní účet
         Account account = new Account(generateAccountNumber(), 0.00, 0.00,
                 generateCreditCardNumber(), false, 0.00, Utils.generateNumber(5), user);
 
-        accountService.save(account);
+        account = accountService.save(account);
 
+        if(account != null){
+            mailService.sendRegisteredUserMail(user, pin);
+        }
         return user;
     }
 

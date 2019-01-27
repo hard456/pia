@@ -65,4 +65,35 @@ public class Enum {
         }
     }
 
+    /**
+     * Subjekt zprávy
+     */
+    public enum SubjectType {
+        DELETED_USER("e-Banking - smazání účtu"),
+        CREATED_USER("e-Banking - vytvoření účtu"),
+        EDITED_USER("e-Banking - úprava údajů");
+
+        //typ uživatelské žádosti
+        private String subject;
+
+        /**
+         * Konstruktor výčtového typu enum pro subjekt zprávy
+         *
+         * @param subject subjekt
+         */
+        SubjectType(String subject) {
+            this.subject = subject;
+        }
+
+        /**
+         * Vrací subjekt emailu
+         *
+         * @return subjekt
+         */
+        @Override
+        public String toString() {
+            return subject;
+        }
+    }
+
 }
