@@ -93,8 +93,7 @@ public class AccountService implements IAccountService {
     @Override
     public Account changeLimitBelow(Account account, Double value) {
         account.setLimitBelow(value);
-        accountDAO.save(account);
-        return account;
+        return accountDAO.save(account);
     }
 
     /**
@@ -110,7 +109,7 @@ public class AccountService implements IAccountService {
         } else {
             account.setInternationalPayment(true);
         }
-        return account;
+        return accountDAO.save(account);
     }
 
 
