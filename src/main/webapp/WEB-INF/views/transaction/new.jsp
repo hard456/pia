@@ -79,13 +79,17 @@
                                             /
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6">
-                                            <form:select cssClass="form-control" path="code">
+                                            <form:select cssClass="form-control" path="code" id="bankCode">
                                                 <c:forEach var="item" items="${bankCodes}">
                                                     <c:if test="${template != null && template.code == item.bankCode}">
                                                         <option selected="selected" value="${item.bankCode}"><c:out
                                                                 value="${item.bankCode} - ${item.name}"/></option>
                                                     </c:if>
-                                                    <c:if test="${template == null || template.code != item.bankCode}">
+                                                    <c:if test="${template == null && transaction.code == item.bankCode}">
+                                                        <option selected="selected" value="${item.bankCode}"><c:out
+                                                                value="${item.bankCode} - ${item.name}"/></option>
+                                                    </c:if>
+                                                    <c:if test="${template == null || transaction.code != item.bankCode}">
                                                         <option value="${item.bankCode}"><c:out
                                                                 value="${item.bankCode} - ${item.name}"/></option>
                                                     </c:if>

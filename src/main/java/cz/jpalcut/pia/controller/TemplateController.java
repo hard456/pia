@@ -96,6 +96,7 @@ public class TemplateController {
     public ModelAndView addNewTemplate(@Valid @ModelAttribute("template") Template template, BindingResult bindingResult) {
         ModelAndView model = new ModelAndView("template/new");
         Account account = accountService.getAccount(userService.getUser());
+        model.addObject("bankCodes", bankCodeService.getBankCodes());
 
         if (bindingResult.hasErrors()) {
             model.addObject("flashMessageSuccess", false);
@@ -112,7 +113,6 @@ public class TemplateController {
 
         model.addObject("flashMessageSuccess", true);
         model.addObject("flashMessageText", "Šablona byla vytvořena.");
-        model.addObject("bankCodes", bankCodeService.getBankCodes());
         model.addObject("template", new Template());
         return model;
     }

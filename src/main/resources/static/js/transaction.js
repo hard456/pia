@@ -41,7 +41,6 @@ function sendTransaction(){
  * @param bankCode bankovní číslo
  */
 function doesNotAccountExist(accountNumber, bankCode){
-    console.log("ayyy");
     var url = home + "/transaction/check-account";
     var data = "number=" + accountNumber + "&bankCode=" + bankCode;
 

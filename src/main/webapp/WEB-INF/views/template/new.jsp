@@ -45,8 +45,14 @@
                                         <div class="col-sm-6 col-md-6 col-lg-6">
                                             <form:select cssClass="form-control" path="code">
                                                 <c:forEach var="item" items="${bankCodes}">
+                                                    <c:if test="${template.code == item.bankCode}">
+                                                        <option selected="selected" value="${item.bankCode}"><c:out
+                                                                value="${item.bankCode} - ${item.name}"/></option>
+                                                    </c:if>
+                                                    <c:if test="${template.code != item.bankCode}">
                                                         <option value="${item.bankCode}"><c:out
                                                                 value="${item.bankCode} - ${item.name}"/></option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </form:select>
                                             <form:errors class="text-danger" path="code"/>
