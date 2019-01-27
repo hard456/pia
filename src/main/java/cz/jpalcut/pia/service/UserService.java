@@ -11,6 +11,7 @@ import cz.jpalcut.pia.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -133,7 +134,12 @@ public class UserService implements UserDetailsService, IUserService {
         newUser = userDAO.save(newUser);
 
         if(newUser != null){
-            mailService.sendEditedUserMail(newUser);
+            try {
+                mailService.sendEditedUserMail(newUser);
+            }
+            catch (MailSendException ex){
+            ex.printStackTrace();
+            }
         }
         return newUser;
     }
@@ -174,7 +180,12 @@ public class UserService implements UserDetailsService, IUserService {
         userRequestService.deleteUserRequestByAccount(accountService.getAccount(user));
         user = userDAO.save(user);
         if(user != null){
-            mailService.sendDeletedUserMail(user);
+            try {
+                mailService.sendDeletedUserMail(user);
+            }
+            catch (MailSendException ex){
+                ex.printStackTrace();
+            }
         }
         return user;
     }
@@ -214,7 +225,12 @@ public class UserService implements UserDetailsService, IUserService {
         account = accountService.save(account);
 
         if(account != null){
-            mailService.sendRegisteredUserMail(user, pin);
+            try {
+                mailService.sendRegisteredUserMail(user, pin);
+            }
+            catch (MailSendException ex){
+                ex.printStackTrace();
+            }
         }
         return user;
     }

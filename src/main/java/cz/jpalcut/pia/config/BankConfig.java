@@ -17,6 +17,10 @@ public class BankConfig {
     @Value("${appvar.bank_codes_url}")
     private String bankCodesUrl;
 
+    //url pro stažení kódů bank
+    @Value("${appvar.info_email}")
+    private String infoEmail;
+
     /**
      * Vrací kód banky
      *
@@ -34,4 +38,14 @@ public class BankConfig {
     public String getBankCodesUrl() {
         return bankCodesUrl;
     }
+
+    /**
+     * Vrátí email pro posílání oznámení
+     *
+     * @return email
+     */
+    public String getInfoEmail(){
+        return infoEmail;
+    }
+
 }

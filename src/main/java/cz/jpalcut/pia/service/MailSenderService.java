@@ -1,5 +1,6 @@
 package cz.jpalcut.pia.service;
 
+import cz.jpalcut.pia.config.BankConfig;
 import cz.jpalcut.pia.model.User;
 import cz.jpalcut.pia.service.interfaces.IMailSenderService;
 import cz.jpalcut.pia.utils.Enum;
@@ -19,9 +20,12 @@ public class MailSenderService implements IMailSenderService {
 
     private JavaMailSender mailSender;
 
+    private BankConfig bankConfig;
+
     @Autowired
-    public MailSenderService(JavaMailSender mailSender) {
+    public MailSenderService(JavaMailSender mailSender, BankConfig bankConfig) {
         this.mailSender = mailSender;
+        this.bankConfig = bankConfig;
     }
 
     /**
@@ -48,6 +52,7 @@ public class MailSenderService implements IMailSenderService {
         helper.setTo(to);
         helper.setText(text, true);
         helper.setSubject(subject);
+        helper.setFrom(bankConfig.getInfoEmail());
 
         return helper;
     }
