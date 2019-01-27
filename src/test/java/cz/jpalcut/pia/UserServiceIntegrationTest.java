@@ -2,10 +2,8 @@ package cz.jpalcut.pia;
 
 import cz.jpalcut.pia.dao.UserDAO;
 import cz.jpalcut.pia.model.*;
-import cz.jpalcut.pia.service.AccountService;
-import cz.jpalcut.pia.service.RoleService;
-import cz.jpalcut.pia.service.UserRequestService;
-import cz.jpalcut.pia.service.UserService;
+import cz.jpalcut.pia.service.*;
+import cz.jpalcut.pia.utils.Enum;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Třída testující UserService
@@ -34,11 +31,13 @@ public class UserServiceIntegrationTest {
 
     private UserService userService;
 
-    private UserRequestService userRequestService;
+    private UserRequestService userRequestService = mock(UserRequestService.class);
+
+    private MailSenderService mailService = mock(MailSenderService.class);
 
     @Before
     public void setUp() {
-        userService = new UserService(accountService, roleService, userDAO, userRequestService);
+        userService = new UserService(accountService, roleService, userDAO, userRequestService, mailService);
     }
 
     /**
@@ -63,7 +62,7 @@ public class UserServiceIntegrationTest {
     public void getUserByIdNull() {
         int userId = 1;
         User user = null;
-        User userServiceReturn = null;
+        User userServiceReturn;
 
         when(userDAO.findUserById(userId)).thenReturn(null);
 
@@ -101,22 +100,13 @@ public class UserServiceIntegrationTest {
         state.setName("Česká Republika");
 
         //role list
-        Role role = new Role();
-        role.setId(1);
-        role.setName("USER");
+        Role role = new Role("USER", null);
         List<Role> roleList = new ArrayList<>();
         roleList.add(role);
 
-        User newUser = new User();
-        newUser.setSex("Muž");
-        newUser.setTown("Písek");
-        newUser.setState(state);
-        newUser.setAddressNumber("44");
-        newUser.setAddress("Zahradní");
-        newUser.setEmail("test@test.cz");
-        newUser.setZipCode("39701");
-        newUser.setFirstname("Jan");
-        newUser.setLastname("Novotný");
+        User newUser = new User("Karel","Novotný", "test@test.cz", null, null,
+                "1234567899", "Zahradní", "44", "39701", "Muž", "Písek", null,
+                state, null);
 
         User user = new User();
         user.setId(1);
@@ -141,69 +131,15 @@ public class UserServiceIntegrationTest {
         Assert.assertEquals(userServiceReturn.getFirstname(), newUser.getFirstname());
         Assert.assertEquals(userServiceReturn.getAddressNumber(), newUser.getAddressNumber());
         Assert.assertEquals(userServiceReturn.getAddress(), newUser.getAddress());
+        Assert.assertEquals(userServiceReturn.getPid(), newUser.getPid());
 
         //kontrola přepsání starých údajů
         Assert.assertEquals(userServiceReturn.getPin(), user.getPin());
         Assert.assertEquals(userServiceReturn.getLoginId(), user.getLoginId());
         Assert.assertEquals(userServiceReturn.getRoleList(), user.getRoleList());
         Assert.assertEquals(userServiceReturn.getId(), user.getId());
+        Assert.assertEquals(userServiceReturn.isDeleted(), user.isDeleted());
 
-    }
-
-    /**
-     * Testování správného vytvoření uživatele
-     */
-    @Test
-    public void addUser() {
-        State state = new State();
-        state.setName("Česká Republika");
-
-        //role list
-        Role role = new Role();
-        role.setId(1);
-        role.setName("USER");
-        List<Role> roleList = new ArrayList<>();
-        roleList.add(role);
-
-        User user = new User();
-        user.setSex("Muž");
-        user.setTown("Písek");
-        user.setState(state);
-        user.setAddressNumber("44");
-        user.setAddress("Zahradní");
-        user.setEmail("test@test.cz");
-        user.setZipCode("39701");
-        user.setFirstname("Jan");
-        user.setLastname("Novotný");
-        user.setRoleList(roleList);
-
-        String tmp = null;
-
-        User userServiceReturn;
-
-        when(userDAO.findUserByLoginId(tmp)).thenReturn(null);
-        when(roleService.getRoleListByName("USER")).thenReturn(roleList);
-        when(userDAO.save(any())).thenAnswer(i -> i.getArguments()[0]);
-        when(accountService.getAccountByNumber(tmp)).thenReturn(null);
-        when(accountService.getAccountByNumber(tmp)).thenReturn(null);
-
-        userServiceReturn = userService.addUser(user);
-
-        //kontrola nezměnění údajů z formuláře
-        Assert.assertEquals(userServiceReturn.getState(), user.getState());
-        Assert.assertEquals(userServiceReturn.getZipCode(), user.getZipCode());
-        Assert.assertEquals(userServiceReturn.getTown(), user.getTown());
-        Assert.assertEquals(userServiceReturn.getSex(), user.getSex());
-        Assert.assertEquals(userServiceReturn.getEmail(), user.getEmail());
-        Assert.assertEquals(userServiceReturn.getLastname(), user.getLastname());
-        Assert.assertEquals(userServiceReturn.getFirstname(), user.getFirstname());
-        Assert.assertEquals(userServiceReturn.getAddressNumber(), user.getAddressNumber());
-        Assert.assertEquals(userServiceReturn.getAddress(), user.getAddress());
-
-        //ověření vygenerování login id
-        Assert.assertNotNull(userServiceReturn.getLoginId());
-        //ověření vygenerování pinu
-        Assert.assertNotNull(userServiceReturn.getPin());
     }
 
     /**
@@ -215,32 +151,19 @@ public class UserServiceIntegrationTest {
         state.setName("Česká Republika");
 
         //role list
-        Role role = new Role();
-        role.setId(1);
-        role.setName("USER");
+        Role role = new Role("USER", null);
         List<Role> roleList = new ArrayList<>();
         roleList.add(role);
 
-        User userFirst = new User();
+        User userFirst = new User("Karel","Novotný", null, "12345678", "12345",
+                "1234567899", null, null, null, null, null, false,
+                null, roleList);
         userFirst.setId(1);
-        userFirst.setPin("12345");
-        userFirst.setLoginId("12345678");
-        userFirst.setRoleList(roleList);
-        userFirst.setPid("1234567899");
-        userFirst.setDeleted(false);
-        userFirst.setLastname("Novotný");
-        userFirst.setFirstname("Karel");
 
-        User user = new User();
-        user.setSex("Muž");
-        user.setTown("Písek");
-        user.setState(state);
-        user.setAddressNumber("44");
-        user.setAddress("Zahradní");
-        user.setEmail("test@test.cz");
-        user.setZipCode("39701");
-        user.setFirstname("Jan");
-        user.setRoleList(roleList);
+
+        User user = new User(null, null, "test@test.cz", null, null, null,
+                "Zahradní", "44", "39701", "Muž", "Písek", null,
+                state, null);
 
         when(userDAO.save(any())).thenAnswer(i -> i.getArguments()[0]);
         User second = userService.editUser(userFirst, user);
@@ -262,7 +185,136 @@ public class UserServiceIntegrationTest {
         Assert.assertEquals(second.getLoginId(), userFirst.getLoginId());
         Assert.assertEquals(second.getPin(), userFirst.getPin());
         Assert.assertEquals(second.getId(), userFirst.getId());
+        Assert.assertEquals(second.isDeleted(), userFirst.isDeleted());
 
+    }
+
+    /**
+     * Testování správného vytvoření uživatele
+     */
+    @Test
+    public void addUser() {
+        State state = new State();
+        state.setName("Česká Republika");
+
+        //role list
+        Role role = new Role("USER", null);
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(role);
+
+
+        User user = new User("Karel","Novotný", "test@test.cz", null, null,
+                "1234567899", "Zahradní", "44", "39701", "Muž", "Písek", null,
+                state, null);
+
+        User userServiceReturn;
+
+        when(userDAO.findUserByLoginId(any())).thenReturn(null);
+        when(roleService.getRoleListByName("USER")).thenReturn(roleList);
+        when(userDAO.save(any())).thenAnswer(i -> i.getArguments()[0]);
+        when(accountService.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+        userServiceReturn = userService.addUser(user);
+
+        //kontrola nezměnění údajů z formuláře
+        Assert.assertEquals(userServiceReturn.getState(), user.getState());
+        Assert.assertEquals(userServiceReturn.getZipCode(), user.getZipCode());
+        Assert.assertEquals(userServiceReturn.getTown(), user.getTown());
+        Assert.assertEquals(userServiceReturn.getSex(), user.getSex());
+        Assert.assertEquals(userServiceReturn.getEmail(), user.getEmail());
+        Assert.assertEquals(userServiceReturn.getLastname(), user.getLastname());
+        Assert.assertEquals(userServiceReturn.getFirstname(), user.getFirstname());
+        Assert.assertEquals(userServiceReturn.getAddressNumber(), user.getAddressNumber());
+        Assert.assertEquals(userServiceReturn.getAddress(), user.getAddress());
+        Assert.assertEquals(userServiceReturn.getPid(), user.getPid());
+
+        //ověření přidání údajů
+        Assert.assertNotNull(userServiceReturn.getLoginId());
+        Assert.assertNotNull(userServiceReturn.getPin());
+        Assert.assertFalse(userServiceReturn.isDeleted());
+    }
+
+    /**
+     * Zkontroluje jestli je role uživatele ADMIN
+     */
+    @Test
+    public void hasRoleAdmin() {
+        //role list
+        Role role = new Role("ADMIN", null);
+        List<Role> roleList = new ArrayList<>();
+        roleList.add(role);
+
+        //user
+        User user = new User();
+        user.setRoleList(roleList);
+
+        when(roleService.getRoleByName(Enum.Role.valueOf("ADMIN").toString())).thenReturn(role);
+
+        Assert.assertTrue(userService.hasRoleAdmin(user));
+    }
+
+    /**
+     * Zkontroluje vygenerování čísla účtu
+     */
+    @Test
+    public void generateAccountNumber() {
+        when(accountService.getAccountByNumber(any())).thenReturn(null);
+        Assert.assertNotNull(userService.generateAccountNumber());
+    }
+
+    /**
+     * Zkontroluje vygenerování pinu
+     */
+    @Test
+    public void generateLoginId() {
+        when(userDAO.findUserByLoginId(any())).thenReturn(null);
+        Assert.assertNotNull(userService.generateLoginId());
+    }
+
+    /**
+     * Zkontroluje vygenerování čísla kreditní karty
+     */
+    @Test
+    public void generateCreditCardNumber(){
+        when(accountService.getAccountByCardNumber(any())).thenReturn(null);
+        Assert.assertNotNull(userService.generateCreditCardNumber());
+    }
+
+    /**
+     * Testování smazání uživatele
+     */
+    @Test
+    public void deleteUser(){
+        User user = new User();
+        Account account = new Account();
+        user.setDeleted(false);
+
+        when(accountService.getAccount(user)).thenReturn(account);
+        when(userDAO.save(any())).thenAnswer(i -> i.getArguments()[0]);
+
+        Assert.assertTrue(userService.deleteUser(user).isDeleted());
+    }
+
+    /**
+     * Testování jestli je uživatel smazáný
+     */
+    @Test
+    public void isDeletedUser(){
+        User user = new User();
+        user.setDeleted(true);
+
+        Assert.assertTrue(userService.isDeletedUser(user));
+    }
+
+    /**
+     * Testování jestli je uživatel nesmazaný
+     */
+    @Test
+    public void notDeletedUser(){
+        User user = new User();
+        user.setDeleted(false);
+
+        Assert.assertFalse(userService.isDeletedUser(user));
     }
 
 }
