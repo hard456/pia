@@ -124,7 +124,7 @@ public class UserRequestController {
             }
             redirectAttributes.addFlashAttribute("flashMessageSuccess", true);
             redirectAttributes.addFlashAttribute("flashMessageText", "Limit účtu pod nulu byl změněn.");
-        } else if (userRequestService.isLimitBelowType(userRequest.getType())) {
+        } else if (userRequestService.isInternationalPaymentType(userRequest.getType())) {
 
             //změna mezinárodní platby kartou
             if (accountService.changeInternationalPayment(account) == null) {
